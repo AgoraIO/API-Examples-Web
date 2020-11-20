@@ -2,6 +2,24 @@ $(function () {
   'use strict'
 
   var isJoined = false
+  var isPublished = false
+
+  function setJoined(joined) {
+    isJoined = joined
+  }
+
+  function setPublished(published) {
+    // no change
+    if(published === isPublished) {
+      return
+    }
+    isPublished = published
+    if(published) {
+      $("#local-video .card-state").removeClass("unpublish-state").addClass("publish-state")
+    } else {
+      $("#local-video .card-state").removeClass("publish-state").addClass("unpublish-state")
+    }
+  }
 
   /**
    * A class defining the properties of the config parameter in the createClient method.
@@ -17,24 +35,47 @@ $(function () {
   var localStream, localUid
 
   // prepare camera/mic devices
-  var currentCameras = []
   client.getCameras(function(cameras) {
-    currentCameras = cameras
     $("#camera-list").html(cameras.map(function(camera) {return '<option value="' + camera.deviceId + '">' + camera.label + '</option>'}))
   })
-  var currentMicrophones = []
   client.getRecordingDevices(function(microphones) {
-    currentMicrophones = microphones
     $("#mic-list").html(microphones.map(function(mic) {return '<option value="' + mic.deviceId + '">' + mic.label + '</option>'}))
   })
 
+  $('#codec-picker').on("change", function onChangeCodec() {
+    if(isJoined){
+      return alert("change codec is allowed before join channel only")
+    }
+
+    var mode = $('#mode-picker').val()
+    var codec = $('#codec-picker').val()
+    console.log("switch to codec: " + codec + ", mode: " + mode)
+    client = AgoraRTC.createClient({
+      mode: mode,
+      codec: codec
+    })
+  })
+
+  $('#mode-picker').on("change", function onChangeCodec() {
+    if(isJoined){
+      return alert("change mode is allowed before join channel only")
+    }
+
+    var mode = $('#mode-picker').val()
+    var codec = $('#codec-picker').val()
+    console.log("switch to codec: " + codec + ", mode: " + mode)
+    client = AgoraRTC.createClient({
+      mode: mode,
+      codec: codec
+    })
+  })
 
   // click on join button
   $('#join-btn').on("click", function onJoin(e) {
     e.preventDefault()
 
     if(isJoined) {
-      alert("Already Joined")
+      alert("already joined")
       return
     }
 
@@ -70,15 +111,9 @@ $(function () {
               '<div class="card-body">' +
                 '<div class="d-flex justify-content-between align-items-center">' +
                   '<div class="btn-group">' +
-                    '<button class="btn btn-lg text-primary cam-toggle" style="background-color:transparent;" data-toggle="button" aria-pressed="false" autocomplete="off">' +
-                        '<svg class="bi" width="16" height="16" fill="currentColor">' +
-                          '<use xlink:href="../../../assets/vendor/css/bootstrap-icons.svg#camera-video-fill"/>' +
-                        '</svg>' +
+                    '<button class="btn btn-lg text-primary cam-toggle camera-on icon" style="background-color:transparent;" data-toggle="button" aria-pressed="false" autocomplete="off">' +
                     '</button>' +
-                    '<button class="btn btn-lg text-primary mic-toggle" style="background-color:transparent;" data-toggle="button" aria-pressed="false" autocomplete="off">' +
-                      '<svg class="bi" width="16" height="16" fill="currentColor">' +
-                        '<use xlink:href="../../../assets/vendor/css/bootstrap-icons.svg#mic-fill"/>' +
-                      '</svg>' +
+                    '<button class="btn btn-lg text-primary mic-toggle mic-on icon" style="background-color:transparent;" data-toggle="button" aria-pressed="false" autocomplete="off">' +
                     '</button>' +
                   '</div>' +
                   '<small class="text-muted"></small>' +
@@ -128,8 +163,10 @@ $(function () {
       client.join(token ? token : null, channelName, uid ? uid : null, function(uid) {
         localUid = uid
         console.log('join channel: ' + channelName + ' success, uid: ' + uid)
-        isJoined = true
+        setJoined(true)
 
+        // update local uid
+        $("#local-video .uid-label").text("Uid: " + localUid)
 
         var cameraId = $("#camera-list").val()
         var microphoneId = $("#mic-list").val()
@@ -158,13 +195,13 @@ $(function () {
           // play stream with html element id "local_stream"
           localStream.play('local-video-container', {fit: 'cover'})
         }, function(err) {
-          console.error(err)
+          showError(err)
         })
       }, function(err) {
-        console.error(err)
+        showError(err)
       })
     }, function(err) {
-      console.error(err)
+      showError(err)
     })
   })
 
@@ -184,15 +221,17 @@ $(function () {
       // stop stream
       localStream.stop()
 
+      // set unpublished
+      setPublished(false)
+      
       // remove all remote doms
       $(".remote-video-wrapper").remove()
 
       localStream = null
       console.log('client leaves channel success')
-      isJoined = false
+      setJoined(false)
     }, function(err) {
-      console.log('channel leave failed')
-      console.error(err)
+      showError(err)
     })
   })
 
@@ -201,34 +240,96 @@ $(function () {
     e.preventDefault()
 
     if(!isJoined) {
-      alert("Not Joined")
+      alert("not joined")
       return
     }
+
+    if(!localStream) {
+      return alert("local stream not exists")
+    }
+
+    client.on("stream-published", function onStreamPublished(){
+      console.log("publish success")
+      setPublished(true)
+      client.off("stream-published", onStreamPublished)
+    })
+
+    client.publish(localStream, function(err) {
+      showError(err)
+    })
   })
 
+  // click on unpublish button
+  $('#unpublish-btn').on("click", function onPublish(e) {
+    e.preventDefault()
+
+    if(!isJoined) {
+      alert("not joined")
+      return
+    }
+
+    if(!isPublished) {
+      return alert("not published")
+    }
+
+    client.on("stream-unpublished", function onStreamUnpublished(){
+      console.log("unpublish success")
+      client.off("stream-unpublished", onStreamUnpublished)
+      setPublished(false)
+    })
+
+    client.unpublish(localStream, function(err) {
+      showError(err)
+    })
+  })
+
+  // click on local video camera toggle
   $('#local-video .cam-toggle').on("click", function onToggleLocalCam(e){
+    if(!localStream) {
+      return alert("local stream not exists")
+    }
+
     var jthis = $(this)
     var pressed = jthis.attr("aria-pressed") === "true"
-    jthis.removeClass("text-primary text-muted").addClass(!pressed ? "text-muted" : "text-primary")
-    jthis.find("use")[0].setAttribute("xlink:href", pressed ? "../../../assets/vendor/css/bootstrap-icons.svg#camera-video-fill" : "../../../assets/vendor/css/bootstrap-icons.svg#camera-video-off-fill")
-  
+    jthis.removeClass("camera-on camera-off").addClass(!pressed ? "camera-off" : "camera-on")
+    
     if(pressed) {
-      localStream.muteVideo()
-    } else {
       localStream.unmuteVideo()
+    } else {
+      localStream.muteVideo()
     }
   })
 
+  // click on local audio mic toggle
   $('#local-video .mic-toggle').on("click", function onToggleLocalMic(e){
+    if(!localStream) {
+      return alert("local stream not exists")
+    }
     var jthis = $(this)
     var pressed = jthis.attr("aria-pressed") === "true"
-    jthis.removeClass("text-primary text-muted").addClass(!pressed ? "text-muted" : "text-primary")
-    jthis.find("use")[0].setAttribute("xlink:href", pressed ? "../../../assets/vendor/css/bootstrap-icons.svg#mic-fill" : "../../../assets/vendor/css/bootstrap-icons.svg#mic-mute-fill")
+    jthis.removeClass("mic-on mic-off").addClass(!pressed ? "mic-off" : "mic-on")
 
     if(pressed) {
-      localStream.muteAudio()
-    } else {
       localStream.unmuteAudio()
+    } else {
+      localStream.muteAudio()
+    }
+  })
+
+  // click on remote video camera toggle
+  $('#local-video .cam-toggle').on("click", function onToggleLocalCam(e){
+    if(!localStream) {
+      return alert("local stream not exists")
+    }
+
+    var jthis = $(this)
+    var pressed = jthis.attr("aria-pressed") === "true"
+    jthis.removeClass("camera-on camera-off").addClass(!pressed ? "camera-off" : "camera-on")
+    
+    if(pressed) {
+      localStream.unmuteVideo()
+    } else {
+      localStream.muteVideo()
     }
   })
 })
