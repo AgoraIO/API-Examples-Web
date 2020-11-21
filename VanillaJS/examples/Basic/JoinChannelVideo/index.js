@@ -33,6 +33,8 @@ $(function () {
     codec: "vp8"
   })
   var localStream, localUid
+  // key value map of remote streams
+  var remoteStreams = {}
 
   // prepare camera/mic devices
   client.getCameras(function(cameras) {
@@ -42,7 +44,7 @@ $(function () {
     $("#mic-list").html(microphones.map(function(mic) {return '<option value="' + mic.deviceId + '">' + mic.label + '</option>'}))
   })
 
-  $('#codec-picker').on("change", function onChangeCodec() {
+  function onChangeClientConfig() {
     if(isJoined){
       return alert("change codec is allowed before join channel only")
     }
@@ -54,21 +56,39 @@ $(function () {
       mode: mode,
       codec: codec
     })
-  })
+  }
 
-  $('#mode-picker').on("change", function onChangeCodec() {
-    if(isJoined){
-      return alert("change mode is allowed before join channel only")
+  // listen to video encoder configuration change
+  $('#codec-picker').on("change", onChangeClientConfig)
+  $('#mode-picker').on("change", onChangeClientConfig)
+
+  function onVideoEncoderConfigurationChange() {
+    if(!localStream) {
+      // do not proceed if local stream is not yet available
+      return
     }
 
-    var mode = $('#mode-picker').val()
-    var codec = $('#codec-picker').val()
-    console.log("switch to codec: " + codec + ", mode: " + mode)
-    client = AgoraRTC.createClient({
-      mode: mode,
-      codec: codec
+    var resolution = $("#resolution-picker").val()
+    var fps = $("#fps-picker").val()
+
+    console.log("video encoder configuration update: " + resolution + ", " + fps + "fps")
+
+    //https://docs.agora.io/cn/Voice/API%20Reference/web/interfaces/agorartc.stream.html#agorartc.stream.html#setvideoencoderconfiguration
+    localStream.setVideoEncoderConfiguration({
+      resolution: {
+          width: parseInt(resolution.split("x")[0]),
+          height: parseInt(resolution.split("x")[1])
+      },
+      frameRate: {
+          min: parseInt(fps),
+          max: 30
+      }
     })
-  })
+  }
+
+  // listen to video encoder configuration change
+  $('#resolution-picker').on("change", onVideoEncoderConfigurationChange)
+  $('#fps-picker').on("change", onVideoEncoderConfigurationChange)
 
   // click on join button
   $('#join-btn').on("click", function onJoin(e) {
@@ -89,6 +109,13 @@ $(function () {
       return
     }
 
+    var mode = $('#mode-picker').val()
+    var codec = $('#codec-picker').val()
+    client = AgoraRTC.createClient({
+      mode: mode,
+      codec: codec
+    })
+
     // init client
     client.init(appID, () => {
       console.log('init success')
@@ -102,7 +129,7 @@ $(function () {
         var stream = e.stream
         var uid = stream.getId()
         var html = 
-          '<div id="remote-' + uid + '" class="col-md-4 remote-video-wrapper">' +
+          '<div id="remote-' + uid + '" class="col-md-4 remote-video">' +
             '<div id="remote-video-' + uid + '" class="card mb-4 shadow-sm">' +
               '<div class="bd-placeholder-img card-img-top align-items-center justify-content-center d-flex position-relative"aria-label="Placeholder: Thumbnail">' +
                 '<div id="remote-video-container-' + uid + '" class="video-element position-absolute"></div>' +
@@ -110,7 +137,7 @@ $(function () {
               '</div>' +
               '<div class="card-body">' +
                 '<div class="d-flex justify-content-between align-items-center">' +
-                  '<div class="btn-group">' +
+                  '<div class="btn-group" data-uid="' + uid + '" >' +
                     '<button class="btn btn-lg text-primary cam-toggle camera-on icon" style="background-color:transparent;" data-toggle="button" aria-pressed="false" autocomplete="off">' +
                     '</button>' +
                     '<button class="btn btn-lg text-primary mic-toggle mic-on icon" style="background-color:transparent;" data-toggle="button" aria-pressed="false" autocomplete="off">' +
@@ -123,6 +150,47 @@ $(function () {
           '</div>'
         $('.videos .row').append(html)
 
+        // store remote stream in map
+        remoteStreams[uid] = stream
+
+        // click on remote video camera toggle
+        $('.remote-video .cam-toggle').on("click", function onToggleRemoteVideoMute(e){
+          var jthis = $(this)
+          var uid = jthis.parent().attr("data-uid")
+          var stream = remoteStreams[uid]
+          if(!stream) {
+            return alert("remote stream " + uid + "not exists")
+          }
+
+          var pressed = jthis.attr("aria-pressed") === "true"
+          jthis.removeClass("camera-on camera-off").addClass(!pressed ? "camera-off" : "camera-on")
+          
+          if(pressed) {
+            stream.unmuteVideo()
+          } else {
+            stream.muteVideo()
+          }
+        })
+
+        // click on remote audio mic toggle
+        $('.remote-video .mic-toggle').on("click", function onToggleRemoteAudioMute(e){
+          var jthis = $(this)
+          var uid = jthis.parent().attr("data-uid")
+          var stream = remoteStreams[uid]
+          if(!stream) {
+            return alert("remote stream " + uid + "not exists")
+          }
+
+          var pressed = jthis.attr("aria-pressed") === "true"
+          jthis.removeClass("mic-on mic-off").addClass(!pressed ? "mic-off" : "mic-on")
+          
+          if(pressed) {
+            stream.unmuteAudio()
+          } else {
+            stream.muteAudio()
+          }
+        })
+
         stream.on('player-status-change', (evt) => {
           console.log('remote player ' + uid + ' status change', evt)
         })
@@ -133,11 +201,15 @@ $(function () {
         var stream = e.stream
         var uid = stream.getId()
         $("#remote-" + uid).remove()
+        // clear stream from map
+        delete remoteStreams[uid]
       })
 
       client.on("peer-leave", function onStreamRemoved(e) {
         var uid = e.uid
         $("#remote-" + uid).remove()
+        // clear stream from map
+        delete remoteStreams[uid]
       })
 
       /**
@@ -184,10 +256,19 @@ $(function () {
           console.log('player status change', evt)
         })
 
-        // if (data.cameraResolution && data.cameraResolution != 'default') {
-        //   // set local video resolution
-        //   this._localStream.setVideoProfile(data.cameraResolution)
-        // }
+        var resolution = $("#resolution-picker").val()
+        var fps = $("#fps-picker").val()
+        //https://docs.agora.io/cn/Voice/API%20Reference/web/interfaces/agorartc.stream.html#agorartc.stream.html#setvideoencoderconfiguration
+        localStream.setVideoEncoderConfiguration({
+          resolution: {
+              width: parseInt(resolution.split("x")[0]),
+              height: parseInt(resolution.split("x")[1])
+          },
+          frameRate: {
+              min: parseInt(fps),
+              max: 30
+          }
+        })
 
         // init local stream
         localStream.init(function() {
@@ -225,7 +306,7 @@ $(function () {
       setPublished(false)
       
       // remove all remote doms
-      $(".remote-video-wrapper").remove()
+      $(".remote-video").remove()
 
       localStream = null
       console.log('client leaves channel success')
@@ -315,21 +396,5 @@ $(function () {
       localStream.muteAudio()
     }
   })
-
-  // click on remote video camera toggle
-  $('#local-video .cam-toggle').on("click", function onToggleLocalCam(e){
-    if(!localStream) {
-      return alert("local stream not exists")
-    }
-
-    var jthis = $(this)
-    var pressed = jthis.attr("aria-pressed") === "true"
-    jthis.removeClass("camera-on camera-off").addClass(!pressed ? "camera-off" : "camera-on")
-    
-    if(pressed) {
-      localStream.unmuteVideo()
-    } else {
-      localStream.muteVideo()
-    }
-  })
+  
 })
