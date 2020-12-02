@@ -1,13 +1,13 @@
-import { RTC } from './rtc.js'
-
 $(function() {
   const rtc = new RTC()
   rtc.getDevicesList(getCameras, getMicrophones)
 
+  // prepare camera devices
   function getCameras(cameras) {
     $("#camera-list").html(cameras.map((camera) => { return '<option value="' + camera.deviceId + '">' + camera.label + '</option>' }))
   }
 
+  // prepare mic devices
   function getMicrophones(microphones) {
     $("#mic-list").html(microphones.map((mic) => { return '<option value="' + mic.deviceId + '">' + mic.label + '</option>' }))
   }
@@ -59,12 +59,12 @@ $(function() {
     console.log("video encoder configuration update: " + resolution + ", " + fps + "fps")
     rtc.getLocalStream().setVideoEncoderConfiguration({
       resolution: {
-          width: parseInt(resolution.split("x")[0]),
-          height: parseInt(resolution.split("x")[1])
+        width: parseInt(resolution.split("x")[0]),
+        height: parseInt(resolution.split("x")[1])
       },
       frameRate: {
-          min: parseInt(fps),
-          max: 30
+        min: parseInt(fps),
+        max: 30
       }
     })
   }
@@ -148,15 +148,28 @@ $(function() {
         remoteStream.close()
         console.log('peer-leave', remoteStreamId)
       })
-      .join(appID, channelName, token, uid,
-        (localUid) => {
-          $("#local-video .uid-label").text("Uid: " + localUid)
+      .initClient(appID,
+        console.log.bind(null, "init success"),
+        console.error.bind(null)
+      )
+      .join(channelName, token, uid,
+        () => {
+          console.log("join success")
+          $("#local-video .uid-label").text("Uid: " + rtc.getUid())
         },
-        (stream) => {
-          stream.play('local-video-container', { fit: 'cover' })
-        }
+        console.error.bind(null)  
+      )
+      .createStream({ screen: true })
+      .initStream(
+        () => {
+          console.log("init local stream success")
+          rtc.getLocalStream().play('local-video-container', { fit: 'cover' })
+        },
+        console.error.bind(null)
       )
   })
+
+  // click on publish button
   $("#publish-btn").on("click", (e) => {
     e.preventDefault()
     if (!rtc.getClient()) {
@@ -173,6 +186,7 @@ $(function() {
     )
   })
 
+  // click on unpublish button
   $("#unpublish-btn").on("click", (e) => {
     e.preventDefault()
     if (!rtc.getClient()) {
@@ -189,18 +203,22 @@ $(function() {
     )
   })
 
+  // click on leave button
   $("#leave-btn").on("click", (e) => {
     e.preventDefault()
     if (!rtc.getClient()) {
       alert('Please Join First!')
       return
     }
-    if (!this.getJoined) {
+    if (!rtc.getJoined()) {
       alert("You are not in channel")
       return
     }
     rtc.leave(
-      console.log.bind(null, "client leaves channel success"),
+      () => {
+        $(".remote-video").remove()
+        console.log("client leaves channel success")
+      },
       console.error.bind(null, "channel leave failed")
     )
   })
