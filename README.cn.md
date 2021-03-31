@@ -19,7 +19,7 @@ npm install agora-rtc-sdk-ng --save
 下面是加入会议并自动发布的代码示例
 
 ```js
-import AgoraRTC from "agora-rtc-sdk"
+import AgoraRTC from "agora-rtc-sdk-ng"
 
 const client = AgoraRTC.createClient()
 
