@@ -1,0 +1,26 @@
+.banner {
+  padding: 0;
+  background-color: #52575c;
+  color: white;
+  margin-bottom: 20px;
+}
+
+.banner-text {
+  padding: 8px 20px;
+  margin: 0;
+}
+
+.card.demo-card {
+  margin-bottom: 15px;
+  flex: 0 0 300px;
+}
+
+.demo-card-btn {
+  position: absolute;
+  right: 15px;
+  bottom: 15px;
+}
+
+.card-text {
+  margin-bottom: 50px;
+}

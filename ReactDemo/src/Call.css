@@ -1,0 +1,22 @@
+.call {
+  text-align: center;
+}
+
+.player-container {
+  padding: 20px;
+  text-align: initial;
+}
+
+.button-group {
+  padding: 20px;
+}
+
+
+
+.call-form {
+  padding: 20px;
+}
+
+input, button {
+  margin-right: 10px;
+}
