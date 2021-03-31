@@ -15,7 +15,7 @@ npm install agora-rtc-sdk-ng --save
 Here is the sample code to join the channel and publish local media automatically
 
 ```js
-import AgoraRTC from "agora-rtc-sdk"
+import AgoraRTC from "agora-rtc-sdk-ng"
 
 const client = AgoraRTC.createClient()
 
