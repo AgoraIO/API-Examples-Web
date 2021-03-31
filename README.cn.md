@@ -3,7 +3,7 @@
 *[English](README.md) | 简体中文*
 
 ```shell
-npm install agora-rtc-sdk --save
+npm install agora-rtc-sdk-ng --save
 ```
 
 > 如果您在接入 Agora Web SDK 时遇到问题，或者有任何建议，都可以在本仓库的 Issues 区发帖讨论，我们会尽快处理大家的反馈
