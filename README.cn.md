@@ -42,33 +42,40 @@ Web SDK 4.x 具有以下优势：
 
 1. 使用 SDK 支持的浏览器打开 `Demo/index.html` 并选择一个示例项目。
 2. 在示例项目页面上，输入 App ID、Token 和频道名，然后加入频道。
+    - 关于 App ID 和 Token 的获取方法参考[校验用户权限](https://docs.agora.io/cn/Agora%20Platform/token)。
+    - 你可以自行设定频道名。频道名支持的字符类型参考[join 方法](https://docs.agora.io/cn/Interactive%20Broadcast/API%20Reference/web_ng/interfaces/iagorartcclient.html#join)。
+
 
 ## 示例项目（使用 React）
 
-| 特性    | 示例项目位置 |
-| ---------- | ----------------------- |
-| 视频通话 | `ReactDemo`             |
+| 特性     | 示例项目位置 |
+| -------- | ------------ |
+| 视频通话 | `ReactDemo`  |
 
 ### 如何运行示例项目
 
 #### 前提条件
 
-- 你必须使用 SDK 支持的浏览器运行示例项目。 关于支持的浏览器列表参考 [产品概述](https://docs.agora.io/en/Interactive%20Broadcast/product_live?platform=Web#compatibility)。
+- 你必须使用 SDK 支持的浏览器运行示例项目。关于支持的浏览器列表参考 [产品概述](https://docs.agora.io/en/Interactive%20Broadcast/product_live?platform=Web#compatibility)。
 - [npm](https://www.npmjs.com/)
 
 #### 运行步骤
 
 1. 导航至 `ReactDemo` 并运行下面的命令安装依赖项。
 
-    ```shell
-    npm install
-    ```
+   ```shell
+   npm install
+   ```
 
 2. 运行下面的命令启动示例项目。
 
-    ```shell
-    npm run start
-    ```
+   ```shell
+   npm run start
+   ```
+
+3. 在示例项目页面上，输入 App ID、Token 和频道名，然后加入频道。
+    - 关于 App ID 和 Token 的获取方法参考[校验用户权限](https://docs.agora.io/cn/Agora%20Platform/token)。
+    - 你可以自行设定频道名。频道名支持的字符类型参考 [join 方法](https://docs.agora.io/cn/Interactive%20Broadcast/API%20Reference/web_ng/interfaces/iagorartcclient.html#join)。
 
 ## 参考
 

@@ -41,6 +41,8 @@ You need a supported browser to run the sample projects. See [Product Overview](
 
 1. Use a supported browser to open `Demo/index.html` and select a demo.
 2. In the demo page, enter your App ID, token, and channel name and join the channel.
+    - See [Set up Authentication](https://docs.agora.io/cn/Agora%20Platform/token) to learn how to get an App ID and token.
+    - You can specify your own channel name. See [join](https://docs.agora.io/cn/Interactive%20Broadcast/API%20Reference/web_ng/interfaces/iagorartcclient.html#join) to learn the supported character set.
 
 ## Projects using React.js
 
@@ -68,6 +70,10 @@ You need a supported browser to run the sample projects. See [Product Overview](
     ```shell
     npm run start
     ```
+
+3. In the demo page, enter your App ID, token, and channel name and join the channel.
+    - See [Set up Authentication](https://docs.agora.io/cn/Agora%20Platform/token) to learn how to get an App ID and token.
+    - You can specify your own channel name. See [join](https://docs.agora.io/cn/Interactive%20Broadcast/API%20Reference/web_ng/interfaces/iagorartcclient.html#join) to learn the supported character set.
 
 ## Reference
 
