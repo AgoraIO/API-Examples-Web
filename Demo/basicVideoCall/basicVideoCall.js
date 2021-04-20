@@ -1,7 +1,7 @@
 
 /*
  *  These procedures use Agora Video Call SDK for Web to enable local and remote
- *  users to join and leave a Video Call channel managed by Agora SDK.
+ *  users to join and leave a Video Call channel managed by Agora Platform.
  */
 
 /*
