@@ -13,7 +13,7 @@ var options = {
   token: null
 };
 
-// you can find all the agora preset video profiles here https://docs.agora.io/cn/Voice/API%20Reference/web/interfaces/agorartc.stream.html#setvideoprofile
+// you can find all the agora preset video profiles here https://docs.agora.io/en/Voice/API%20Reference/web_ng/globals.html#videoencoderconfigurationpreset
 var videoProfiles = [
   { label: "480p_1", detail: "640×480, 15fps, 500Kbps", value: "480p_1" },
   { label: "480p_2", detail: "640×480, 30fps, 1000Kbps", value: "480p_2" },
