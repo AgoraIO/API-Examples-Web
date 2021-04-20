@@ -36,7 +36,6 @@ Web SDK 4.x 具有以下优势：
 #### 前提条件
 
 - 你必须使用 SDK 支持的浏览器运行示例项目。 关于支持的浏览器列表参考 [产品概述](https://docs.agora.io/en/Interactive%20Broadcast/product_live?platform=Web#compatibility)。
-- [npm](https://www.npmjs.com/)
 
 #### 运行步骤
 
