@@ -16,7 +16,7 @@ npm install agora-rtc-sdk-ng --save
 - 使用 Promise
 - 基于 Track 的音视频管理
 
-下面是加入会议并自动发布的代码示例
+下面是加入会议并自动发布的代码示例ta
 
 ```js
 import AgoraRTC from "agora-rtc-sdk-ng"
