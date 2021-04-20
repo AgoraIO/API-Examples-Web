@@ -42,7 +42,7 @@ Web SDK 4.x 具有以下优势：
 1. 使用 SDK 支持的浏览器打开 `Demo/index.html` 并选择一个示例项目。
 2. 在示例项目页面上，输入 App ID、Token 和频道名，然后加入频道。
     - 关于 App ID 和 Token 的获取方法参考[校验用户权限](https://docs.agora.io/cn/Agora%20Platform/token)。
-    - 你可以自行设定频道名。频道名支持的字符类型参考[join 方法](https://docs.agora.io/cn/Interactive%20Broadcast/API%20Reference/web_ng/interfaces/iagorartcclient.html#join)。
+    - 你可以自行设定频道名。频道名支持的字符类型参考 [join 方法](https://docs.agora.io/cn/Interactive%20Broadcast/API%20Reference/web_ng/interfaces/iagorartcclient.html#join)。
 
 
 ## 示例项目（使用 React）
