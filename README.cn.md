@@ -35,7 +35,7 @@ Web SDK 4.x 具有以下优势：
 
 #### 前提条件
 
-- 你必须使用 SDK 支持的浏览器运行示例项目。 关于支持的浏览器列表参考 [产品概述](https://docs.agora.io/en/Interactive%20Broadcast/product_live?platform=Web#compatibility)。
+- 你必须使用 SDK 支持的浏览器运行示例项目。 关于支持的浏览器列表参考 [产品概述](https://docs.agora.io/cn/Interactive%20Broadcast/product_live?platform=Web#compatibility)。
 
 #### 运行步骤
 
@@ -55,7 +55,7 @@ Web SDK 4.x 具有以下优势：
 
 #### 前提条件
 
-- 你必须使用 SDK 支持的浏览器运行示例项目。关于支持的浏览器列表参考 [产品概述](https://docs.agora.io/en/Interactive%20Broadcast/product_live?platform=Web#compatibility)。
+- 你必须使用 SDK 支持的浏览器运行示例项目。关于支持的浏览器列表参考 [产品概述](https://docs.agora.io/cn/Interactive%20Broadcast/product_live?platform=Web#compatibility)。
 - [npm](https://www.npmjs.com/)
 
 #### 运行步骤
@@ -78,9 +78,13 @@ Web SDK 4.x 具有以下优势：
 
 ## 参考
 
-- [Web SDK 4.x 产品概述](https://docs.agora.io/en/Interactive%20Broadcast/product_live?platform=Web)
-- [Web SDK 4.x API 参考](https://docs.agora.io/en/Interactive%20Broadcast/API%20Reference/web_ng/index.html)
+- [Web SDK 4.x 产品概述](https://docs.agora.io/cn/Interactive%20Broadcast/product_live?platform=Web)
+- [Web SDK 4.x API 参考](https://docs.agora.io/cn/Interactive%20Broadcast/API%20Reference/web_ng/index.html)
 
 ## 反馈
 
 如果你有任何问题或建议，可以通过 issue 的形式反馈。
+
+## 许可证
+
+示例项目遵守 MIT 许可证。详见 [LICENSE](./LICENSE) 文件。
