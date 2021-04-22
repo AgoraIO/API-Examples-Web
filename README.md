@@ -83,3 +83,7 @@ You need a supported browser to run the sample projects. See [Product Overview](
 ## Feedback
 
 If you have any problems or suggestions regarding the sample projects, feel free to file an issue.
+
+## License
+
+See the [LICENSE](./LICENSE) file for details.
