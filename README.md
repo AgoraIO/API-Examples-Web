@@ -1,4 +1,4 @@
-# Sample project for Agora Web SDK 4.x
+# Sample projects for Agora Web SDK 4.x
 
 _English | [简体中文](README.cn.md)_
 
@@ -86,4 +86,4 @@ If you have any problems or suggestions regarding the sample projects, feel free
 
 ## License
 
-See the [LICENSE](./LICENSE) file for details.
+The sample projects are under the MIT license. See the [LICENSE](./LICENSE) file for details.
