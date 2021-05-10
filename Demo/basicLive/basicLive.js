@@ -20,7 +20,9 @@ $(() => {
   options.appid = urlParams.get("appid");
   options.channel = urlParams.get("channel");
   options.token = urlParams.get("token");
+  options.uid = urlParams.get("uid");
   if (options.appid && options.channel) {
+    $("#uid").val(options.uid);
     $("#appid").val(options.appid);
     $("#token").val(options.token);
     $("#channel").val(options.channel);
@@ -44,6 +46,7 @@ $("#join-form").submit(async function (e) {
     options.appid = $("#appid").val();
     options.token = $("#token").val();
     options.channel = $("#channel").val();
+    options.uid = $("#uid").val();
     await join();
     if (options.role === "host") {
       $("#success-alert a").attr("href", `index.html?appid=${options.appid}&channel=${options.channel}&token=${options.token}`);
@@ -76,7 +79,7 @@ async function join() {
   }
 
   // join the channel
-  options.uid = await client.join(options.appid, options.channel, options.token || null);
+  options.uid = await client.join(options.appid, options.channel, options.token || null, options.uid || null);
 
   if (options.role === "host") {
     // create local audio and video tracks

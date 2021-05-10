@@ -26,7 +26,9 @@ $(() => {
   options.appid = urlParams.get("appid");
   options.channel = urlParams.get("channel");
   options.token = urlParams.get("token");
+  options.uid = urlParams.get("uid");
   if (options.appid && options.channel) {
+    $("#uid").val(options.uid);
     $("#appid").val(options.appid);
     $("#token").val(options.token);
     $("#channel").val(options.channel);
@@ -42,6 +44,7 @@ $("#join-form").submit(async function (e) {
     options.appid = $("#appid").val();
     options.token = $("#token").val();
     options.channel = $("#channel").val();
+    options.uid = $("#uid").val();
     await join();
     if(options.token) {
       $("#success-alert-with-token").css("display", "block");
@@ -85,7 +88,7 @@ async function join() {
   // join a channel and create local tracks, we can use Promise.all to run them concurrently
   [ options.uid, localTracks.audioTrack, localTracks.videoTrack ] = await Promise.all([
     // join the channel
-    client.join(options.appid, options.channel, options.token || null),
+    client.join(options.appid, options.channel, options.token || null, options.uid || null),
     // create local tracks, using microphone and camera
     AgoraRTC.createMicrophoneAudioTrack(),
     AgoraRTC.createCameraVideoTrack()

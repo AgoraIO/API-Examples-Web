@@ -22,7 +22,9 @@ $(() => {
   options.channel = urlParams.get("channel");
   options.token = urlParams.get("token");
   options.liveStreamingUrl = urlParams.get("liveStreamingUrl");
+  options.uid = urlParams.get("uid");
   if (options.appid && options.channel) {
+    $("#uid").val(options.uid);
     $("#appid").val(options.appid);
     $("#token").val(options.token);
     $("#channel").val(options.channel);
@@ -63,6 +65,7 @@ $("#join-form").submit(async function (e) {
     options.appid = $("#appid").val();
     options.token = $("#token").val();
     options.channel = $("#channel").val();
+    options.uid = $("#uid").val();
     options.liveStreamingUrl = $("#live-streaming-url").val();
     await join();
     if (options.role === "host") {
@@ -94,7 +97,7 @@ async function join() {
   client.on("user-unpublished", handleUserUnpublished);
 
   // join the channel
-  options.uid = await client.join(options.appid, options.channel, options.token || null);
+  options.uid = await client.join(options.appid, options.channel, options.token || null, options.uid || null);
 
   if (options.role === "host") {
     // create local audio and video tracks

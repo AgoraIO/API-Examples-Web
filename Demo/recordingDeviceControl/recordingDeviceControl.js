@@ -34,6 +34,7 @@ $(async () => {
   options.appid = urlParams.get("appid");
   options.channel = urlParams.get("channel");
   options.token = urlParams.get("token");
+  options.uid = urlParams.get("uid");
   await mediaDeviceTest();
   volumeAnimation = requestAnimationFrame(setVolumeWave);
 })
@@ -46,6 +47,7 @@ $("#join-form").submit(async function (e) {
     options.appid = $("#appid").val();
     options.token = $("#token").val();
     options.channel = $("#channel").val();
+    options.uid = $("#uid").val();
     await join();
     if(options.token) {
       $("#success-alert-with-token").css("display", "block");
@@ -80,7 +82,7 @@ async function join() {
   client.on("user-unpublished", handleUserUnpublished);
   
   // join a channel.
-  options.uid = await client.join(options.appid, options.channel, options.token || null);
+  options.uid = await client.join(options.appid, options.channel, options.token || null, options.uid || null);
 
   if (!localTracks.audioTrack || !localTracks.videoTrack) {
     [ localTracks.audioTrack, localTracks.videoTrack ] = await Promise.all([
