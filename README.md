@@ -18,18 +18,19 @@ Compared to the Web SDK 3.x, the Web SDK 4.x has the following advantages:
 
 ## Projects using jQuery and Bootstrap
 
-| Feature                       | Sample project location          |
-| ----------------------------- | -------------------------------- |
-| Adjust video profile          | `Demo/adjustVideoProfile`        |
-| Audio mixing and audio effect | `Demo/audioMixingAndAudioEffect` |
-| Live streaming                | `Demo/basicLive`                 |
-| Video call                    | `Demo/basicVideoCall`            |
-| Display call status           | `Demo/displayCallStats`          |
-| Dual stream                   | `Demo/dualStream`                |
-| Push stream to CDN            | `Demo/pushStreamToCDN`           |
-| Control recording devices     | `Demo/recordingDeviceControl`    |
-| Share the screen              | `Demo/shareTheScreen`            |
-| Video beauty effect           | `Demo/videoBeautyEffect`         |
+| Feature                          | Sample project location          |
+| -------------------------------- | -------------------------------- |
+| Adjust video profile             | `Demo/adjustVideoProfile`        |
+| Audio mixing and audio effect    | `Demo/audioMixingAndAudioEffect` |
+| Live streaming                   | `Demo/basicLive`                 |
+| Video call                       | `Demo/basicVideoCall`            |
+| Enable/disable Video/Audio track | `Demo/basicMute`                 |
+| Display call status              | `Demo/displayCallStats`          |
+| Dual stream                      | `Demo/dualStream`                |
+| Push stream to CDN               | `Demo/pushStreamToCDN`           |
+| Control recording devices        | `Demo/recordingDeviceControl`    |
+| Share the screen                 | `Demo/shareTheScreen`            |
+| Video beauty effect              | `Demo/videoBeautyEffect`         |
 
 ### How to run the sample projects
 
@@ -41,8 +42,8 @@ You need a supported browser to run the sample projects. See [Product Overview](
 
 1. Use a supported browser to open `Demo/index.html` and select a demo.
 2. In the demo page, enter your App ID, token, and channel name and join the channel.
-    - See [Set up Authentication](https://docs.agora.io/en/Agora%20Platform/token) to learn how to get an App ID and token.
-    - You can specify your own channel name. See [join](https://docs.agora.io/en/Interactive%20Broadcast/API%20Reference/web_ng/interfaces/iagorartcclient.html#join) to learn the supported character set.
+   - See [Set up Authentication](https://docs.agora.io/en/Agora%20Platform/token) to learn how to get an App ID and token.
+   - You can specify your own channel name. See [join](https://docs.agora.io/en/Interactive%20Broadcast/API%20Reference/web_ng/interfaces/iagorartcclient.html#join) to learn the supported character set.
 
 ## Projects using React.js
 
@@ -61,19 +62,19 @@ You need a supported browser to run the sample projects. See [Product Overview](
 
 1. Navigate to `ReactDemo` and run the following command to install dependencies.
 
-    ```shell
-    npm install
-    ```
+   ```shell
+   npm install
+   ```
 
 2. Use the following command to run the sample project.
 
-    ```shell
-    npm run start
-    ```
+   ```shell
+   npm run start
+   ```
 
 3. In the demo page, enter your App ID, token, and channel name and join the channel.
-    - See [Set up Authentication](https://docs.agora.io/en/Agora%20Platform/token) to learn how to get an App ID and token.
-    - You can specify your own channel name. See [join](https://docs.agora.io/en/Interactive%20Broadcast/API%20Reference/web_ng/interfaces/iagorartcclient.html#join) to learn the supported character set.
+   - See [Set up Authentication](https://docs.agora.io/en/Agora%20Platform/token) to learn how to get an App ID and token.
+   - You can specify your own channel name. See [join](https://docs.agora.io/en/Interactive%20Broadcast/API%20Reference/web_ng/interfaces/iagorartcclient.html#join) to learn the supported character set.
 
 ## Reference
 

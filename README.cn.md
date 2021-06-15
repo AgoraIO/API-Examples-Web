@@ -18,18 +18,19 @@ Web SDK 4.x 具有以下优势：
 
 ## 示例项目（使用 jQuery 和 Bootstrap）
 
-| Feature      | 示例项目位置                     |
-| ------------ | -------------------------------- |
-| 调整视频参数 | `Demo/adjustVideoProfile`        |
-| 混音与音效   | `Demo/audioMixingAndAudioEffect` |
-| 视频直播     | `Demo/basicLive`                 |
-| 视频通话     | `Demo/basicVideoCall`            |
-| 显示呼叫状态 | `Demo/displayCallStats`          |
-| 双流模式     | `Demo/dualStream`                |
-| 推流到 CDN   | `Demo/pushStreamToCDN`           |
-| 控制录制设备 | `Demo/recordingDeviceControl`    |
-| 屏幕共享     | `Demo/shareTheScreen`            |
-| 美颜         | `Demo/videoBeautyEffect`         |
+| Feature             | 示例项目位置                     |
+| ------------------- | -------------------------------- |
+| 调整视频参数        | `Demo/adjustVideoProfile`        |
+| 混音与音效          | `Demo/audioMixingAndAudioEffect` |
+| 视频直播            | `Demo/basicLive`                 |
+| 视频通话            | `Demo/basicVideoCall`            |
+| 启用/禁用音视频轨道 | `Demo/basicMute`                 |
+| 显示呼叫状态        | `Demo/displayCallStats`          |
+| 双流模式            | `Demo/dualStream`                |
+| 推流到 CDN          | `Demo/pushStreamToCDN`           |
+| 控制录制设备        | `Demo/recordingDeviceControl`    |
+| 屏幕共享            | `Demo/shareTheScreen`            |
+| 美颜                | `Demo/videoBeautyEffect`         |
 
 ### 如何运行示例项目
 
@@ -41,9 +42,8 @@ Web SDK 4.x 具有以下优势：
 
 1. 使用 SDK 支持的浏览器打开 `Demo/index.html` 并选择一个示例项目。
 2. 在示例项目页面上，输入 App ID、Token 和频道名，然后加入频道。
-    - 关于 App ID 和 Token 的获取方法参考[校验用户权限](https://docs.agora.io/cn/Agora%20Platform/token)。
-    - 你可以自行设定频道名。频道名支持的字符类型参考 [join 方法](https://docs.agora.io/cn/Interactive%20Broadcast/API%20Reference/web_ng/interfaces/iagorartcclient.html#join)。
-
+   - 关于 App ID 和 Token 的获取方法参考[校验用户权限](https://docs.agora.io/cn/Agora%20Platform/token)。
+   - 你可以自行设定频道名。频道名支持的字符类型参考 [join 方法](https://docs.agora.io/cn/Interactive%20Broadcast/API%20Reference/web_ng/interfaces/iagorartcclient.html#join)。
 
 ## 示例项目（使用 React）
 
@@ -73,8 +73,8 @@ Web SDK 4.x 具有以下优势：
    ```
 
 3. 在示例项目页面上，输入 App ID、Token 和频道名，然后加入频道。
-    - 关于 App ID 和 Token 的获取方法参考[校验用户权限](https://docs.agora.io/cn/Agora%20Platform/token)。
-    - 你可以自行设定频道名。频道名支持的字符类型参考 [join 方法](https://docs.agora.io/cn/Interactive%20Broadcast/API%20Reference/web_ng/interfaces/iagorartcclient.html#join)。
+   - 关于 App ID 和 Token 的获取方法参考[校验用户权限](https://docs.agora.io/cn/Agora%20Platform/token)。
+   - 你可以自行设定频道名。频道名支持的字符类型参考 [join 方法](https://docs.agora.io/cn/Interactive%20Broadcast/API%20Reference/web_ng/interfaces/iagorartcclient.html#join)。
 
 ## 参考
 
