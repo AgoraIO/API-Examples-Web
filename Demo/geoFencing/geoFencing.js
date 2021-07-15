@@ -35,11 +35,27 @@ var options = {
   token: null
 };
 
+var areas = [
+  { label: "GLOBAL", detail: "Global", value: "GLOBAL" },
+  { label: "ASIA", detail: "Asia, excluding Mainland China", value: "ASIA" },
+  { label: "CHINA", detail: "China", value: "CHINA" },
+  { label: "EUROPE", detail: "Europe", value: "EUROPE" },
+  { label: "INDIA", detail: "India", value: "INDIA" },
+  { label: "JAPAN", detail: "Japan", value: "JAPAN" },
+  { label: "NORTH_AMERICA", detail: "North America", value: "NORTH_AMERICA" }
+]
+
+var area;
+
 /*
  * When this page is called with parameters in the URL, this procedure
  * attempts to join a Video Call channel using those parameters.
  */
 $(() => {
+  initAreas();
+  $(".profile-list").delegate("a", "click", function(e){
+    changeArea(this.getAttribute("label"));
+  });
   var urlParams = new URL(location.href).searchParams;
   options.appid = urlParams.get("appid");
   options.channel = urlParams.get("channel");
@@ -189,4 +205,21 @@ function handleUserUnpublished(user) {
   const id = user.uid;
   delete remoteUsers[id];
   $(`#player-wrapper-${id}`).remove();
+}
+
+async function changeArea (label) {
+  area = areas.find(profile => profile.label === label);
+  $(".profile-input").val(`${area.detail}`);
+  // Specify the region for connection as North America
+  AgoraRTC.setArea({
+    areaCode:area.value
+  })
+}
+
+function initAreas () {
+  areas.forEach(profile => {
+    $(".profile-list").append(`<a class="dropdown-item" label="${profile.label}" href="#">${profile.label}: ${profile.detail}</a>`)
+  });
+  area = areas[0];
+  $(".profile-input").val(`${area.detail}`);
 }

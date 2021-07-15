@@ -55,7 +55,7 @@ $("#join-form").submit(async function (e) {
         options.appid = $("#appid").val();
         options.token = $("#token").val();
         options.channel = $("#channel").val();
-        options.uid = $("#uid").val();
+        options.uid = Number($("#uid").val());
         await join();
         if (options.role === "host") {
             $("#success-alert a").attr("href", `index.html?appid=${options.appid}&channel=${options.channel}&token=${options.token}`);
