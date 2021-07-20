@@ -157,7 +157,7 @@ async function join2() {
   client2.on("user-unpublished", handleUserUnpublished);
 
   // Join a channel and create local tracks. Best practice is to use Promise.all and run them concurrently.
-  [ options2.uid, localTracks.audioTrack, localTracks.videoTrack ] = await Promise.all([
+  options2.uid = await Promise.all([
     // Join the channel.
     client2.join(options2.appid, options2.channel, options2.token || null, options2.uid || null),
   ]);
@@ -180,7 +180,7 @@ async function leave() {
   remoteUsers = {};
 
   $("#remote-playerlists").html("");
-  $("#remote-playerlist-2").html("");
+
   // leave the channel
   await client.leave();
   console.log("client 1 leaves channel success");
