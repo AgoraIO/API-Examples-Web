@@ -24,3 +24,14 @@
 .card-text {
   margin-bottom: 50px;
 }
+
+.navFix {
+  background: #FFF;
+  position: fixed;
+  left: 10px;
+  top: 0px;
+  width: 280px;
+  _position: absolute;
+  top: expression((offsetParent.scrollTop)+0);
+  z-index: 2;
+}

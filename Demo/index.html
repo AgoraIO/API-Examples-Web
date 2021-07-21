@@ -16,9 +16,54 @@
       <svg class="octicon octicon-mark-github v-align-middle" height="32" viewBox="0 0 16 16" version="1.1" width="32" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg>
     </a>
   </div>
+  <div class="navbar float-left">
+    <nav class="navbar bg-light">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <div>
+            <span><a class="nav-link" href="#1">Basic Examples</a></span>
+            <ul>
+              <li>Basic Video Calling</li>
+              <li>Basic Live Streaming</li>
+              <li>Group Video Calling</li>
+              <li>Movie Together</li>
+            </ul>
+          </div>
+        </li>
+        <li class="nav-item">
+          <div>
+            <span><a class="nav-link" href="#2">Advanced Examples</a></span>
+            <ul>
+              <li>Test / Switch Media Devices</li>
+              <li>Mute Audio and Stop Video</li>
+              <li>Adjust Video Profile</li>
+              <li>Display In-call Statistics</li>
+              <li>Share the Screen</li>
+              <li>Image Enhancement</li>
+              <li>Audio Effects / Music Files</li>
+              <li>Push Streams to CDN</li>
+              <li>Enable Dual-stream Mode</li>
+              <li>Network Geofencing</li>
+              <li>Join Multiple Channel</li>
+              <li>Custom Video Source</li>
+            </ul>
+          </div>
+        </li>
+        <li class="nav-item">
+          <div>
+            <span><a class="nav-link" href="#3">FAQ & Best Practices</a></span>
+            <ul>
+              <li>Deal with Autoplay</li>
+              <li>String user names</li>
+            </ul>
+          </div>
 
+        </li>
+      </ul>
+    </nav>
+  </div>
   <div class="container">
-    <h1> Basic </h1>
+    <h1 id="1"> Basic </h1>
     <div class="card-deck">
       <div class="card demo-card">
         <div class="card-body">
@@ -45,13 +90,13 @@
         <div class="card-body">
           <h5 class="card-title">Movie Together</h5>
           <p class="card-text">Video Sharing and Real Time Engagement Demo.</p>
-          <a href="https://github.com/AgoraIO-Community/MovieTogether" class="btn btn-primary demo-card-btn">Go Now</a>
+          <a href="https://github.com/AgoraIO-Community/MovieTogether" class="btn btn-primary demo-card-btn">View the code</a>
         </div>
       </div>
     </div>
   </div>
   <div class="container">
-    <h1> Advanced </h1>
+    <h1 id="2"> Advanced </h1>
     <div class="card-deck">
       <div class="card demo-card">
         <div class="card-body">
@@ -127,20 +172,56 @@
         <div class="card-body">
           <h5 class="card-title">Join Multiple Channel</h5>
           <p class="card-text">Join two channels simultaneously and subscribe Streams from them.</p>
-          <a href="./joinMutlipleChannel/index.html" class="btn btn-primary demo-card-btn">Go Now</a>
+          <a href="./joinMutlipleChannel/index.html" class="btn btn-primary demo-card-btn">Try it now</a>
         </div>
       </div>
       <div class="card demo-card">
         <div class="card-body">
           <h5 class="card-title">Custom Video Source</h5>
           <p class="card-text">Usage for custom video track and switch with camera track.</p>
-          <a href="./customVideoSource/index.html" class="btn btn-primary demo-card-btn">Go Now</a>
+          <a href="./customVideoSource/index.html" class="btn btn-primary demo-card-btn">Try it now</a>
         </div>
       </div>
     </div>
 </div>
+  <div class="container">
+    <h1 id="3"> FAQ </h1>
+    <div class="card demo-card" style="width: 960px">
+      <div class="card-body">
+        <h5 class="card-title">Deal with Autoplay Blocking</h5>
+        <p class="card-text">To prevent the webpage from playing sound without permission, most web browsers restrict the autoplay function: Autoplay with sound is blocked unless the user has interacted with the webpage.</p>
+        <a href="https://docs.agora.io/en/Interactive%20Broadcast/autoplay_policy_web?platform=Web" class="btn btn-primary demo-card-btn">Check the Article</a>
+      </div>
+    </div>
+    <div class="card demo-card" style="width: 960px">
+      <div class="card-body">
+        <h5 class="card-title">Use string user names</h5>
+        <p class="card-text">Starting from v2.5, the uid parameter in the Client.join method can be set as either a number or a string. You can join a channel by calling the Client.join method and passing in a string uid.</p>
+        <a href="https://docs.agora.io/en/Interactive%20Broadcast/faq/string" class="btn btn-primary demo-card-btn">Check the Article</a>
+      </div>
+    </div>
+  </div>
 
   <script src="./assets/jquery-3.4.1.min.js"></script>
   <script src="./assets/bootstrap.bundle.min.js"></script>
+  <script>
+    $(document).ready(function(){
+      var headHeight=200;  //这个高度其实有更好的办法的。使用者根据自己的需要可以手工调整。
+      var nav=$(".navbar");
+      if($(window).width() < 1500){
+        nav.hide();
+        return;
+      }
+      $(window).scroll(function(){
+
+        if($(this).scrollTop()>headHeight){
+          nav.addClass("navFix");
+        }
+        else{
+          nav.removeClass("navFix");
+        }
+      })
+    })
+  </script>
 </body>
 </html>
