@@ -76,6 +76,62 @@ $("#leave").click(function (e) {
 })
 
 
+
+
+
+$("#tech_check").click(async function (e) {
+
+    var $myForm = $('#join-form');
+    if (!$myForm[0].checkValidity()) {
+        return;
+    }
+    var appid = $("#appid").val();
+    var channel = "techcheck";
+    var token = $("#token").val();
+    
+    $("#connection_container_inner").html("Starting Connect");
+    await mediaDeviceTest();
+    volumeAnimation = requestAnimationFrame(setVolumeWave);
+     
+    $("#mic_container").removeClass("hidden");
+    $("#cam_container").addClass("hidden");
+    $("#speaker_container").addClass("hidden");
+    $("#connection_container").addClass("hidden");
+    $("#media-device-test").modal("show");
+   
+    // while the model dialog is open to check mic/cam/speaker we will try and join the channel and publish to it
+    var proxy_mode=4; //  proxy mode 4 will fail over to TCP if UDP is blocked and appid is enabled. Change this to 0 if appid is not enabled for proxy4
+    var timeout=15000; // it should never take this long but just in case of a very slow internet connection     
+    var join = await check_join( appid, channel, token, proxy_mode, timeout);
+    if (join==PROTOCOL_FAIL) {
+        $("#connection_container_inner").html(" Join FAIL (proxy mode " + proxy_mode + ") <br/> Please check internet and  <br/> appid is enabled for this proxy mode");
+    }
+});
+
+async function check_join(appid, channel, token, proxy_mode, timeout) {
+    if (proxy_mode > 0) {
+        client.startProxyServer(proxy_mode);
+    }
+   await Promise.all([
+        Promise.race(
+            [client.join(appid, channel, token || null), // if succeeds (calls resolve() internally) it will callback to the then block 
+            new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    reject(); // calls back to the catch block below
+                },timeout);                  
+            })]).then((msg) => { // join success
+                 return check_publish(proxy_mode);
+ 
+            }
+            ).catch((msg) => {
+                return PROTOCOL_FAIL;
+            }
+            )
+    ]);
+    return PROTOCOL_FAIL;
+}
+
+
 async function check_publish(proxy_type) {
 
     var isTCP = false;
@@ -92,72 +148,21 @@ async function check_publish(proxy_type) {
                     })
                 }).then(value => {
                     if (isTCP) {
-                        $("#connection_container_inner").html(" Join success (" + proxy_type + ") protocol = TCP ");
+                        $("#connection_container_inner").html(" Join Success (Proxy " + proxy_type + ") Protocol = TCP ");
                         return PROTOCOL_TCP;
                     } else {
-                        $("#connection_container_inner").html(" Join success (" + proxy_type + ") protocol = UDP ");
+                        $("#connection_container_inner").html(" Join Success (Proxy " + proxy_type + ") Protocol = UDP ");
                         return PROTOCOL_UDP;
                     }
                 });
             }
         }
     }).catch(e => {
-        $("#connection_container_inner").html("Join success (" + proxy_type + ") but publish failed");
-        return "fail";
+        $("#connection_container_inner").html("Join success (Proxy " + proxy_type + ") but publish FAILED");
+        return PROTOCOL_FAIL;
     });
 }
 
-async function check_join(appid, channel, token, proxy_mode, timeout) {
-    if (proxy_mode > 0) {
-        client.startProxyServer(proxy_mode);
-    }
-   await Promise.all([
-        Promise.race(
-            [client.join(appid, channel, token || null), // if succeeds (calls resolve() internally) it will callback to the then block 
-            new Promise((resolve, reject) => {
-                setTimeout(() => {
-                    reject(); // calls back to the catch block below
-                },timeout);                  
-            })]).then((msg) => { // join success
-                 return check_publish("Proxy " + proxy_mode);
- 
-            }
-            ).catch((msg) => {
-                return PROTOCOL_FAIL;
-            }
-            )
-    ]);
-    return PROTOCOL_FAIL;
-}
-
-$("#tech_check").click(async function (e) {
-
-    var $myForm = $('#join-form');
-    if (!$myForm[0].checkValidity()) {
-        return;
-    }
-
-    var appid = $("#appid").val();
-    var channel = "techcheck";
-    var token = $("#token").val();
-    
-    $("#connection_container_inner").html("Starting Connect");
-
-    await mediaDeviceTest();
-    volumeAnimation = requestAnimationFrame(setVolumeWave);
-
-    // try with proxy mode 4 and wait for 10 seconds to fail
-    // if join==PROTOCOL_TCP you could consider another join via Cloud Proxy (proxy mode 3) and switch to that if successful
-    
-    var join = check_join( appid, channel, token, 4, 10000);
-
-    $("#mic_container").removeClass("hidden");
-    $("#cam_container").addClass("hidden");
-    $("#speaker_container").addClass("hidden");
-    $("#connection_container").addClass("hidden");
-
-    $("#media-device-test").modal("show");
-});
 
 $("#mic_complete").click(function (e) {
     $("#mic_container").addClass("hidden");

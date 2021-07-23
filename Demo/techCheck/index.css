@@ -81,7 +81,7 @@ input {
   width: 405px;
   position: absolute;
   top: 378px;
-  right: -1px;
+  right: 15px;
 }
 
 .speaker-play{
@@ -107,5 +107,9 @@ input {
 
 .container{
   margin-top: 10px;
+}
+
+.btn-close{
+  margin-right: 19px;
 }
 
