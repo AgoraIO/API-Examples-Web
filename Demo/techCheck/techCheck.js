@@ -27,8 +27,7 @@ var currentCam; // the camera you are using
 let volumeAnimation;
 
 // the demo can auto join channel with params in url
-$(async () => {
-    //$("#media-device-test").modal("show");
+$(() => {
 
     $(".cam-list").delegate("a", "click", function (e) {
         switchCamera(this.text);
@@ -45,52 +44,24 @@ $(async () => {
     options.channel = urlParams.get("channel");
     options.token = urlParams.get("token");
     options.uid = urlParams.get("uid");
-    
+    if (options.appid && options.channel) {
+      $("#uid").val(options.uid);
+      $("#appid").val(options.appid);
+      $("#token").val(options.token);
+      $("#channel").val(options.channel);
+      $("#join-form").submit();
+    }      
 })
 
 $("#join-form").submit(async function (e) {
     e.preventDefault();
-    $("#join").attr("disabled", true);
-    $("#device-wrapper").css("display", "flex");
-    try {
-        options.appid = $("#appid").val();  
-        options.token = $("#token").val();
-        options.channel = $("#channel").val();
-        options.uid = Number($("#uid").val());
-        await join();
-        if (options.token) {
-            $("#success-alert-with-token").css("display", "block");
-        } else {
-            $("#success-alert a").attr("href", `index.html?appid=${options.appid}&channel=${options.channel}&token=${options.token}&uid=${options.uid}`);
-            $("#success-alert").css("display", "block");
-        }
-    } catch (error) {
-        console.error(error);
-    } finally {
-        $("#leave").attr("disabled", false);
-    }
-})
-
-$("#leave").click(function (e) {
-    leave();
-})
-
-
-
-
-
-$("#tech_check").click(async function (e) {
-
-    var $myForm = $('#join-form');
-    if (!$myForm[0].checkValidity()) {
-        return;
-    }
-    var appid = $("#appid").val();
-    var channel = "techcheck";
-    var token = $("#token").val();
+    options.appid = $("#appid").val();
+    options.token = $("#token").val();
+    options.channel = $("#channel").val();
+    options.uid = Number($("#uid").val());
     
-    $("#connection_container_inner").html("Starting Connect");
-    await mediaDeviceTest();
+    $("#connection_container_inner").html("Starting Connection");
+    await startTechCheck();
     volumeAnimation = requestAnimationFrame(setVolumeWave);
      
     $("#mic_container").removeClass("hidden");
@@ -102,19 +73,23 @@ $("#tech_check").click(async function (e) {
     // while the model dialog is open to check mic/cam/speaker we will try and join the channel and publish to it
     var proxy_mode=4; //  proxy mode 4 will fail over to TCP if UDP is blocked and appid is enabled. Change this to 0 if appid is not enabled for proxy4
     var timeout=15000; // it should never take this long but just in case of a very slow internet connection     
-    var join = await check_join( appid, channel, token, proxy_mode, timeout);
+    var join = await check_join( proxy_mode, timeout);
     if (join==PROTOCOL_FAIL) {
-        $("#connection_container_inner").html(" Join FAIL (proxy mode " + proxy_mode + ") <br/> Please check internet and  <br/> appid is enabled for this proxy mode");
+        $("#connection_container_inner").html(" Join FAIL (proxy mode " + proxy_mode + ") <br/> Please check internet and  <br/>if appid is enabled for this proxy mode");
     }
-});
+})
 
-async function check_join(appid, channel, token, proxy_mode, timeout) {
+$("#leave").click(function (e) {
+    leave();
+})
+
+async function check_join(proxy_mode, timeout) {
     if (proxy_mode > 0) {
         client.startProxyServer(proxy_mode);
     }
    await Promise.all([
         Promise.race(
-            [client.join(appid, channel, token || null), // if succeeds (calls resolve() internally) it will callback to the then block 
+            [client.join(options.appid, options.channel, options.token || null, options.uid || null), // if succeeds (i.e. calls resolve() internally) it will callback to the then block 
             new Promise((resolve, reject) => {
                 setTimeout(() => {
                     reject(); // calls back to the catch block below
@@ -131,9 +106,7 @@ async function check_join(appid, channel, token, proxy_mode, timeout) {
     return PROTOCOL_FAIL;
 }
 
-
 async function check_publish(proxy_type) {
-
     var isTCP = false;
     await client.publish([localTracks.audioTrack, localTracks.videoTrack]).then(response => {
         if (client._highStream && client._highStream.pc) {
@@ -163,7 +136,6 @@ async function check_publish(proxy_type) {
     });
 }
 
-
 $("#mic_complete").click(function (e) {
     $("#mic_container").addClass("hidden");
     $("#cam_container").removeClass("hidden");
@@ -191,16 +163,20 @@ async function join() {
     client.on("user-unpublished", handleUserUnpublished);
     client.on('user-left', handleUserLeft);
 
+
+
     // join a channel.
-    options.uid = await client.join(options.appid, options.channel, options.token || null);
+    options.uid = await client.join(options.appid, options.channel, options.token || null, options.uid || null);
 
     if (!localTracks.audioTrack || !localTracks.videoTrack) {
         [localTracks.audioTrack, localTracks.videoTrack] = await Promise.all([
             // create local tracks, using microphone and camera
-            AgoraRTC.createMicrophoneAudioTrack({ microphoneId: currentMic.deviceId }),
-            AgoraRTC.createCameraVideoTrack({ cameraId: currentCam.deviceId })
+            AgoraRTC.createMicrophoneAudioTrack({ microphoneId: currentMic?.deviceId }),
+            AgoraRTC.createCameraVideoTrack({ cameraId: currentCam?.deviceId })
         ]);
     }
+
+    await populateCamMicLists();
 
     // play local video track
     localTracks.videoTrack.play("local-player");
@@ -211,7 +187,25 @@ async function join() {
     console.log("publish success");
 }
 
-async function mediaDeviceTest() {
+async function populateCamMicLists() {
+        // get mics
+        mics = await AgoraRTC.getMicrophones();
+        currentMic = mics[0];
+        $(".mic-input").val(currentMic.label);
+        mics.forEach(mic => {
+            $(".mic-list").append(`<a class="dropdown-item" href="#">${mic.label}</a>`);
+        });
+    
+        // get cameras
+        cams = await AgoraRTC.getCameras();
+        currentCam = cams[0];
+        $(".cam-input").val(currentCam.label);
+        cams.forEach(cam => {
+            $(".cam-list").append(`<a class="dropdown-item" href="#">${cam.label}</a>`);
+        });
+}
+
+async function startTechCheck() {
     // create local tracks
     [localTracks.audioTrack, localTracks.videoTrack, localTracks.audioSourceTrack] = await Promise.all([
         // create local tracks, using microphone and camera
