@@ -79,12 +79,15 @@ $("#leave").click(function (e) {
 
 async function join() {
     // create Agora client
-    client.setClientRole(options.role, {level: options.audienceLatency});
 
     if (options.role === "audience") {
+        client.setClientRole(options.role, {level: options.audienceLatency});
         // add event listener to play remote tracks when remote user publishs.
         client.on("user-published", handleUserPublished);
         client.on("user-unpublished", handleUserUnpublished);
+    }
+    else{
+        client.setClientRole(options.role);
     }
 
     // join the channel
