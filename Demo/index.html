@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta id="i18n_pagename" content="common">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Agora WebSDK Demos</title>
   <link rel="stylesheet" href="./assets/bootstrap.min.css">
@@ -31,40 +32,40 @@
       <ul class="navbar-nav">
         <li class="nav-item">
           <div>
-            <span><a class="nav-link" href="#1">Basic Examples</a></span>
+            <span><a class="nav-link" href="#1"><label class="i18n" name="basic"></label></a></span>
             <ul>
-              <li>Basic Video Calling</li>
-              <li>Basic Live Streaming</li>
-              <li>Group Video Calling</li>
-              <li>Movie Together</li>
+              <li><label class="i18n" name="basicvideocalling"></label></li>
+              <li><label class="i18n" name="basiclivestreaming"></label></li>
+              <li><label class="i18n" name="groupvideocalling"></label></li>
+              <li><label class="i18n" name="movietogether"></label></li>
             </ul>
           </div>
         </li>
         <li class="nav-item">
           <div>
-            <span><a class="nav-link" href="#2">Advanced Examples</a></span>
+            <span><a class="nav-link" href="#2"><label class="i18n" name="advanced"></label></a></span>
             <ul>
-              <li>Test / Switch Media Devices</li>
-              <li>Mute Audio and Stop Video</li>
-              <li>Adjust Video Profile</li>
-              <li>Display In-call Statistics</li>
-              <li>Share the Screen</li>
-              <li>Image Enhancement</li>
-              <li>Audio Effects / Music Files</li>
-              <li>Push Streams to CDN</li>
-              <li>Enable Dual-stream Mode</li>
-              <li>Network Geofencing</li>
-              <li>Join Multiple Channel</li>
-              <li>Custom Video Source</li>
+              <li><label class="i18n" name="testdevices"></label></li>
+              <li><label class="i18n" name="muteaudiovideo"></label></li>
+              <li><label class="i18n" name="adjustvideoprofile"></label></li>
+              <li><label class="i18n" name="incallstats"></label></li>
+              <li><label class="i18n" name="sharescreen"></label></li>
+              <li><label class="i18n" name="imageenhance"></label></li>
+              <li><label class="i18n" name="audioeffect"></label></li>
+              <li><label class="i18n" name="cdnstreaming"></label></li>
+              <li><label class="i18n" name="dualstream"></label></li>
+              <li><label class="i18n" name="geofencing"></label></li>
+              <li><label class="i18n" name="multiplechannel"></label></li>
+              <li><label class="i18n" name="customvideosource"></label></li>
             </ul>
           </div>
         </li>
         <li class="nav-item">
           <div>
-            <span><a class="nav-link" href="#3">FAQ & Best Practices</a></span>
+            <span><a class="nav-link" href="#3"><label class="i18n" name="faq"></label></a></span>
             <ul>
-              <li>Deal with Autoplay</li>
-              <li>String user names</li>
+              <li><label class="i18n" name="autoplay"></label></li>
+              <li><label class="i18n" name="stringuid"></label></li>
             </ul>
           </div>
 
@@ -73,141 +74,141 @@
     </nav>
   </div>
   <div class="container">
-    <h1 id="1"> Basic </h1>
+    <h1 id="1"><label class="i18n" name="basic"></label></h1>
     <div class="card-deck">
       <div class="card demo-card">
         <div class="card-body">
-          <h5 class="card-title">Basic Video Calling</h5>
-          <p class="card-text">A basic Video Calling app.</p>
-          <a href="./basicVideoCall/index.html" class=" btn btn-primary demo-card-btn">Try it now</a>
+          <h5 class="card-title"><label class="i18n" name="basicvideocalling"></label></h5>
+          <p class="card-text"><label class="i18n" name="basicvideocallingnote"></label></p>
+          <a href="./basicVideoCall/index.html" class=" btn btn-primary demo-card-btn"><label class="i18n" name="tryitnow"></label></a>
         </div>
       </div>
       <div class="card demo-card">
         <div class="card-body">
-          <h5 class="card-title">Basic Interactive Live Streaming</h5>
-          <p class="card-text">A basic Interactive Live Streaming app, showing sample code for both Interactive Live Streaming Premium and Standard.</p>
-          <a href="./basicLive/index.html" class="btn btn-primary demo-card-btn">Try it now</a>
+          <h5 class="card-title"><label class="i18n" name="basiclivestreaming"></label></h5>
+          <p class="card-text"><label class="i18n" name="basiclivestreamingnote"></label></p>
+          <a href="./basicLive/index.html" class="btn btn-primary demo-card-btn"><label class="i18n" name="tryitnow"></label></a>
         </div>
       </div>
       <div class="card demo-card">
         <div class="card-body">
-          <h5 class="card-title">Group Video Calling</h5>
-          <p class="card-text">A group Video Calling app with the features of screen sharing, dual-stream mode, and adaptive layout.</p>
-          <a href="https://github.com/AgoraIO-Community/AgoraMultiCall-vue" class="btn btn-primary demo-card-btn">View the code</a>
+          <h5 class="card-title"><label class="i18n" name="groupvideocalling"></label></h5>
+          <p class="card-text"><label class="i18n" name="groupvideocallingnote"></label></p>
+          <a href="https://github.com/AgoraIO-Community/AgoraMultiCall-vue" class="btn btn-primary demo-card-btn"><label class="i18n" name="viewthecode"></label></a>
         </div>
       </div>
       <div class="card demo-card">
         <div class="card-body">
-          <h5 class="card-title">Movie Together</h5>
-          <p class="card-text">Video Sharing and Real Time Engagement Demo.</p>
-          <a href="https://github.com/AgoraIO-Community/MovieTogether" class="btn btn-primary demo-card-btn">View the code</a>
+          <h5 class="card-title"><label class="i18n" name="movietogether"></label></h5>
+          <p class="card-text"><label class="i18n" name="movietogethernote"></label></p>
+          <a href="https://github.com/AgoraIO-Community/MovieTogether" class="btn btn-primary demo-card-btn"><label class="i18n" name="viewthecode"></label></a>
         </div>
       </div>
     </div>
   </div>
   <div class="container">
-    <h1 id="2"> Advanced </h1>
+    <h1 id="2"><label class="i18n" name="advanced"></label></h1>
     <div class="card-deck">
       <div class="card demo-card">
         <div class="card-body">
-          <h5 class="card-title">Test and Switch Media Devices</h5>
-          <p class="card-text">A Video Calling app with pre-call device test and in-call device switch. Read the <a href="https://docs.agora.io/en/Video/test_switch_device_web_ng?platform=Web">doc</a></p>
-          <a href="./recordingDeviceControl/index.html" class="btn btn-primary demo-card-btn">Try it now</a>
+          <h5 class="card-title"><label class="i18n" name="testdevices"></label></h5>
+          <p class="card-text"><label class="i18n" name="testdevicesnote"></label><a href="https://docs.agora.io/en/Video/test_switch_device_web_ng?platform=Web"><label class="i18n" name="doc"></label></a></p>
+          <a href="./recordingDeviceControl/index.html" class="btn btn-primary demo-card-btn"><label class="i18n" name="tryitnow"></label></a>
         </div>
       </div>
       <div class="card demo-card">
         <div class="card-body">
-          <h5 class="card-title">Mute Audio and Stop Video</h5>
-          <p class="card-text">A Video Calling app with the feature of muting the local audio and stopping the local video. </p>
-          <a href="./basicMute/index.html" class="btn btn-primary demo-card-btn">Try it now</a>
+          <h5 class="card-title"><label class="i18n" name="muteaudiovideo"></label></h5>
+          <p class="card-text"><label class="i18n" name="muteaudiovideonote"></label></p>
+          <a href="./basicMute/index.html" class="btn btn-primary demo-card-btn"><label class="i18n" name="tryitnow"></label></a>
         </div>
       </div>
       <div class="card demo-card">
         <div class="card-body">
-          <h5 class="card-title">Adjust Video Profile</h5>
-          <p class="card-text">A Video Calling app with the feature of changing the local video profile (the resolution, bitrate, and frame rate) during a call. Read the <a href="https://docs.agora.io/en/Video/video_profile_web_ng?platform=Web">doc</a></p>
-          <a href="./adjustVideoProfile/index.html" class="btn btn-primary demo-card-btn">Try it now</a>
+          <h5 class="card-title"><label class="i18n" name="adjustvideoprofile"></label></h5>
+          <p class="card-text"><label class="i18n" name="adjustvideoprofilenote"></label><a href="https://docs.agora.io/en/Video/video_profile_web_ng?platform=Web"><label class="i18n" name="doc"></label></a></p>
+          <a href="./adjustVideoProfile/index.html" class="btn btn-primary demo-card-btn"><label class="i18n" name="tryitnow"></label></a>
         </div>
       </div>
       <div class="card demo-card">
         <div class="card-body">
-          <h5 class="card-title">Display In-call Statistics</h5>
-          <p class="card-text">A Video Calling app with in-call statistics. Read the <a href="https://docs.agora.io/en/Video/in-call_quality_web_ng?platform=Web">doc</a></p>
-          <a href="./displayCallStats/index.html" class="btn btn-primary demo-card-btn">Try it now</a>
+          <h5 class="card-title"><label class="i18n" name="incallstats"></label></h5>
+          <p class="card-text"><label class="i18n" name="incallstatsnote"></label><a href="https://docs.agora.io/en/Video/in-call_quality_web_ng?platform=Web"><label class="i18n" name="doc"></label></a></p>
+          <a href="./displayCallStats/index.html" class="btn btn-primary demo-card-btn"><label class="i18n" name="tryitnow"></label></a>
         </div>
       </div>
       <div class="card demo-card">
         <div class="card-body">
-          <h5 class="card-title">Share the Screen</h5>
-          <p class="card-text">A Video Calling app with the feature of screen sharing. Read the <a href="https://docs.agora.io/en/Video/screensharing_web_ng?platform=Web">doc</a></p>
-          <a href="./shareTheScreen/index.html" class="btn btn-primary demo-card-btn">Try it now</a>
+          <h5 class="card-title"><label class="i18n" name="sharescreen"></label></h5>
+          <p class="card-text"><label class="i18n" name="sharescreennote"></label><a href="https://docs.agora.io/en/Video/screensharing_web_ng?platform=Web"><label class="i18n" name="doc"></label></a></p>
+          <a href="./shareTheScreen/index.html" class="btn btn-primary demo-card-btn"><label class="i18n" name="tryitnow"></label></a>
         </div>
       </div>
       <div class="card demo-card">
         <div class="card-body">
-          <h5 class="card-title">Image Enhancement</h5>
-          <p class="card-text">A Video Calling app with the feature of image enhancement.</p>
-          <a href="./videoBeautyEffect/index.html" class="btn btn-primary demo-card-btn">Try it now</a>
+          <h5 class="card-title"><label class="i18n" name="imageenhance"></label></h5>
+          <p class="card-text"><label class="i18n" name="imageenhancenote"></label></p>
+          <a href="./videoBeautyEffect/index.html" class="btn btn-primary demo-card-btn"><label class="i18n" name="tryitnow"></label></a>
         </div>
       </div>
       <div class="card demo-card">
         <div class="card-body">
-          <h5 class="card-title">Play Audio Effects or Music Files</h5>
-          <p class="card-text">A Video Calling app with the feature of playing background music or audio effects. Read the <a href="https://docs.agora.io/en/Video/audio_effect_mixing_web_ng?platform=Web">doc</a></p>
-          <a href="./audioMixingAndAudioEffect/index.html" class="btn btn-primary demo-card-btn">Try it now</a>
+          <h5 class="card-title"><label class="i18n" name="audioeffect"></label></h5>
+          <p class="card-text"><label class="i18n" name="audioeffectnote"></label><a href="https://docs.agora.io/en/Video/audio_effect_mixing_web_ng?platform=Web"><label class="i18n" name="doc"></label></a></p>
+          <a href="./audioMixingAndAudioEffect/index.html" class="btn btn-primary demo-card-btn"><label class="i18n" name="tryitnow"></label></a>
         </div>
       </div>
       <div class="card demo-card">
         <div class="card-body">
-          <h5 class="card-title">Push Streams to CDN</h5>
-          <p class="card-text">An Interactive Live Streaming app with the feature of pushing streams to CDN (Content Delivery Network). Read the <a href="https://docs.agora.io/en/Interactive%20Broadcast/cdn_streaming_web_ng?platform=Web">doc</a></p>
-          <a href="./pushStreamToCDN/index.html" class="btn btn-primary demo-card-btn">Try it now</a>
+          <h5 class="card-title"><label class="i18n" name="cdnstreaming"></label></h5>
+          <p class="card-text"><label class="i18n" name="cdnstreamingnote"></label><a href="https://docs.agora.io/en/Interactive%20Broadcast/cdn_streaming_web_ng?platform=Web"><label class="i18n" name="doc"></label></a></p>
+          <a href="./pushStreamToCDN/index.html" class="btn btn-primary demo-card-btn"><label class="i18n" name="tryitnow"></label></a>
         </div>
       </div>
       <div class="card demo-card">
         <div class="card-body">
-          <h5 class="card-title">Enable Dual-stream Mode</h5>
-          <p class="card-text">A Video Calling app that enables dual-stream mode. Read the <a href="https://docs.agora.io/en/Agora%20Platform/dual_stream_mode?platform=Web">doc</a></p>
-          <a href="./dualStream/index.html" class="btn btn-primary demo-card-btn">Try it now</a>
+          <h5 class="card-title"><label class="i18n" name="dualstream"></label></h5>
+          <p class="card-text"><label class="i18n" name="dualstreamnote"></label><a href="https://docs.agora.io/en/Agora%20Platform/dual_stream_mode?platform=Web"><label class="i18n" name="doc"></label></a></p>
+          <a href="./dualStream/index.html" class="btn btn-primary demo-card-btn"><label class="i18n" name="tryitnow"></label></a>
         </div>
       </div>
       <div class="card demo-card">
         <div class="card-body">
-          <h5 class="card-title">Network Geofencing</h5>
-          <p class="card-text">A Video Calling app that enables geofencing. After enabling geofencing, the SDK only connects to Agora servers within the specified region. Read the <a href="https://docs.agora.io/en/Interactive%20Broadcast/region_web_ng_rtc?platform=Web">doc</a></p>
-          <a href="./geoFencing/index.html" class="btn btn-primary demo-card-btn">Try it now</a>
+          <h5 class="card-title"><label class="i18n" name="geofencing"></label></h5>
+          <p class="card-text"><label class="i18n" name="geofencingnote"></label><a href="https://docs.agora.io/en/Interactive%20Broadcast/region_web_ng_rtc?platform=Web"><label class="i18n" name="doc"></label></a></p>
+          <a href="./geoFencing/index.html" class="btn btn-primary demo-card-btn"><label class="i18n" name="tryitnow"></label></a>
         </div>
       </div>
       <div class="card demo-card">
         <div class="card-body">
-          <h5 class="card-title">Join Multiple Channel</h5>
-          <p class="card-text">Join two channels simultaneously and subscribe Streams from them.</p>
-          <a href="./joinMutlipleChannel/index.html" class="btn btn-primary demo-card-btn">Try it now</a>
+          <h5 class="card-title"><label class="i18n" name="multiplechannel"></label></h5>
+          <p class="card-text"><label class="i18n" name="multiplechannelnote"></label></p>
+          <a href="./joinMutlipleChannel/index.html" class="btn btn-primary demo-card-btn"><label class="i18n" name="tryitnow"></label></a>
         </div>
       </div>
       <div class="card demo-card">
         <div class="card-body">
-          <h5 class="card-title">Custom Video Source</h5>
-          <p class="card-text">Usage for custom video track and switch with camera track.</p>
-          <a href="./customVideoSource/index.html" class="btn btn-primary demo-card-btn">Try it now</a>
+          <h5 class="card-title"><label class="i18n" name="customvideosource"></label></h5>
+          <p class="card-text"><label class="i18n" name="customvideosourcenote"></label></p>
+          <a href="./customVideoSource/index.html" class="btn btn-primary demo-card-btn"><label class="i18n" name="tryitnow"></label></a>
         </div>
       </div>
     </div>
 </div>
   <div class="container">
-    <h1 id="3"> FAQ </h1>
+    <h1 id="3"><label class="i18n" name="faq"></label></h1>
     <div class="card-deck">
-      <div class="card demo-card" style="width: 960px">
+      <div class="card demo-card">
         <div class="card-body">
-          <h5 class="card-title">Deal with Autoplay Blocking</h5>
-          <p class="card-text">To prevent the webpage from playing sound without permission, most web browsers restrict the autoplay function: Autoplay with sound is blocked unless the user has interacted with the webpage.</p>
+          <h5 class="card-title"><label class="i18n" name="autoplay"></label></h5>
+          <p class="card-text"><label class="i18n" name="autoplaynote"></label></p>
           <a href="https://docs.agora.io/en/Interactive%20Broadcast/autoplay_policy_web?platform=Web" class="btn btn-primary demo-card-btn">Check the Article</a>
         </div>
       </div>
-      <div class="card demo-card" style="width: 960px">
+      <div class="card demo-card">
         <div class="card-body">
-          <h5 class="card-title">Use string user names</h5>
-          <p class="card-text">Starting from v2.5, the uid parameter in the Client.join method can be set as either a number or a string. You can join a channel by calling the Client.join method and passing in a string uid.</p>
+          <h5 class="card-title"><label class="i18n" name="stringuid"></label></h5>
+          <p class="card-text"><label class="i18n" name="stringuidnote"></label></p>
           <a href="https://docs.agora.io/en/Interactive%20Broadcast/faq/string" class="btn btn-primary demo-card-btn">Check the Article</a>
         </div>
       </div>
@@ -215,7 +216,10 @@
   </div>
 
   <script src="./assets/jquery-3.4.1.min.js"></script>
+  <script src="./assets/jquery.cookie.js"></script>
+  <script src="./assets/jquery.i18n.properties-min.js"></script>
   <script src="./assets/bootstrap.bundle.min.js"></script>
+  <script src="./i18n/language.js"></script>
   <script>
     $(document).ready(function(){
       var headHeight=200;
