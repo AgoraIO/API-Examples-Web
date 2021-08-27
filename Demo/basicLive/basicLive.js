@@ -55,7 +55,7 @@ $("#join-form").submit(async function (e) {
         options.appid = $("#appid").val();
         options.token = $("#token").val();
         options.channel = $("#channel").val();
-        options.uid = $("#uid").val();
+        options.uid = Number($("#uid").val());
         await join();
         if (options.role === "host") {
             $("#success-alert a").attr("href", `index.html?appid=${options.appid}&channel=${options.channel}&token=${options.token}`);
@@ -79,12 +79,15 @@ $("#leave").click(function (e) {
 
 async function join() {
     // create Agora client
-    client.setClientRole(options.role, {level: options.audienceLatency});
 
     if (options.role === "audience") {
+        client.setClientRole(options.role, {level: options.audienceLatency});
         // add event listener to play remote tracks when remote user publishs.
         client.on("user-published", handleUserPublished);
         client.on("user-unpublished", handleUserUnpublished);
+    }
+    else{
+        client.setClientRole(options.role);
     }
 
     // join the channel

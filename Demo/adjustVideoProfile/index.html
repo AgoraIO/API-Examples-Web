@@ -50,7 +50,7 @@
           </div>
         <div class="col-sm">
           <p class="join-info-text">User ID(optional)</p>
-          <input id="uid" type="text" placeholder="Enter the user ID">
+          <input id="uid" type="text" onkeyup="this.value=this.value.replace(/[^0-9]/g,'')" onafterpaste="this.value=this.value.replace(/[^0-9]/g,'')" placeholder="Enter the user ID">
         </div>
       </div>
 
