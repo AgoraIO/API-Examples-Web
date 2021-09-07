@@ -7,8 +7,8 @@ var localTracks = {
 };
 
 var localTrackState = {
-  videoTrackEnabled: true,
-  audioTrackEnabled: true
+  videoTrackMuted: false,
+  audioTrackMuted: false
 }
 
 var remoteUsers = {};
@@ -64,7 +64,7 @@ $("#leave").click(function (e) {
 });
 
 $("#mute-audio").click(function (e) {
-  if (localTrackState.audioTrackEnabled) {
+  if (!localTrackState.audioTrackMuted) {
     muteAudio();
   } else {
     unmuteAudio();
@@ -72,7 +72,7 @@ $("#mute-audio").click(function (e) {
 });
 
 $("#mute-video").click(function (e) {
-  if (localTrackState.videoTrackEnabled) {
+  if (!localTrackState.videoTrackMuted) {
     muteVideo();
   } else {
     unmuteVideo();
@@ -182,28 +182,32 @@ function showMuteButton() {
 
 async function muteAudio() {
   if (!localTracks.audioTrack) return;
-  await localTracks.audioTrack.setEnabled(false);
-  localTrackState.audioTrackEnabled = false;
+  /**
+   * After calling setMuted to mute an audio or video track, the SDK stops sending the audio or video stream. Users whose tracks are muted are not counted as users sending streams.
+   * Calling setEnabled to disable a track, the SDK stops audio or video capture
+   */
+  await localTracks.audioTrack.setMuted(true);
+  localTrackState.audioTrackMuted = true;
   $("#mute-audio").text("Unmute Audio");
 }
 
 async function muteVideo() {
   if (!localTracks.videoTrack) return;
-  await localTracks.videoTrack.setEnabled(false);
-  localTrackState.videoTrackEnabled = false;
+  await localTracks.videoTrack.setMuted(true);
+  localTrackState.videoTrackMuted = true;
   $("#mute-video").text("Unmute Video");
 }
 
 async function unmuteAudio() {
   if (!localTracks.audioTrack) return;
-  await localTracks.audioTrack.setEnabled(true);
-  localTrackState.audioTrackEnabled = true;
+  await localTracks.audioTrack.setMuted(false);
+  localTrackState.audioTrackMuted = false;
   $("#mute-audio").text("Mute Audio");
 }
 
 async function unmuteVideo() {
   if (!localTracks.videoTrack) return;
-  await localTracks.videoTrack.setEnabled(true);
-  localTrackState.videoTrackEnabled = true;
+  await localTracks.videoTrack.setMuted(false);
+  localTrackState.videoTrackMuted = false;
   $("#mute-video").text("Mute Video");
 }
