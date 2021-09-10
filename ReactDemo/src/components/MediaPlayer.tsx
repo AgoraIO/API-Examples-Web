@@ -16,7 +16,9 @@ const MediaPlayer = (props: VideoPlayerProps) => {
     };
   }, [container, props.videoTrack]);
   useEffect(() => {
-    props.audioTrack?.play();
+    if(props.audioTrack){
+      props.audioTrack?.play();
+    }
     return () => {
       props.audioTrack?.stop();
     };
