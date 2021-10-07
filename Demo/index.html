@@ -224,8 +224,10 @@
     $(document).ready(function(){
       var headHeight=200;
       var nav=$(".navbar");
+      console.log($(window).width());
       if($(window).width() < 1500){
-        nav.hide();
+        console.log("hide!");
+        nav.parent().hide();
         return;
       }
       $(window).scroll(function(){

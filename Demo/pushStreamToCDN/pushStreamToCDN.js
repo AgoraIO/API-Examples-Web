@@ -142,7 +142,7 @@ async function liveTranscoding(){
     width: 1280,
     height: 720,
     videoBitrate: 400,
-    videoFramerate: 15,
+    videoFrameRate: 15,
     audioSampleRate: 32000,
     audioBitrate: 48,
     audioChannels: 1,
