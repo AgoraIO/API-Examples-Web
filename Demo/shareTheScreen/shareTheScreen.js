@@ -73,6 +73,12 @@ async function join() {
   localTracks.videoTrack.play("local-player");
   $("#local-player-name").text(`localVideo(${options.uid})`);
 
+  //bind "track-ended" event, and when screensharing is stopped, there is an alert to notify the end user.
+  localTracks.videoTrack.on("track-ended", () => {
+    alert(`Screen-share track ended, stop sharing screen ` + localTracks.videoTrack.getTrackId());
+    localTracks.videoTrack && localTracks.videoTrack.close();
+  });
+
   // publish local tracks to channel
   await client.publish(Object.values(localTracks));
   console.log("publish success");
