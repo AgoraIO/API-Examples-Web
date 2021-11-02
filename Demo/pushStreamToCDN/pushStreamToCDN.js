@@ -148,7 +148,7 @@ async function liveTranscoding(){
     audioChannels: 1,
     videoGop: 30,
     videoCodecProfile: 100,
-    userCount: 1,
+    userCount: 2,
     // userConfigExtraInfo: {},
     backgroundColor: 0x0000EE,
     watermark: {
