@@ -32,6 +32,10 @@ export default function useAgora(client: IAgoraRTCClient | undefined)
     if (!client) return;
     const [microphoneTrack, cameraTrack] = await createLocalTracks();
     
+    let salt = base64ToUint8Array("X5w9T+50kzxVOnkJKiY/lUk82/bES2kATOt3vBuGEDw="); //base64ToUint8Array(salt);
+    let secret = hex2ascii("dba643c8ba6b6dc738df43d9fd624293b4b12d87a60f518253bd10ba98c48453");//hex2ascii(secret);
+
+    await client.setEncryptionConfig("aes-256-gcm2", secret, salt);
     await client.join(appid, channel, token || null);
     await client.publish([microphoneTrack, cameraTrack]);
 
@@ -40,6 +44,26 @@ export default function useAgora(client: IAgoraRTCClient | undefined)
 
     setJoinState(true);
   }
+
+  function hex2ascii(hexx:string) {
+    const hex = hexx.toString();//force conversion
+    let str = '';
+    for (let i = 0; i < hex.length; i += 2)
+        str += String.fromCharCode(parseInt(hex.substr(i, 2), 16));
+    return str;
+}
+  
+  // Declare a function to convert Base64 to Uint8Array.
+function base64ToUint8Array(base64Str: string): Uint8Array {
+  const raw = window.atob(base64Str);
+  const result = new Uint8Array(new ArrayBuffer(raw.length));
+
+  for (let i = 0; i < raw.length; i += 1) {
+    result[i] = raw.charCodeAt(i);
+  }
+
+  return result;
+}
 
   async function leave() {
     if (localAudioTrack) {
