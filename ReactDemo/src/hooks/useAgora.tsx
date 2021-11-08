@@ -32,6 +32,7 @@ export default function useAgora(client: IAgoraRTCClient | undefined)
     if (!client) return;
     const [microphoneTrack, cameraTrack] = await createLocalTracks();
     
+    //Note: TODO: We have hardcoded the Salt and Secret here, but we really need to get these from server managed by the App developer.
     let salt = base64ToUint8Array("X5w9T+50kzxVOnkJKiY/lUk82/bES2kATOt3vBuGEDw="); //base64ToUint8Array(salt);
     let secret = hex2ascii("dba643c8ba6b6dc738df43d9fd624293b4b12d87a60f518253bd10ba98c48453");//hex2ascii(secret);
 
