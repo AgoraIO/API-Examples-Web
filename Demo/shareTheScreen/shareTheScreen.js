@@ -1,8 +1,9 @@
 // create Agora client
 var client = AgoraRTC.createClient({ mode: "rtc", codec: "vp8" });
 var localTracks = {
-  videoTrack: null,
-  audioTrack: null
+  screenVideoTrack: null,
+  audioTrack: null,
+  screenAudioTrack: null
 };
 var remoteUsers = {};
 // Agora client options
@@ -61,7 +62,7 @@ async function join() {
   client.on("user-unpublished", handleUserUnpublished);
 
   // join a channel and create local tracks, we can use Promise.all to run them concurrently
-  [ options.uid, localTracks.audioTrack, localTracks.videoTrack ] = await Promise.all([
+  [ options.uid, localTracks.audioTrack, [localTracks.screenVideoTrack, localTracks.screenAudioTrack] ] = await Promise.all([
     // join the channel
     client.join(options.appid, options.channel, options.token || null, options.uid || null),
     // ** create local tracks, using microphone and screen
@@ -72,17 +73,17 @@ async function join() {
         height: 720,
         width: 1280
       }
-    }, "enable")
+    }, "auto")
   ]);
  
   // play local video track
-  localTracks.videoTrack.play("local-player");
+  localTracks.screenVideoTrack.play("local-player");
   $("#local-player-name").text(`localVideo(${options.uid})`);
 
   //bind "track-ended" event, and when screensharing is stopped, there is an alert to notify the end user.
-  localTracks.videoTrack.on("track-ended", () => {
-    alert(`Screen-share track ended, stop sharing screen ` + localTracks.videoTrack.getTrackId());
-    localTracks.videoTrack && localTracks.videoTrack.close();
+  localTracks.screenVideoTrack.on("track-ended", () => {
+    alert(`Screen-share track ended, stop sharing screen ` + localTracks.screenVideoTrack.getTrackId());
+    localTracks.screenVideoTrack && localTracks.screenVideoTrack.close();
   });
 
   // publish local tracks to channel
@@ -139,8 +140,11 @@ function handleUserPublished(user, mediaType) {
   subscribe(user, mediaType);
 }
 
-function handleUserUnpublished(user) {
-  const id = user.uid;
-  delete remoteUsers[id];
-  $(`#player-wrapper-${id}`).remove();
+function handleUserUnpublished(user, mediaType) {
+  if (mediaType === 'video') {
+    const id = user.uid;
+    delete remoteUsers[id];
+    $(`#player-wrapper-${id}`).remove();
+
+  }
 }

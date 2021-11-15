@@ -1,6 +1,6 @@
 
 /*
- *  These procedures use Agora Video Call SDK for Web to enable 1 local and 2 remote
+ *  These procedures use Agora Video Call SDK for Web to enable local and remote
  *  users to join and leave a Video Call channel managed by Agora Platform.
  */
 
@@ -11,7 +11,6 @@
  * @param  {string} codec - The {@link https://docs.agora.io/en/Voice/API%20Reference/web_ng/interfaces/clientconfig.html#codec| client codec} used by the browser.
  */
 var client = AgoraRTC.createClient({ mode: "rtc", codec: "vp8" });
-var client2 = AgoraRTC.createClient({ mode: "rtc", codec: "vp8" });
 
 /*
  * Clear the video and audio tracks used by `client` on initiation.
@@ -36,36 +35,33 @@ var options = {
   token: null
 };
 
-var options2 = {
-  appid: null,
-  channel: null,
-  uid: null,
-  token: null
-};
+var modes = [
+  { label: "Close", detail: "Disable Cloud Proxy", value: "0" },
+  { label: "UDP Mode", detail: "Enable Cloud Proxy via UDP protocol", value: "3" },
+  { label: "TCP Mode", detail: "Enable Cloud Proxy via TCP/TLS port 443", value: "3" },
+]
+
+var mode;
 
 /*
  * When this page is called with parameters in the URL, this procedure
  * attempts to join a Video Call channel using those parameters.
  */
 $(() => {
+  initModes();
+  $(".profile-list").delegate("a", "click", function(e){
+    changeModes(this.getAttribute("label"));
+  });
   var urlParams = new URL(location.href).searchParams;
   options.appid = urlParams.get("appid");
   options.channel = urlParams.get("channel");
   options.token = urlParams.get("token");
-  options.uid = Number(urlParams.get("uid"));
-  options2.appid = urlParams.get("appid");
-  options2.channel = urlParams.get("channel-2");
-  options2.token = urlParams.get("token-2");
-  options2.uid = Number(urlParams.get("uid-2"));
-
-  if ((options.appid && options.channel) && (options2.appid && options2.channel)) {
-    $("#appid").val(options.appid);
+  options.uid = urlParams.get("uid");
+  if (options.appid && options.channel) {
     $("#uid").val(options.uid);
+    $("#appid").val(options.appid);
     $("#token").val(options.token);
     $("#channel").val(options.channel);
-    $("#uid-2").val(options2.uid);
-    $("#token-2").val(options2.token);
-    $("#channel-2").val(options2.channel);
     $("#join-form").submit();
   }
 })
@@ -78,37 +74,18 @@ $(() => {
 $("#join-form").submit(async function (e) {
   e.preventDefault();
   $("#join").attr("disabled", true);
-
   try {
     options.appid = $("#appid").val();
     options.token = $("#token").val();
     options.channel = $("#channel").val();
     options.uid = Number($("#uid").val());
-    options2.appid = $("#appid").val();
-    options2.token = $("#token-2").val();
-    options2.channel = $("#channel-2").val();
-    options2.uid = Number($("#uid-2").val());
-    await Promise.all(join(), join2());
-
-  } catch (error) {
-    console.log(error);
-  }
-
-  try {
-
+    await join();
     if(options.token) {
       $("#success-alert-with-token").css("display", "block");
     } else {
       $("#success-alert a").attr("href", `index.html?appid=${options.appid}&channel=${options.channel}&token=${options.token}`);
       $("#success-alert").css("display", "block");
     }
-    if(options2.token) {
-      $("#success-alert-with-token").css("display", "block");
-    } else {
-      $("#success-alert a").attr("href", `index.html?appid=${options2.appid}&channel=${options2.channel}&token=${options2.token}`);
-      $("#success-alert").css("display", "block");
-    }
-
   } catch (error) {
     console.error(error);
   } finally {
@@ -145,22 +122,9 @@ async function join() {
   localTracks.videoTrack.play("local-player");
   $("#local-player-name").text(`localVideo(${options.uid})`);
 
-  // Publish the local video and audio tracks to the channel(default is published from client 1).
+  // Publish the local video and audio tracks to the channel.
   await client.publish(Object.values(localTracks));
-  console.log("publish 1 success");
-}
-
-async function join2() {
-
-  // Add an event listener to play remote tracks when remote user publishes.
-  client2.on("user-published", handleUserPublished2);
-  client2.on("user-unpublished", handleUserUnpublished);
-
-  // Join a channel and create local tracks. Best practice is to use Promise.all and run them concurrently.
-  options2.uid = await Promise.all([
-    // Join the channel.
-    client2.join(options2.appid, options2.channel, options2.token || null, options2.uid || null),
-  ]);
+  console.log("publish success");
 }
 
 /*
@@ -178,19 +142,17 @@ async function leave() {
 
   // Remove remote users and player views.
   remoteUsers = {};
-
-  $("#remote-playerlists").html("");
+  $("#remote-playerlist").html("");
 
   // leave the channel
   await client.leave();
-  console.log("client 1 leaves channel success");
-  await client2.leave();
-  console.log("client 2 leaves channel success");
 
   $("#local-player-name").text("");
   $("#join").attr("disabled", false);
   $("#leave").attr("disabled", true);
+  console.log("client leaves channel success");
 }
+
 
 /*
  * Add the local use to a remote channel.
@@ -198,10 +160,10 @@ async function leave() {
  * @param  {IAgoraRTCRemoteUser} user - The {@link  https://docs.agora.io/en/Voice/API%20Reference/web_ng/interfaces/iagorartcremoteuser.html| remote user} to add.
  * @param {trackMediaType - The {@link https://docs.agora.io/en/Voice/API%20Reference/web_ng/interfaces/itrack.html#trackmediatype | media type} to add.
  */
-async function subscribe(user, mediaType, clientName) {
+async function subscribe(user, mediaType) {
   const uid = user.uid;
   // subscribe to a remote user
-  await clientName.subscribe(user, mediaType);
+  await client.subscribe(user, mediaType);
   console.log("subscribe success");
   if (mediaType === 'video') {
     const player = $(`
@@ -210,7 +172,7 @@ async function subscribe(user, mediaType, clientName) {
         <div id="player-${uid}" class="player"></div>
       </div>
     `);
-    $("#remote-playerlists").append(player);
+    $("#remote-playerlist").append(player);
     user.videoTrack.play(`player-${uid}`);
   }
   if (mediaType === 'audio') {
@@ -227,13 +189,7 @@ async function subscribe(user, mediaType, clientName) {
 function handleUserPublished(user, mediaType) {
   const id = user.uid;
   remoteUsers[id] = user;
-  subscribe(user, mediaType, client);
-}
-
-function handleUserPublished2(user, mediaType) {
-  const id = user.uid;
-  remoteUsers[id] = user;
-  subscribe(user, mediaType, client2);
+  subscribe(user, mediaType);
 }
 
 /*
@@ -248,4 +204,21 @@ function handleUserUnpublished(user, mediaType) {
     $(`#player-wrapper-${id}`).remove();
 
   }
+}
+
+async function changeModes (label) {
+  mode = modes.find(profile => profile.label === label);
+  $(".profile-input").val(`${mode.detail}`);
+  // Specify the region for connection as North America
+  AgoraRTC.setArea({
+    areaCode:mode.value
+  })
+}
+
+function initModes () {
+  modes.forEach(profile => {
+    $(".profile-list").append(`<a class="dropdown-item" label="${profile.label}" href="#">${profile.label}: ${profile.detail}</a>`)
+  });
+  mode = modes[0];
+  $(".profile-input").val(`${mode.detail}`);
 }

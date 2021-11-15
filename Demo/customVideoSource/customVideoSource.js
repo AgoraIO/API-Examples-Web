@@ -246,8 +246,11 @@ function handleUserPublished(user, mediaType) {
  *
  * @param  {string} user - The {@link  https://docs.agora.io/en/Voice/API%20Reference/web_ng/interfaces/iagorartcremoteuser.html| remote user} to remove.
  */
-function handleUserUnpublished(user) {
-  const id = user.uid;
-  delete remoteUsers[id];
-  $(`#player-wrapper-${id}`).remove();
+function handleUserUnpublished(user, mediaType) {
+  if (mediaType === 'video') {
+    const id = user.uid;
+    delete remoteUsers[id];
+    $(`#player-wrapper-${id}`).remove();
+
+  }
 }

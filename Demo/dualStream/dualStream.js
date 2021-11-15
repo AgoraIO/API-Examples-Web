@@ -195,8 +195,11 @@ function handleUserPublished(user, mediaType) {
   subscribe(user, mediaType);
 }
 
-function handleUserUnpublished(user) {
-  const id = user.uid;
-  delete remoteUsers[id];
-  $(`#player-wrapper-${id}`).remove();
+function handleUserUnpublished(user, mediaType) {
+  if (mediaType === 'video') {
+    const id = user.uid;
+    delete remoteUsers[id];
+    $(`#player-wrapper-${id}`).remove();
+
+  }
 }
