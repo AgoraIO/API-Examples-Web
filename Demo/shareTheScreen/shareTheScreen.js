@@ -61,8 +61,10 @@ async function join() {
   client.on("user-published", handleUserPublished);
   client.on("user-unpublished", handleUserUnpublished);
 
+  let screenTrack;
+
   // join a channel and create local tracks, we can use Promise.all to run them concurrently
-  [ options.uid, localTracks.audioTrack, [localTracks.screenVideoTrack, localTracks.screenAudioTrack] ] = await Promise.all([
+      [options.uid, localTracks.audioTrack, screenTrack] = await Promise.all([
     // join the channel
     client.join(options.appid, options.channel, options.token || null, options.uid || null),
     // ** create local tracks, using microphone and screen
@@ -75,7 +77,14 @@ async function join() {
       }
     }, "auto")
   ]);
- 
+
+  if(screenTrack instanceof Array){
+    localTracks.screenVideoTrack = screenTrack[0]
+    localTracks.screenAudioTrack = screenTrack[1]
+  }
+  else{
+    localTracks.screenVideoTrack = screenTrack
+  }
   // play local video track
   localTracks.screenVideoTrack.play("local-player");
   $("#local-player-name").text(`localVideo(${options.uid})`);
@@ -87,7 +96,12 @@ async function join() {
   });
 
   // publish local tracks to channel
-  await client.publish(Object.values(localTracks));
+  if(localTracks.screenAudioTrack == null){
+    await client.publish([localTracks.screenVideoTrack, localTracks.audioTrack]);
+  }
+  else{
+    await client.publish([localTracks.screenVideoTrack, localTracks.audioTrack, localTracks.screenAudioTrack]);
+  }
   console.log("publish success");
 }
 
