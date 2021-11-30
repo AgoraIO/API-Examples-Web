@@ -183,7 +183,6 @@ async function subscribe(user, mediaType) {
 }
 
 function handleUserPublished(user, mediaType) {
-    console.log("xxxkkkk");
     const id = user.uid;
     remoteUsers[id] = user;
     subscribe(user, mediaType);
