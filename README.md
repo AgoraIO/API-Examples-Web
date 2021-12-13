@@ -18,19 +18,24 @@ Compared to the Web SDK 3.x, the Web SDK 4.x has the following advantages:
 
 ## Projects using jQuery and Bootstrap
 
-| Feature                          | Sample project location          |
-| -------------------------------- | -------------------------------- |
-| Adjust video profile             | `Demo/adjustVideoProfile`        |
-| Audio mixing and audio effect    | `Demo/audioMixingAndAudioEffect` |
-| Live streaming                   | `Demo/basicLive`                 |
-| Video call                       | `Demo/basicVideoCall`            |
-| Enable/disable Video/Audio track | `Demo/basicMute`                 |
-| Display call status              | `Demo/displayCallStats`          |
-| Dual stream                      | `Demo/dualStream`                |
-| Push stream to CDN               | `Demo/pushStreamToCDN`           |
-| Control recording devices        | `Demo/recordingDeviceControl`    |
-| Share the screen                 | `Demo/shareTheScreen`            |
-| Video beauty effect              | `Demo/videoBeautyEffect`         |
+| Feature             | Sample project location                     |
+| ------------------- | -------------------------------- |
+| Adjust video profile        | [/Demo/adjustVideoProfile](/Demo/adjustVideoProfile)        |
+| Audio mixing and audio effect          | [/Demo/audioMixingAndAudioEffect](/Demo/audioMixingAndAudioEffect) |
+| Live streaming            | [/Demo/basicLive](/Demo/basicLive)                 |
+| Enable/disable Video/Audio track | [/Demo/basicMute](/Demo/basicMute)                 |
+| Video call            | [/Demo/basicVideoCall](/Demo/basicVideoCall)            |
+| Cloud proxy            | [/Demo/cloudProxy](/Demo/cloudProxy)            |
+| Custom video source            | [/Demo/customVideoSource](/Demo/customVideoSource)            |
+| Display call status        | [/Demo/displayCallStats](/Demo/displayCallStats)          |
+| Dual stream            | [/Demo/dualStream](/Demo/dualStream)                |
+| Geofencing          | [/Demo/geoFencing](/Demo/geoFencing)           |
+| Join multiple channels          | [/Demo/joinMultipleChannel](/Demo/joinMultipleChannel)           |
+| Push stream to CDN          | [/Demo/pushStreamToCDN](/Demo/pushStreamToCDN)           |
+| Control recording devices        | [/Demo/recordingDeviceControl](/Demo/recordingDeviceControl)    |
+| Custom rendering            | [/Demo/selfRendering](/Demo/selfRendering)            |
+| Share the screen            | [/Demo/shareTheScreen](/Demo/shareTheScreen)            |
+|  Video beauty effect                 | [/Demo/videoBeautyEffect](/Demo/videoBeautyEffect)         |
 
 ### How to run the sample projects
 
@@ -49,7 +54,7 @@ You need a supported browser to run the sample projects. See [Product Overview](
 
 | Feature    | Sample project location |
 | ---------- | ----------------------- |
-| Video call | `ReactDemo`             |
+| Video call | [/ReactDemo](/ReactDemo)             |
 
 ### How to run the sample projects
 
