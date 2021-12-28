@@ -83,9 +83,13 @@ $("#stop-audio-mixing").click(function (e) {
   return false;
 })
 
-$(".progress").click(function (e) {
+$(".audio-bar .progress").click(function (e) {
   setAudioMixingPosition(e.offsetX);
   return false;
+})
+
+$("#volume").click(function (e) {
+  setVolume($("#volume").val())
 })
 
 $("#local-audio-mixing").click(function (e) {
@@ -111,6 +115,11 @@ function setAudioMixingPosition(clickPosX) {
 
   // set the audio mixing playing position
   localTracks.audioMixingTrack.seekAudioBuffer(newPosition * audioMixing.duration);
+}
+
+function setVolume(value) {
+  // set the audio mixing playing position
+  localTracks.audioMixingTrack.setVolume(parseInt(value));
 }
 
 async function startAudioMixing(file) {

@@ -80,6 +80,17 @@
   width: 320px;
 }
 
+.audio-volume-bar {
+  display: inline-block;
+  vertical-align: middle;
+  width: 320px;
+  height: 30px;
+}
+
+.audio-volume-controls {
+  margin: 20px 0;
+}
+
 .audio-time {
   display: inline-block;
   vertical-align: middle;
