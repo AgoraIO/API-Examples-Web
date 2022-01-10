@@ -209,10 +209,6 @@ function handleUserUnpublished(user, mediaType) {
 async function changeModes (label) {
   mode = modes.find(profile => profile.label === label);
   $(".profile-input").val(`${mode.detail}`);
-  // Specify the region for connection as North America
-  AgoraRTC.setArea({
-    areaCode:mode.value
-  })
 }
 
 function initModes () {
