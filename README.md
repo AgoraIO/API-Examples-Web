@@ -34,6 +34,7 @@ Compared to the Web SDK 3.x, the Web SDK 4.x has the following advantages:
 | Push stream to CDN          | [/Demo/pushStreamToCDN](/Demo/pushStreamToCDN)           |
 | Control recording devices        | [/Demo/recordingDeviceControl](/Demo/recordingDeviceControl)    |
 | Custom rendering            | [/Demo/selfRendering](/Demo/selfRendering)            |
+| Custom Capturing            | [/Demo/selfCapturing](/Demo/selfCapturing)            |
 | Share the screen            | [/Demo/shareTheScreen](/Demo/shareTheScreen)            |
 |  Video beauty effect                 | [/Demo/videoBeautyEffect](/Demo/videoBeautyEffect)         |
 

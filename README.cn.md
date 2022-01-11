@@ -34,6 +34,7 @@ Web SDK 4.x 具有以下优势：
 | 推流到 CDN          | [/Demo/pushStreamToCDN](/Demo/pushStreamToCDN)           |
 | 控制录制设备        | [/Demo/recordingDeviceControl](/Demo/recordingDeviceControl)    |
 | 自定义音视频渲染            | [/Demo/selfRendering](/Demo/selfRendering)            |
+| 自定义音视频采集            | [/Demo/selfCapturing](/Demo/selfCapturing)            |
 | 屏幕共享            | [/Demo/shareTheScreen](/Demo/shareTheScreen)            |
 | 美颜                | [/Demo/videoBeautyEffect](/Demo/videoBeautyEffect)         |
 
