@@ -18,19 +18,24 @@ Web SDK 4.x 具有以下优势：
 
 ## 示例项目（使用 jQuery 和 Bootstrap）
 
-| Feature             | 示例项目位置                     |
+| 功能             | 示例项目位置                     |
 | ------------------- | -------------------------------- |
-| 调整视频参数        | `Demo/adjustVideoProfile`        |
-| 混音与音效          | `Demo/audioMixingAndAudioEffect` |
-| 视频直播            | `Demo/basicLive`                 |
-| 视频通话            | `Demo/basicVideoCall`            |
-| 启用/禁用音视频轨道 | `Demo/basicMute`                 |
-| 显示呼叫状态        | `Demo/displayCallStats`          |
-| 双流模式            | `Demo/dualStream`                |
-| 推流到 CDN          | `Demo/pushStreamToCDN`           |
-| 控制录制设备        | `Demo/recordingDeviceControl`    |
-| 屏幕共享            | `Demo/shareTheScreen`            |
-| 美颜                | `Demo/videoBeautyEffect`         |
+| 调整视频参数        | [/Demo/adjustVideoProfile](/Demo/adjustVideoProfile)        |
+| 混音与音效          | [/Demo/audioMixingAndAudioEffect](/Demo/audioMixingAndAudioEffect) |
+| 视频直播            | [/Demo/basicLive](/Demo/basicLive)                 |
+| 启用/禁用音视频轨道 | [/Demo/basicMute](/Demo/basicMute)                 |
+| 视频通话            | [/Demo/basicVideoCall](/Demo/basicVideoCall)            |
+| 云代理            | [/Demo/cloudProxy](/Demo/cloudProxy)            |
+| 自定义视频源            | [/Demo/customVideoSource](/Demo/customVideoSource)            |
+| 显示呼叫状态        | [/Demo/displayCallStats](/Demo/displayCallStats)          |
+| 双流模式            | [/Demo/dualStream](/Demo/dualStream)                |
+| 地理区域限制          | [/Demo/geoFencing](/Demo/geoFencing)           |
+| 加入多频道          | [/Demo/joinMultipleChannel](/Demo/joinMultipleChannel)           |
+| 推流到 CDN          | [/Demo/pushStreamToCDN](/Demo/pushStreamToCDN)           |
+| 控制录制设备        | [/Demo/recordingDeviceControl](/Demo/recordingDeviceControl)    |
+| 自定义音视频渲染            | [/Demo/selfRendering](/Demo/selfRendering)            |
+| 屏幕共享            | [/Demo/shareTheScreen](/Demo/shareTheScreen)            |
+| 美颜                | [/Demo/videoBeautyEffect](/Demo/videoBeautyEffect)         |
 
 ### 如何运行示例项目
 
@@ -49,7 +54,7 @@ Web SDK 4.x 具有以下优势：
 
 | 特性     | 示例项目位置 |
 | -------- | ------------ |
-| 视频通话 | `ReactDemo`  |
+| 视频通话 | [/ReactDemo](/ReactDemo)  |
 
 ### 如何运行示例项目
 
