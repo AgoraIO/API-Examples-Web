@@ -105,18 +105,21 @@ $("#leave").click(function (e) {
  */
 async function join() {
 
-  // Add an event listener to play remote tracks when remote user publishes.
-  client.on("user-published", handleUserPublished);
-  client.on("user-unpublished", handleUserUnpublished);
+    // Add an event listener to play remote tracks when remote user publishes.
+    client.on("user-published", handleUserPublished);
+    client.on("user-unpublished", handleUserUnpublished);
 
-  // Join a channel and create local tracks. Best practice is to use Promise.all and run them concurrently.
-  [ options.uid, localTracks.audioTrack, localTracks.videoTrack ] = await Promise.all([
-    // Join the channel.
-    client.join(options.appid, options.channel, options.token || null, options.uid || null),
-    // Create tracks to the local microphone and camera.
-    AgoraRTC.createMicrophoneAudioTrack(),
-    AgoraRTC.createCameraVideoTrack()
-  ]);
+    // Enable Cloud Proxy according to setting
+    client.startProxyServer(Number(mode.value))
+
+        // Join a channel and create local tracks. Best practice is to use Promise.all and run them concurrently.
+        [options.uid, localTracks.audioTrack, localTracks.videoTrack] = await Promise.all([
+        // Join the channel.
+        client.join(options.appid, options.channel, options.token || null, options.uid || null),
+        // Create tracks to the local microphone and camera.
+        AgoraRTC.createMicrophoneAudioTrack(),
+        AgoraRTC.createCameraVideoTrack()
+    ]);
 
   // Play the local video track to the local browser and update the UI with the user ID.
   localTracks.videoTrack.play("local-player");
