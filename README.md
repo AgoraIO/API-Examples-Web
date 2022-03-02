@@ -49,13 +49,14 @@ You need a supported browser to run the sample projects. See [Product Overview](
 1. Use a supported browser to open `Demo/index.html` and select a demo.
 2. In the demo page, enter your App ID, token, and channel name and join the channel.
    - See [Set up Authentication](https://docs.agora.io/en/Agora%20Platform/token) to learn how to get an App ID and token.
-   - You can specify your own channel name. See [join](https://docs.agora.io/en/Interactive%20Broadcast/API%20Reference/web_ng/interfaces/iagorartcclient.html#join) to learn the supported character set.
+   - You must use the channel ID that is used to generate the token.
 
 ## Projects using React.js
 
 | Feature    | Sample project location |
 | ---------- | ----------------------- |
-| Video call | [/ReactDemo](/ReactDemo)             |
+| Video call | [/ReactDemo](/ReactDemo)  |
+| OpenLive   |  [/OpenLive](/OpenLive) |
 
 ### How to run the sample projects
 
@@ -64,9 +65,9 @@ You need a supported browser to run the sample projects. See [Product Overview](
 - You need a supported browser to run the sample projects. See [Product Overview](https://docs.agora.io/en/Interactive%20Broadcast/product_live?platform=Web#compatibility) for a list of supported browsers.
 - [npm](https://www.npmjs.com/)
 
-#### Steps to run
+#### Steps to run the ReactDemo
 
-1. Navigate to `ReactDemo` and run the following command to install dependencies.
+1. Navigate to [/ReactDemo](/ReactDemo) and run the following command to install dependencies.
 
    ```shell
    npm install
@@ -80,7 +81,34 @@ You need a supported browser to run the sample projects. See [Product Overview](
 
 3. In the demo page, enter your App ID, token, and channel name and join the channel.
    - See [Set up Authentication](https://docs.agora.io/en/Agora%20Platform/token) to learn how to get an App ID and token.
-   - You can specify your own channel name. See [join](https://docs.agora.io/en/Interactive%20Broadcast/API%20Reference/web_ng/interfaces/iagorartcclient.html#join) to learn the supported character set.
+   - You must use the channel ID that is used to generate the token.
+
+#### Steps to run OpenLive
+
+1. Navigate to [/OpenLive](/OpenLive). Rename the **.env.example** file as **.env**. In the **.env** file, replace `<#YOUR APP ID#>` with the App ID, and
+ replace `<#YOUR TOKEN#>` with the token.
+
+   > See [Set up Authentication](https://docs.agora.io/en/Agora%20Platform/token) to learn how to get an App ID and token.
+
+   ```bash
+   REACT_APP_AGORA_APP_ID=<#YOUR APP ID#>
+   REACT_APP_AGORA_APP_TOKEN=<#YOUR TOKEN#>
+   REACT_APP_AGORA_LOG=true
+   ```
+
+2. Run the following command to install dependencies.
+
+   ```shell
+   npm install
+   ```
+
+3. Run the following command to start the project.
+
+   > You must use the channel ID that is used to generate the token.
+
+   ```shell
+   npm run dev
+   ```
 
 ## Reference
 
