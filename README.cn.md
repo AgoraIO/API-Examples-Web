@@ -48,7 +48,7 @@ Web SDK 4.x 具有以下优势：
 
 1. 使用 SDK 支持的浏览器打开 `Demo/index.html` 并选择一个示例项目。
 2. 在示例项目页面上，输入 App ID、Token 和频道名，然后加入频道。
-   - 关于 App ID 和 Token 的获取方法参考[校验用户权限](https://docs.agora.io/cn/Agora%20Platform/token)。
+   - 关于 App ID 和 Token 的获取方法参考 [开始使用 Agora 平台](https://docs.agora.io/en/Agora%20Platform/get_appid_token)。
    - 你必须使用生成 Token 时的频道名加入频道。
 
 ## 示例项目（使用 React）
@@ -80,14 +80,14 @@ Web SDK 4.x 具有以下优势：
    ```
 
 3. 在示例项目页面上，输入 App ID、Token 和频道名，然后加入频道。
-   - 关于 App ID 和 Token 的获取方法参考 [校验用户权限](https://docs.agora.io/cn/Agora%20Platform/token)。
+   - 关于 App ID 和 Token 的获取方法参考 [开始使用 Agora 平台](https://docs.agora.io/en/Agora%20Platform/get_appid_token)。
    - 你必须使用生成 Token 时的频道名加入频道。
 
 #### OpenLive 的运行步骤
 
 1. 导航至 [/OpenLive](/OpenLive)。 将 **.env.example** 重命名为 **.env**。在 **.env** 文件中，使用 App ID 替换 `<#YOUR APP ID#>`，使用 token 替换 `<#YOUR TOKEN#>`.
 
-   > 关于 App ID 和 Token 的获取方法参考 [校验用户权限](https://docs.agora.io/cn/Agora%20Platform/token)。
+   > 关于 App ID 和 Token 的获取方法参考 [开始使用 Agora 平台](https://docs.agora.io/en/Agora%20Platform/get_appid_token)。
 
    ```bash
    REACT_APP_AGORA_APP_ID=<#YOUR APP ID#>
