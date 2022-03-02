@@ -80,7 +80,7 @@ You need a supported browser to run the sample projects. See [Product Overview](
    ```
 
 3. In the demo page, enter your App ID, token, and channel name and join the channel.
-   - See [Get Started with Agora](https://docs.agora.io/en/Agora%20Platform/get_appid_token) to learn how to get an App ID and token.
+   - See [Get Started with Agora](https://docs.agora.io/en/Agora%20Platform/get_appid_token) to learn how to get an App ID and token. You can get a temporary access token to quickly try out this sample project.
    - You must use the channel ID that is used to generate the token.
 
 #### Steps to run OpenLive
@@ -90,7 +90,7 @@ You need a supported browser to run the sample projects. See [Product Overview](
 
    > See [Get Started with Agora](https://docs.agora.io/en/Agora%20Platform/get_appid_token) to learn how to get an App ID and token.
 
-   ```bash
+   ```shell
    REACT_APP_AGORA_APP_ID=<#YOUR APP ID#>
    REACT_APP_AGORA_APP_TOKEN=<#YOUR TOKEN#>
    REACT_APP_AGORA_LOG=true
