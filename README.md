@@ -48,8 +48,8 @@ You need a supported browser to run the sample projects. See [Product Overview](
 
 1. Use a supported browser to open `Demo/index.html` and select a demo.
 2. In the demo page, enter your App ID, token, and channel name and join the channel.
-   - See [Get Started with Agora](https://docs.agora.io/en/Agora%20Platform/get_appid_token) to learn how to get an App ID and token.
-   - You must use the channel ID that is used to generate the token.
+   - See [Get Started with Agora](https://docs.agora.io/en/Agora%20Platform/get_appid_token) to learn how to get an App ID and token. You can get a temporary access token to quickly try out this sample project.
+   - The channel name must be the same as the channel ID used to generate the token.
 
 ## Projects using React.js
 
@@ -81,14 +81,14 @@ You need a supported browser to run the sample projects. See [Product Overview](
 
 3. In the demo page, enter your App ID, token, and channel name and join the channel.
    - See [Get Started with Agora](https://docs.agora.io/en/Agora%20Platform/get_appid_token) to learn how to get an App ID and token. You can get a temporary access token to quickly try out this sample project.
-   - You must use the channel ID that is used to generate the token.
+   - The channel name must be the same as the channel ID used to generate the token.
 
 #### Steps to run OpenLive
 
 1. Navigate to [/OpenLive](/OpenLive). Rename the **.env.example** file as **.env**. In the **.env** file, replace `<#YOUR APP ID#>` with the App ID, and
  replace `<#YOUR TOKEN#>` with the token.
 
-   > See [Get Started with Agora](https://docs.agora.io/en/Agora%20Platform/get_appid_token) to learn how to get an App ID and token.
+   > See [Get Started with Agora](https://docs.agora.io/en/Agora%20Platform/get_appid_token) to learn how to get an App ID and token. You can get a temporary access token to quickly try out this sample project.
 
    ```shell
    REACT_APP_AGORA_APP_ID=<#YOUR APP ID#>
@@ -104,7 +104,7 @@ You need a supported browser to run the sample projects. See [Product Overview](
 
 3. Run the following command to start the project.
 
-   > You must use the channel ID that is used to generate the token.
+   > The channel name must be the same as the channel ID used to generate the token.
 
    ```shell
    npm run dev
