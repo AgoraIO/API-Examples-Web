@@ -1,0 +1,12 @@
+{
+  "name": "agora-extension-virtual-background",
+  "version": "1.0.0-beta",
+  "description": "",
+  "keywords": [],
+  "main": "agora-extension-virtual-background.js",
+  "typings": "index.d.ts",
+  "declaration": true,
+  "declarationMap": true,
+  "author": "agora",
+  "license": ""
+}
