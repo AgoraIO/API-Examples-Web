@@ -1,4 +1,4 @@
-# Sample projects for Agora Web SDK 4.x
+# Sample projects for Agora RTC Web SDK 4.x
 
 _English | [简体中文](README.cn.md)_
 
