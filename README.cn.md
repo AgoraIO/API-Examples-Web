@@ -1,4 +1,4 @@
-# Agora Web SDK 4.x 示例项目
+# Agora RTC Web SDK 4.x 示例项目
 
 _[English](README.md) | 简体中文_
 
@@ -15,6 +15,8 @@ Web SDK 4.x 具有以下优势：
 - 优化频道事件通知机制，统一频道内事件的命名和回调参数的格式，降低断线重连的处理难度。
 - 提供清晰和完善的错误码，方便错误排查。
 - 支持 TypeScript。
+
+> 如果你还不熟悉 Agora RTC Web SDK，建议你先通过我们提供的 [社区版互动教程](https://agorawebsdktutorialmain.gatsbyjs.io/) 快速理解 SDK 的功能并在浏览器中调用 SDK。
 
 ## 示例项目（使用 jQuery 和 Bootstrap）
 
