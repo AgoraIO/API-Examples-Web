@@ -12,6 +12,7 @@
  */
 var client = AgoraRTC.createClient({ mode: "rtc", codec: "vp8" });
 var client2 = AgoraRTC.createClient({ mode: "rtc", codec: "vp8" });
+AgoraRTC.enableLogUpload();
 
 /*
  * Clear the video and audio tracks used by `client` on initiation.

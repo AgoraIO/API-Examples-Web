@@ -1,5 +1,6 @@
 // create Agora client
 var client = AgoraRTC.createClient({ mode: "rtc", codec: "vp8" });
+AgoraRTC.enableLogUpload();
 var localTracks = {
   screenVideoTrack: null,
   audioTrack: null,
@@ -93,6 +94,8 @@ async function join() {
   localTracks.screenVideoTrack.on("track-ended", () => {
     alert(`Screen-share track ended, stop sharing screen ` + localTracks.screenVideoTrack.getTrackId());
     localTracks.screenVideoTrack && localTracks.screenVideoTrack.close();
+    localTracks.screenAudioTrack && localTracks.screenAudioTrack.close();
+    localTracks.audioTrack && localTracks.audioTrack.close();
   });
 
   // publish local tracks to channel

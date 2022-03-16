@@ -1,5 +1,6 @@
 // create Agora client
 var client = AgoraRTC.createClient({ mode: "rtc", codec: "vp8" });
+AgoraRTC.enableLogUpload();
 
 var localTracks = {
   videoTrack: null,
