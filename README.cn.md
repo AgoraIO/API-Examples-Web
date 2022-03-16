@@ -1,4 +1,4 @@
-# Agora Web SDK 4.x 示例项目
+# Agora RTC Web SDK 4.x 示例项目
 
 _[English](README.md) | 简体中文_
 
@@ -15,6 +15,8 @@ Web SDK 4.x 具有以下优势：
 - 优化频道事件通知机制，统一频道内事件的命名和回调参数的格式，降低断线重连的处理难度。
 - 提供清晰和完善的错误码，方便错误排查。
 - 支持 TypeScript。
+
+> 如果你还不熟悉 Agora RTC Web SDK，建议你先通过我们提供的 [社区版互动教程](https://agorawebsdktutorialmain.gatsbyjs.io/) 快速理解 SDK 的功能并在浏览器中调用 SDK。
 
 ## 示例项目（使用 jQuery 和 Bootstrap）
 
@@ -48,14 +50,15 @@ Web SDK 4.x 具有以下优势：
 
 1. 使用 SDK 支持的浏览器打开 `Demo/index.html` 并选择一个示例项目。
 2. 在示例项目页面上，输入 App ID、Token 和频道名，然后加入频道。
-   - 关于 App ID 和 Token 的获取方法参考[校验用户权限](https://docs.agora.io/cn/Agora%20Platform/token)。
-   - 你可以自行设定频道名。频道名支持的字符类型参考 [join 方法](https://docs.agora.io/cn/Interactive%20Broadcast/API%20Reference/web_ng/interfaces/iagorartcclient.html#join)。
+   - 关于 App ID 和 Token 的获取方法参考 [开始使用 Agora 平台](https://docs.agora.io/cn/Agora%20Platform/get_appid_token)。你可以获取一个临时 token，快速运行示例项目。
+   - 生成 Token 使用的频道名必须和加入频道时使用的频道名一致。
 
 ## 示例项目（使用 React）
 
 | 特性     | 示例项目位置 |
 | -------- | ------------ |
 | 视频通话 | [/ReactDemo](/ReactDemo)  |
+| OpenLive   | [/OpenLive](/OpenLive) |
 
 ### 如何运行示例项目
 
@@ -64,7 +67,7 @@ Web SDK 4.x 具有以下优势：
 - 你必须使用 SDK 支持的浏览器运行示例项目。关于支持的浏览器列表参考 [产品概述](https://docs.agora.io/cn/Interactive%20Broadcast/product_live?platform=Web#compatibility)。
 - [npm](https://www.npmjs.com/)
 
-#### 运行步骤
+#### ReactDemo 的运行步骤
 
 1. 导航至 `ReactDemo` 并运行下面的命令安装依赖项。
 
@@ -79,8 +82,34 @@ Web SDK 4.x 具有以下优势：
    ```
 
 3. 在示例项目页面上，输入 App ID、Token 和频道名，然后加入频道。
-   - 关于 App ID 和 Token 的获取方法参考[校验用户权限](https://docs.agora.io/cn/Agora%20Platform/token)。
-   - 你可以自行设定频道名。频道名支持的字符类型参考 [join 方法](https://docs.agora.io/cn/Interactive%20Broadcast/API%20Reference/web_ng/interfaces/iagorartcclient.html#join)。
+   - 关于 App ID 和 Token 的获取方法参考 [开始使用 Agora 平台](https://docs.agora.io/cn/Agora%20Platform/get_appid_token)。你可以获取一个临时 token，快速运行示例项目。
+   - 生成 Token 使用的频道名必须和加入频道时使用的频道名一致。
+
+#### OpenLive 的运行步骤
+
+1. 导航至 [/OpenLive](/OpenLive)。 将 **.env.example** 重命名为 **.env**。在 **.env** 文件中，使用 App ID 替换 `<#YOUR APP ID#>`，使用 token 替换 `<#YOUR TOKEN#>`.
+
+   > 关于 App ID 和 Token 的获取方法参考 [开始使用 Agora 平台](https://docs.agora.io/cn/Agora%20Platform/get_appid_token)。你可以获取一个临时 token，快速运行示例项目。
+
+   ```bash
+   REACT_APP_AGORA_APP_ID=<#YOUR APP ID#>
+   REACT_APP_AGORA_APP_TOKEN=<#YOUR TOKEN#>
+   REACT_APP_AGORA_LOG=true
+   ```
+
+2. 运行下面的命令安装依赖项。
+
+   ```shell
+   npm install
+   ```
+
+3. 运行下面的命令启动示例项目。
+
+   > 生成 Token 使用的频道名必须和加入频道时使用的频道名一致。
+
+   ```shell
+   npm run dev
+   ```
 
 ## 参考
 
