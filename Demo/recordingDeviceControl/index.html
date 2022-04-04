@@ -7,6 +7,7 @@
   <title>Recording Device Control -- Agora</title>
   <link rel="stylesheet" href="../assets/bootstrap.min.css">
   <link rel="stylesheet" href="./index.css">
+  <link rel="stylesheet" href="./jquery.jsonview.min.css">
 </head>
 <body>
   <div class="container-fluid banner">
@@ -57,6 +58,7 @@
       <div class="button-group">
         <button id="join" type="submit" class="btn btn-primary btn-sm">Join</button>
         <button id="leave" type="button" class="btn btn-primary btn-sm" disabled>Leave</button>
+          <button id="startNetworkTest" type="submit" class="btn btn-primary btn-sm">Start Network Test</button>
       </div>
     </form>
 
@@ -120,19 +122,92 @@
               </div>
               <input type="text" class="cam-input form-control" aria-label="Text input with dropdown button" readonly>
             </div>
-            <div id="pre-local-player" class="player"></div>
+              <div id="pre-local-player" class="player"></div>
           </div>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-primary" data-dismiss="modal">Finish</button>
-        </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-primary" data-dismiss="modal">Finish</button>
+          </div>
       </div>
     </div>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="network-test" data-backdrop="static" tabindex="-1" role="dialog"
+       aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title" id="modal-label">Network Test</h5>
+              </div>
+              <div class="modal-body">
+
+
+                  <div class="container">
+                      <h5 id="1">Uplink</h1>
+                          <div class="card-deck">
+                              <div class="card demo-card">
+                                  <div class="card-body">
+                                      <h6 class="card-title">Network Quality
+                      </h5>
+                      <div id="uplink-network-quality"></div>
+                  </div>
+              </div>
+              <div class="card demo-card">
+                  <div class="card-body">
+                      <h6 class="card-title">Local Audio Stats</h5>
+                          <div id="local-audio-stats"></div>
+                  </div>
+              </div>
+
+              <div class="card demo-card">
+                  <div class="card-body">
+                      <h6 class="card-title">Local Video Stats</label></h5>
+                          <div id="local-video-stats"></div>
+                  </div>
+              </div>
+          </div>
+      </div>
+
+
+      <div class="container">
+          <h5 id="2">Downlink</h1>
+              <div class="card-deck">
+                  <div class="card demo-card">
+                      <div class="card-body">
+                          <h6 class="card-title">Network Quality</label>
+          </h5>
+          <div id="downlink-network-quality"></div>
+      </div>
+  </div>
+  <div class="card demo-card">
+      <div class="card-body">
+          <h6 class="card-title">Remote Audio Stats</label></h5>
+              <div id="remote-audio-stats"></div>
+      </div>
+  </div>
+  <div class="card demo-card">
+      <div class="card-body">
+          <h6 class="card-title">Remote Video Stats</label></h5>
+              <div id="remote-video-stats"></div>
+      </div>
+  </div>
+  </div>
+  </div>
+
+
+  </div>
+  <div class="modal-footer">
+      <button id="network-test-finish" type="button" class="btn btn-primary" data-dismiss="modal">Finish</button>
+  </div>
+  </div>
+  </div>
   </div>
 
   <script src="../assets/jquery-3.4.1.min.js"></script>
   <script src="../assets/bootstrap.bundle.min.js"></script>
   <script src="https://download.agora.io/sdk/release/AgoraRTC_N.js"></script>
   <script src="./recordingDeviceControl.js"></script>
+  <script src="./jquery.jsonview.min.js"></script>
 </body>
 </html>

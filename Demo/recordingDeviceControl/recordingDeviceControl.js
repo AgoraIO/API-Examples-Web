@@ -1,5 +1,7 @@
 // create Agora client
-var client = AgoraRTC.createClient({ mode: "rtc", codec: "vp8" });
+var client = AgoraRTC.createClient({mode: "rtc", codec: "vp8"});
+var uplinkClient;
+var downlinkClient;
 AgoraRTC.enableLogUpload();
 var localTracks = {
   videoTrack: null,
@@ -42,26 +44,52 @@ $(async () => {
 
 $("#join-form").submit(async function (e) {
   e.preventDefault();
-  $("#join").attr("disabled", true);
-  $("#device-wrapper").css("display", "flex");
-  try {
+
+  //check the id of submitter to decide to join a channel or do netwwork test
+  let submitterId = e.originalEvent.submitter.attributes[0].value;
+
+  if (submitterId == "join") {
+
+    $("#join").attr("disabled", true);
+    $("#device-wrapper").css("display", "flex");
+    try {
+      options.appid = $("#appid").val();
+      options.token = $("#token").val();
+      options.channel = $("#channel").val();
+      options.uid = Number($("#uid").val());
+      await join();
+      if (options.token) {
+        $("#success-alert-with-token").css("display", "block");
+      } else {
+        $("#success-alert a").attr("href", `index.html?appid=${options.appid}&channel=${options.channel}&token=${options.token}`);
+        $("#success-alert").css("display", "block");
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
+      $("#leave").attr("disabled", false);
+    }
+
+  } else if (submitterId == "startNetworkTest") {
     options.appid = $("#appid").val();
     options.token = $("#token").val();
     options.channel = $("#channel").val();
     options.uid = Number($("#uid").val());
-    await join();
-    if(options.token) {
-      $("#success-alert-with-token").css("display", "block");
-    } else {
-      $("#success-alert a").attr("href", `index.html?appid=${options.appid}&channel=${options.channel}&token=${options.token}`);
-      $("#success-alert").css("display", "block");
-    }
-  } catch (error) {
-    console.error(error);
-  } finally {
-    $("#leave").attr("disabled", false);
+    await goToNetworkTestPage();
+  } else {
   }
+
+
 })
+
+$("#network-test-finish").click(function (e) {
+  if (!uplinkClient || !downlinkClient) {
+    return;
+  }
+  uplinkClient.leave();
+  downlinkClient.leave();
+})
+
 
 $("#leave").click(function (e) {
   leave();
@@ -131,11 +159,61 @@ async function mediaDeviceTest() {
   });
 }
 
+async function goToNetworkTestPage() {
+  $("#network-test").modal("show");
+  await doNetworkTest();
+}
+
+async function doNetworkTest() {
+  uplinkClient = AgoraRTC.createClient({mode: "rtc", codec: "vp8"});
+  downlinkClient = AgoraRTC.createClient({mode: "rtc", codec: "vp8"});
+
+  if (!localTracks.audioTrack || !localTracks.videoTrack) {
+    [localTracks.audioTrack, localTracks.videoTrack] = await Promise.all([
+      // create local tracks, using microphone and camera
+      AgoraRTC.createMicrophoneAudioTrack({microphoneId: currentMic.deviceId}),
+      AgoraRTC.createCameraVideoTrack({cameraId: currentCam.deviceId})
+    ]);
+  }
+
+  // join network test channel.
+  let upClientUid = await uplinkClient.join(options.appid, options.channel, options.token || null, null);
+  await downlinkClient.join(options.appid, options.channel, options.token || null, null);
+// publish local audio and video tracks
+  await uplinkClient.publish(Object.values(localTracks));
+
+  downlinkClient.on("user-published", async (user, mediaType) => {
+    await downlinkClient.subscribe(user, mediaType);
+  })
+
+  //whether to play or not??????
+
+  // 获取上行网络质量
+  uplinkClient.on("network-quality", (quality) => {
+    console.log("uplink network quality", quality.uplinkNetworkQuality);
+    $("#uplink-network-quality").JSONView(JSON.stringify(quality.uplinkNetworkQuality));
+    console.log("uplink audio stats", uplinkClient.getLocalAudioStats());
+    $("#local-audio-stats").JSONView(JSON.stringify(uplinkClient.getLocalAudioStats()));
+    console.log("uplink video stats", uplinkClient.getLocalVideoStats());
+    $("#local-video-stats").JSONView(JSON.stringify(uplinkClient.getLocalVideoStats()));
+  });
+
+  // 获取下行网络质量
+  downlinkClient.on("network-quality", (quality) => {
+    console.log("downlink network quality", quality.downlinkNetworkQuality);
+    $("#downlink-network-quality").JSONView(JSON.stringify(quality.downlinkNetworkQuality));
+    console.log("downlink audio stats", downlinkClient.getRemoteAudioStats()[upClientUid]);
+    $("#remote-audio-stats").JSONView(JSON.stringify(downlinkClient.getRemoteAudioStats()[upClientUid]));
+    console.log("downlink video stats", downlinkClient.getRemoteVideoStats()[upClientUid]);
+    $("#remote-video-stats").JSONView(JSON.stringify(downlinkClient.getRemoteVideoStats()[upClientUid]));
+  });
+}
+
 
 async function leave() {
   for (trackName in localTracks) {
     var track = localTracks[trackName];
-    if(track) {
+    if (track) {
       track.stop();
       track.close();
       localTracks[trackName] = undefined;

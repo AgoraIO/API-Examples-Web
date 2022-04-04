@@ -58,16 +58,21 @@ input {
 }
 
 .progress-bar {
-  transition-duration: .3s;
+    transition-duration: .3s;
 }
 
 #device-wrapper .input-group {
-  flex-basis: 49%;
+    flex-basis: 49%;
+}
+
+.card.demo-card {
+    margin-bottom: 15px;
+    flex: 0 0 350px;
 }
 
 @media (max-width: 640px) {
-  .player {
-    width: 320px;
-    height: 240px;
-  }
+    .player {
+        width: 320px;
+        height: 240px;
+    }
 }

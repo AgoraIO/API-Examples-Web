@@ -116,26 +116,28 @@ async function setSomeUserHQStream(HQStreamUserList = []){
   // get a list of all remote users 
   const allUserList = [...Object.keys(remoteUsers)].map(Number)
   // set default HQStreamUserList
-  if(!HQStreamUserList ||(Array.isArray(HQStreamUserList) && HQStreamUserList.length === 0)){
-    if(allUserList.length){
+  if (!HQStreamUserList || (Array.isArray(HQStreamUserList) && HQStreamUserList.length === 0)) {
+    if (allUserList.length) {
       HQStreamUserList = [allUserList[0]]
     }
   }
   // All other elements are the elements of the LQStreamUserList
-  const LQStreamUserList = allUserList.filter(user=> !HQStreamUserList.includes(user))
+  const LQStreamUserList = allUserList.filter(user => !HQStreamUserList.includes(user))
   const handlePromiseList = []
   // Get a queue
   // The queue settings for all streams
-  LQStreamUserList.forEach(user=> void handlePromiseList.push(
-    async () => {
-      console.log(`set user: ${user} to LQ Stream`);
-      const result = await client.setRemoteVideoStreamType(user, 1)
-      return result
-    }
+  // On desktop browsers, a user can subscribe to up to four high-quality streams and 13 low-quality streams.
+  // On mobile browsers, a user can subscribe to one high-quality stream and four low-quality streams
+  LQStreamUserList.forEach(user => void handlePromiseList.push(
+      async () => {
+        console.log(`set user: ${user} to LQ Stream`);
+        const result = await client.setRemoteVideoStreamType(user, 1)
+        return result
+      }
   ))
-  HQStreamUserList.forEach(user=> void handlePromiseList.push(
-    async ()=> {
-      console.log(`set user: ${user} to HQ Stream`);
+  HQStreamUserList.forEach(user => void handlePromiseList.push(
+      async () => {
+        console.log(`set user: ${user} to HQ Stream`);
       const result = await client.setRemoteVideoStreamType(user, 0)
       return result
     }

@@ -35,6 +35,32 @@ var options = {
   token: null
 };
 
+AgoraRTC.onAutoplayFailed = () => {
+  alert("click to start autoplay!")
+}
+
+AgoraRTC.onMicrophoneChanged = async (changedDevice) => {
+  // When plugging in a device, switch to a device that is newly plugged in.
+  if (changedDevice.state === "ACTIVE") {
+    localTracks.audioTrack.setDevice(changedDevice.device.deviceId);
+    // Switch to an existing device when the current device is unplugged.
+  } else if (changedDevice.device.label === localTracks.audioTrack.getTrackLabel()) {
+    const oldMicrophones = await AgoraRTC.getMicrophones();
+    oldMicrophones[0] && localTracks.audioTrack.setDevice(oldMicrophones[0].deviceId);
+  }
+}
+
+AgoraRTC.onCameraChanged = async (changedDevice) => {
+  // When plugging in a device, switch to a device that is newly plugged in.
+  if (changedDevice.state === "ACTIVE") {
+    localTracks.videoTrack.setDevice(changedDevice.device.deviceId);
+    // Switch to an existing device when the current device is unplugged.
+  } else if (changedDevice.device.label === localTracks.videoTrack.getTrackLabel()) {
+    const oldCameras = await AgoraRTC.getCameras();
+    oldCameras[0] && localTracks.videoTrack.setDevice(oldCameras[0].deviceId);
+  }
+}
+
 /*
  * When this page is called with parameters in the URL, this procedure
  * attempts to join a Video Call channel using those parameters.
@@ -107,7 +133,7 @@ async function join() {
   ]);
 
   // Play the local video track to the local browser and update the UI with the user ID.
-  localTracks.videoTrack.play("local-player");
+  // localTracks.videoTrack.play("local-player");
   $("#local-player-name").text(`localVideo(${options.uid})`);
 
   // Publish the local video and audio tracks to the channel.
@@ -161,7 +187,7 @@ async function subscribe(user, mediaType) {
       </div>
     `);
     $("#remote-playerlist").append(player);
-    user.videoTrack.play(`player-${uid}`);
+    // user.videoTrack.play(`player-${uid}`);
   }
   if (mediaType === 'audio') {
     user.audioTrack.play();
