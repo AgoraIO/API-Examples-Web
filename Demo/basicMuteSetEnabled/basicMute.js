@@ -186,28 +186,28 @@ async function muteAudio() {
    * After calling setEnabled to mute an audio or video track, the SDK stops sending the audio or video stream. Users whose tracks are muted are not counted as users sending streams.
    * Calling setEnabled to disable a track, the SDK stops audio or video capture
    */
-  await localTracks.audioTrack.setEnabled(true);
+  await localTracks.audioTrack.setEnabled(false);
   localTrackState.audioTrackMuted = true;
   $("#mute-audio").text("Unmute Audio");
 }
 
 async function muteVideo() {
   if (!localTracks.videoTrack) return;
-  await localTracks.videoTrack.setEnabled(true);
+  await localTracks.videoTrack.setEnabled(false);
   localTrackState.videoTrackMuted = true;
   $("#mute-video").text("Unmute Video");
 }
 
 async function unmuteAudio() {
   if (!localTracks.audioTrack) return;
-  await localTracks.audioTrack.setEnabled(false);
+  await localTracks.audioTrack.setEnabled(true);
   localTrackState.audioTrackMuted = false;
   $("#mute-audio").text("Mute Audio");
 }
 
 async function unmuteVideo() {
   if (!localTracks.videoTrack) return;
-  await localTracks.videoTrack.setEnabled(false);
+  await localTracks.videoTrack.setEnabled(true);
   localTrackState.videoTrackMuted = false;
   $("#mute-video").text("Mute Video");
 }
