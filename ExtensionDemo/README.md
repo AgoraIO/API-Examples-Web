@@ -13,3 +13,8 @@ npm install
 npm run build
 ```
 
+## Run the demo
+```shell
+npm run demo
+```
+
