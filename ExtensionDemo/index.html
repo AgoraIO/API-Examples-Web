@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    .video-container{
+        width:640px;
+        height:480px;
+    }
+  </style>
+  <script src="./dist/index.js"></script>
+  <script src="https://download.agora.io/sdk/release/AgoraRTC_N-4.11.0.js"></script>
+</head>
+<body>
+<div class="video-container">
+</div>
+
+<script>
+  async function main(){
+    //create extension
+    const videoExtension = new SimpleExtension.SimpleVideoExtension();
+
+    //register extension
+    AgoraRTC.registerExtensions([videoExtension]);
+
+    //create processor
+    const processor = videoExtension.createProcessor();
+
+    //create CameraVideoTrack
+    const videoTrack = await AgoraRTC.createCameraVideoTrack();
+
+    //piping processor
+    videoTrack.pipe(processor).pipe(videoTrack.processorDestination);
+
+    videoTrack.play(document.querySelector('.video-container'));
+  }
+
+  main();
+
+</script>
+
+</body>
+</html>
