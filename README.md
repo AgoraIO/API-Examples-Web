@@ -6,6 +6,12 @@ _English | [简体中文](README.cn.md)_
 
 This repository contains sample projects using the Agora RTC Web SDK 4.x.
 
+<hr>
+
+**If you are still not familiar with Agora RTC Web SDK 4.x, please follow [our community interactive tutorial (Currently only available in Chinese)](https://agorawebsdktutorialmain.gatsbyjs.io/) to quickly understand the SDK and use CodePen iframes to call the SDK in your browser.**
+
+<hr>
+
 The Web SDK 4.x refactors the Web SDK 3.x. Based on the features of 3.x, 4.x fully optimizes the internal architecture of the SDK and provides more flexible and easy-to-use APIs.
 
 Compared to the Web SDK 3.x, the Web SDK 4.x has the following advantages:
