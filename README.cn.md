@@ -6,6 +6,12 @@ _[English](README.md) | 简体中文_
 
 此仓库包含基于 Agora RTC Web SDK 4.x 的示例项目。
 
+<hr>
+
+**如果你还不熟悉 Agora RTC Web SDK 4.x，建议你先通过我们提供的 [社区版互动教程](https://agorawebsdktutorialmain.gatsbyjs.io/) 快速理解 SDK 的功能并通过 CodePen 控件在浏览器中直接调用 SDK。**
+
+<hr>
+
 Web SDK 4.x 是基于 Web SDK 3.x 开发的全量重构版本，在继承了 Web SDK 3.x 功能的基础上，优化了 SDK 的内部架构，提高了 API 的易用性。
 
 Web SDK 4.x 具有以下优势：
@@ -15,8 +21,6 @@ Web SDK 4.x 具有以下优势：
 - 优化频道事件通知机制，统一频道内事件的命名和回调参数的格式，降低断线重连的处理难度。
 - 提供清晰和完善的错误码，方便错误排查。
 - 支持 TypeScript。
-
-> 如果你还不熟悉 Agora RTC Web SDK，建议你先通过我们提供的 [社区版互动教程](https://agorawebsdktutorialmain.gatsbyjs.io/) 快速理解 SDK 的功能并在浏览器中调用 SDK。
 
 ## 示例项目（使用 jQuery 和 Bootstrap）
 
