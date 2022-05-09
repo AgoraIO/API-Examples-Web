@@ -119,6 +119,7 @@ Web SDK 4.x 具有以下优势：
 
 - [Web SDK 4.x 产品概述](https://docs.agora.io/cn/Interactive%20Broadcast/product_live?platform=Web)
 - [Web SDK 4.x API 参考](https://docs.agora.io/cn/Interactive%20Broadcast/API%20Reference/web_ng/index.html)
+- [基于本仓库部署的在线 demo](https://webdemo.agora.io/)
 
 ## 反馈
 
