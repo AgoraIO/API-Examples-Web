@@ -8,7 +8,7 @@ This repository contains sample projects using the Agora RTC Web SDK 4.x.
 
 <hr>
 
-**If you are still not familiar with Agora RTC Web SDK 4.x, please follow [our community interactive tutorial (Currently only partly translated to English)](https://agorawebsdktutorialenusmain.gtsb.io/) to quickly understand the SDK and use CodePen iframes to call the SDK in your browser.**
+**If you are still not familiar with Agora RTC Web SDK 4.x, please follow [our community interactive tutorial](https://agorawebsdktutorialenusmain.gtsb.io/) to quickly understand the SDK and use CodePen iframes to call the SDK in your browser.**
 
 <hr>
 
