@@ -152,12 +152,20 @@ async function subscribe(user, mediaType) {
 }
 
 function handleUserPublished(user, mediaType) {
+
+  //print in the console log for debugging 
+  console.log('"user-published" event for remote users is triggered.');
+
   const id = user.uid;
   remoteUsers[id] = user;
   subscribe(user, mediaType);
 }
 
 function handleUserUnpublished(user, mediaType) {
+
+  //print in the console log for debugging 
+  console.log('"user-unpublished" event for remote users is triggered.');
+
   if (mediaType === 'video') {
     const id = user.uid;
     delete remoteUsers[id];
