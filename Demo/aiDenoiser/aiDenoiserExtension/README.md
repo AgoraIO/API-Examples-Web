@@ -20,6 +20,12 @@ denoiser.onloaderror = (e) => {
 ```javascript
 const processor = denoiser.createProcessor();
 
+// If you want to enable the processor by default.
+processor.enable();
+
+// If you want to disable the processor by default.
+// processor.disable();
+
 // Optional, listen the processor`s overlaod callback to catch overload message
 processor.onoverload = async () => {
   console.log("overload!!!");

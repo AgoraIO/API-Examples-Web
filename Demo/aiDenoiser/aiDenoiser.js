@@ -83,7 +83,7 @@ async function join() {
   localTracks.videoTrack.play("local-player");
   $("#local-player-name").text(`localVideo(${options.uid})`);
 
-  localTracks.audioTrack.play();
+  // localTracks.audioTrack.play();
   await client.publish(Object.values(localTracks));
   console.log("publish success");
 }
@@ -134,7 +134,7 @@ async function subscribe(user, mediaType) {
     user.videoTrack.play(`player-${uid}`);
   }
   if (mediaType === 'audio') {
-    // user.audioTrack.play();
+    user.audioTrack.play();
   }
 }
 
