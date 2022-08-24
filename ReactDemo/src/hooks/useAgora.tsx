@@ -2,6 +2,9 @@ import { useState, useEffect } from 'react';
 import AgoraRTC, {
   IAgoraRTCClient, IAgoraRTCRemoteUser, MicrophoneAudioTrackInitConfig, CameraVideoTrackInitConfig, IMicrophoneAudioTrack, ICameraVideoTrack, ILocalVideoTrack, ILocalAudioTrack } from 'agora-rtc-sdk-ng';
 
+import AIDenoiserEnabler from "./AIDenoiserEnabler";
+
+
 export default function useAgora(client: IAgoraRTCClient | undefined)
   :
    {
@@ -20,6 +23,8 @@ export default function useAgora(client: IAgoraRTCClient | undefined)
 
   const [remoteUsers, setRemoteUsers] = useState<IAgoraRTCRemoteUser[]>([]);
 
+
+
   async function createLocalTracks(audioConfig?: MicrophoneAudioTrackInitConfig, videoConfig?: CameraVideoTrackInitConfig)
   : Promise<[IMicrophoneAudioTrack, ICameraVideoTrack]> {
     const [microphoneTrack, cameraTrack] = await AgoraRTC.createMicrophoneAndCameraTracks(audioConfig, videoConfig);
@@ -33,6 +38,11 @@ export default function useAgora(client: IAgoraRTCClient | undefined)
     const [microphoneTrack, cameraTrack] = await createLocalTracks();
     
     await client.join(appid, channel, token || null);
+
+    const enableDenoiser4AudioTrack = AIDenoiserEnabler();
+    await enableDenoiser4AudioTrack.enabler(microphoneTrack);
+
+
     await client.publish([microphoneTrack, cameraTrack]);
 
     (window as any).client = client;
@@ -54,6 +64,11 @@ export default function useAgora(client: IAgoraRTCClient | undefined)
     setJoinState(false);
     await client?.leave();
   }
+
+
+
+
+
 
   useEffect(() => {
     if (!client) return;
