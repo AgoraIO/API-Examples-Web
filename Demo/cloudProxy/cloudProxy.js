@@ -38,7 +38,7 @@ var options = {
 var modes = [
   { label: "Close", detail: "Disable Cloud Proxy", value: "0" },
   { label: "UDP Mode", detail: "Enable Cloud Proxy via UDP protocol", value: "3" },
-  { label: "TCP Mode", detail: "Enable Cloud Proxy via TCP/TLS port 443", value: "3" },
+  { label: "TCP Mode", detail: "Enable Cloud Proxy via TCP/TLS port 443", value: "5" },
 ]
 
 var mode;
@@ -110,15 +110,20 @@ async function join() {
     client.on("user-unpublished", handleUserUnpublished);
 
     // Enable Cloud Proxy according to setting
-    client.startProxyServer(Number(mode.value))
-
-        // Join a channel and create local tracks. Best practice is to use Promise.all and run them concurrently.
-        [options.uid, localTracks.audioTrack, localTracks.videoTrack] = await Promise.all([
-        // Join the channel.
-        client.join(options.appid, options.channel, options.token || null, options.uid || null),
-        // Create tracks to the local microphone and camera.
-        AgoraRTC.createMicrophoneAudioTrack(),
-        AgoraRTC.createCameraVideoTrack()
+    const value = Number(mode.value)
+    if([3,5].includes(value)){
+      client.startProxyServer(value)
+    }
+    if(value === 0){
+      client.stopProxyServer()
+    }
+    // Join a channel and create local tracks. Best practice is to use Promise.all and run them concurrently.
+    [options.uid, localTracks.audioTrack, localTracks.videoTrack] = await Promise.all([
+    // Join the channel.
+    client.join(options.appid, options.channel, options.token || null, options.uid || null),
+    // Create tracks to the local microphone and camera.
+    AgoraRTC.createMicrophoneAudioTrack(),
+    AgoraRTC.createCameraVideoTrack()
     ]);
 
   // Play the local video track to the local browser and update the UI with the user ID.
