@@ -1,45 +1,27 @@
-import AgoraRTC, {ILocalAudioTrack,IRemoteAudioTrack} from "agora-rtc-sdk-ng";
-import {AIDenoiserExtension} from "agora-extension-ai-denoiser"
+import {ILocalAudioTrack,IRemoteAudioTrack} from "agora-rtc-sdk-ng";
+import {AIDenoiserExtension, IAIDenoiserProcessor} from "agora-extension-ai-denoiser"
 
+import DenoiserExtentionSingleton from "./DenoiserExtention"
 
 
 export default function AIDenoiserEnabler()
 :
 {
+    denoiser: AIDenoiserExtension,
+    processor: IAIDenoiserProcessor,
     enabler: Function,
     controler: Function,
 }
 {
-    //let enabledAIDenoiserExtentionFlag = true; // by default, enabled AI Denoiser Extension.
-
-    // Create AIDenoiserExtension instance, please make sure this instance is a singleton, assetsPath is the path of wasm and wasmjs.
-    const denoiser = new AIDenoiserExtension({assetsPath:'./agora-extension-ai-denoiser/external'});
-
-    // Register AI denoiser extension into AgoraRTC.
-    AgoraRTC.registerExtensions([denoiser]);
-
-    // listen the loaderror callback to handle loading module failed.
-    denoiser.onloaderror = (e) => {
-        // if loading denoiser is failed, disable the function of denoiser. For example, set your button disbled.
-        console.log(e);
-    }
-
+    const denoiser = DenoiserExtentionSingleton.getInstance().extentionInstance;
     const processor = denoiser.createProcessor();
-
-    // If you want to enable the processor by default.
-    processor.enable();
-
-
-    // Optional, listen the processor`s overlaod callback to catch overload message
-    processor.onoverload = async () => {
-        console.log("overload!!!");
-        await processor.disable();
-    }
 
     async function enabler(audioTrack: ILocalAudioTrack | IRemoteAudioTrack): Promise<void>{
         audioTrack.pipe(processor).pipe(audioTrack.processorDestination);
 
         await processor.enable();
+
+        console.log("processor.enabled:" + processor.enabled);
     }
 
     //Control the denoiser function enabled or disabled.
@@ -54,10 +36,9 @@ export default function AIDenoiserEnabler()
     }
 
 
-
-
     return {
-
+        denoiser,
+        processor,
         enabler,
         controler,
     };

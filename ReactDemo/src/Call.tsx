@@ -11,7 +11,7 @@ function Call() {
   const [ token, setToken ] = useState('');
   const [ channel, setChannel ] = useState('');
   const {
-    localAudioTrack, localVideoTrack, leave, join, joinState, remoteUsers
+    localAudioTrack, localVideoTrack, joinState,aiDenoiserState,leave, join, controler, remoteUsers
   } = useAgora(client);
 
   return (
@@ -32,6 +32,9 @@ function Call() {
         <div className='button-group'>
           <button id='join' type='button' className='btn btn-primary btn-sm' disabled={joinState} onClick={() => {join(appid, channel, token)}}>Join</button>
           <button id='leave' type='button' className='btn btn-primary btn-sm' disabled={!joinState} onClick={() => {leave()}}>Leave</button>
+
+          <button id='btnEnableAIDenoiserExtension' type='button' className='btn btn-primary btn-sm' disabled={(!joinState) && !aiDenoiserState } onClick={() => {controler(true)}}>Enable AI Denoiser</button>
+
         </div>
       </form>
       <div className='player-container'>
