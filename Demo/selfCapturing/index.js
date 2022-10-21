@@ -1,4 +1,3 @@
-
 /*
  *  These procedures use Agora Video Call SDK for Web to enable local and remote
  *  users to join and leave a Video Call channel managed by Agora Platform.
@@ -10,7 +9,10 @@
  * @param {string} mode - The {@link https://docs.agora.io/en/Voice/API%20Reference/web_ng/interfaces/clientconfig.html#mode| streaming algorithm} used by Agora SDK.
  * @param  {string} codec - The {@link https://docs.agora.io/en/Voice/API%20Reference/web_ng/interfaces/clientconfig.html#codec| client codec} used by the browser.
  */
-var client = AgoraRTC.createClient({ mode: "rtc", codec: "vp8" });
+var client = AgoraRTC.createClient({
+  mode: "rtc",
+  codec: "vp8"
+});
 
 /*
  * Clear the video and audio tracks used by `client` on initiation.
@@ -41,20 +43,15 @@ var options = {
  */
 $(() => {
   var urlParams = new URL(location.href).searchParams;
-  options.appid = urlParams.get("appid");
   options.channel = urlParams.get("channel");
-  options.token = urlParams.get("token");
   options.uid = urlParams.get("uid");
   if (options.appid && options.channel) {
     $("#uid").val(options.uid);
-    $("#appid").val(options.appid);
-    $("#token").val(options.token);
     $("#channel").val(options.channel);
     $("#join-form").submit();
   }
-
   initializeCanvasCustomVideoTrack();
-})
+});
 
 /*
  * When a user clicks Join or Leave in the HTML form, this procedure gathers the information
@@ -65,12 +62,12 @@ $("#join-form").submit(async function (e) {
   e.preventDefault();
   $("#join").attr("disabled", true);
   try {
-    options.appid = $("#appid").val();
-    options.token = $("#token").val();
     options.channel = $("#channel").val();
     options.uid = Number($("#uid").val());
+    options.appid = $("#appid").val();
+    options.token = $("#token").val();
     await join();
-    if(options.token) {
+    if (options.token) {
       $("#success-alert-with-token").css("display", "block");
     } else {
       $("#success-alert a").attr("href", `index.html?appid=${options.appid}&channel=${options.channel}&token=${options.token}`);
@@ -81,20 +78,19 @@ $("#join-form").submit(async function (e) {
   } finally {
     $("#leave").attr("disabled", false);
   }
-})
+});
 
 /*
  * Called when a user clicks Leave in order to exit a channel.
  */
 $("#leave").click(function (e) {
   leave();
-})
+});
 
 /*
  * Join a channel, then create local video and audio tracks and publish them to the channel.
  */
 async function join() {
-
   // Add an event listener to play remote tracks when remote user publishes.
   client.on("user-published", handleUserPublished);
   client.on("user-unpublished", handleUserUnpublished);
@@ -110,48 +106,38 @@ async function join() {
   console.log("publish success");
 }
 
-
 //initialize canvas elements
-function initializeCanvasCustomVideoTrack(){
+function initializeCanvasCustomVideoTrack() {
   const canvasElement = document.querySelector("#customCanvasElement");
-  
-
   const ctx = canvasElement.getContext('2d');
-
   canvasElement.height = canvasElement.clientHeight;
   canvasElement.width = canvasElement.clientWidth;
-
-
-    setInterval(()=>{
-      ctx.clearRect(0, 0, canvasElement.clientWidth, canvasElement.clientHeight);
-      ctx.fillStyle = '#dddddd';
-      ctx.fillRect(10, 10, 130, 130);
-      var path=new Path2D();
-      path.arc(75, 75, 50, 0, Math.PI*2, true);
-      path.moveTo(110,75);
-      path.arc(75, 75, 35, 0, Math.PI, false);
-      path.moveTo(65, 65);
-      path.arc(60, 65, 5, 0, Math.PI*2, true);
-      path.moveTo(95, 65);
-      path.arc(90, 65, 5, 0, Math.PI*2, true);
-      ctx.strokeStyle = '#0000ff';
-      ctx.stroke(path);
-
-    }, 17);
+  setInterval(() => {
+    ctx.clearRect(0, 0, canvasElement.clientWidth, canvasElement.clientHeight);
+    ctx.fillStyle = '#dddddd';
+    ctx.fillRect(10, 10, 130, 130);
+    var path = new Path2D();
+    path.arc(75, 75, 50, 0, Math.PI * 2, true);
+    path.moveTo(110, 75);
+    path.arc(75, 75, 35, 0, Math.PI, false);
+    path.moveTo(65, 65);
+    path.arc(60, 65, 5, 0, Math.PI * 2, true);
+    path.moveTo(95, 65);
+    path.arc(90, 65, 5, 0, Math.PI * 2, true);
+    ctx.strokeStyle = '#0000ff';
+    ctx.stroke(path);
+  }, 17);
 }
 
-
 //get video track from canvas elements
-function getCanvasCustomVideoTrack(){
+function getCanvasCustomVideoTrack() {
   const canvasElement = document.querySelector("#customCanvasElement");
-
   const stream = canvasElement.captureStream(30);
   const [videoTrack] = stream.getVideoTracks();
   return AgoraRTC.createCustomVideoTrack({
-    mediaStreamTrack: videoTrack,
-  })
+    mediaStreamTrack: videoTrack
+  });
 }
-
 
 /*
  * Stop all local and remote tracks then leave the channel.
@@ -159,7 +145,7 @@ function getCanvasCustomVideoTrack(){
 async function leave() {
   for (trackName in localTracks) {
     var track = localTracks[trackName];
-    if(track) {
+    if (track) {
       track.stop();
       track.close();
       localTracks[trackName] = undefined;
@@ -172,13 +158,11 @@ async function leave() {
 
   // leave the channel
   await client.leave();
-
   $("#local-player-name").text("");
   $("#join").attr("disabled", false);
   $("#leave").attr("disabled", true);
   console.log("client leaves channel success");
 }
-
 
 /*
  * Add the local use to a remote channel.
@@ -228,6 +212,5 @@ function handleUserUnpublished(user, mediaType) {
     const id = user.uid;
     delete remoteUsers[id];
     $(`#player-wrapper-${id}`).remove();
-
   }
 }

@@ -19,14 +19,32 @@
       s.parentNode.insertBefore(hm, s);
     })();
   </script>
+
+  <style>
+    .wrapper {
+      display: flex;
+    }
+
+    .left {
+      flex: 0 0 350px;
+      max-width: 350px;
+      overflow: hidden;
+    }
+
+    .right {
+      flex: 1 1 auto;
+    }
+
+  </style>
 </head>
 
 <body>
+  <!-- banner -->
   <div class="container-fluid banner">
     <p class="banner-text">Agora WebSDK Demos <a class="btn btn-secondary"
         href="https://forms.office.com/Pages/ResponsePage.aspx?id=dFMnYKo-wkmDw8wYnRJpgXLvSSJvzXpKsNwZBzWrfBhUNFFEUldSWVBNNkRMQklYS1ZZODY0Mk9BVy4u"><small><label
             class="i18n" name="questionare"></label></small></a></p>
-    <a style="color: rgb(255, 255, 255);fill: rgb(255, 255, 255);fill-rule: evenodd; position: absolute; right: 10px; top: 4px;"
+    <a style="color: rgb(255, 255, 255);fill: rgb(255, 255, 255);fill-rule: evenodd; position: absolute; right: 60px; top: 10px;"
       class="Header-link " href="https://github.com/AgoraIO/API-Examples-Web/tree/main/Demo">
       <svg class="octicon octicon-mark-github v-align-middle" height="32" viewBox="0 0 16 16" version="1.1" width="32"
         aria-hidden="true">
@@ -35,410 +53,531 @@
         </path>
       </svg>
     </a>
+    <span style="cursor: pointer; position: absolute; right: 15px; top: 14px;" id="logout">
+      <label class="i18n" name="logout" style="cursor: pointer;"></label>
+    </span>
   </div>
-  <div class="float-left">
-    <nav class="navbar bg-light">
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <div>
-            <span><a class="nav-link" href="#1"><label class="i18n" name="basic"></label></a></span>
-            <ul>
-              <li><label class="i18n" name="basicvoicecalling"></label></li>
-              <li><label class="i18n" name="basicvideocalling"></label></li>
-              <li><label class="i18n" name="basiclivestreaming"></label></li>
-              <li><label class="i18n" name="selfRendering"></label></li>
-              <li><label class="i18n" name="selfCapturing"></label></li>
-              <li><label class="i18n" name="cloudProxy"></label></li>
-              <li><label class="i18n" name="hotPlug"></label></li>
-              <li><label class="i18n" name="sharescreen"></label></li>
-            </ul>
-          </div>
-        </li>
-        <li class="nav-item">
-          <div>
-            <span><a class="nav-link" href="#2"><label class="i18n" name="advanced"></label></a></span>
-            <ul>
-              <li><label class="i18n" name="testdevices"></label></li>
-              <li><label class="i18n" name="adjustvideoprofile"></label></li>
-              <li><label class="i18n" name="incallstats"></label></li>
-              <li><label class="i18n" name="muteaudiovideosetmuted"></label></li>
-              <li><label class="i18n" name="muteaudiovideosetenabled"></label></li>
-              <li><label class="i18n" name="muteaudiovideomediastreamtrackenabled"></label></li>
-              <li><label class="i18n" name="imageenhance"></label></li>
-              <li><label class="i18n" name="audioeffect"></label></li>
-              <li><label class="i18n" name="cdnstreaming"></label></li>
-              <li><label class="i18n" name="dualstream"></label></li>
-              <li><label class="i18n" name="geofencing"></label></li>
-              <li><label class="i18n" name="multiplechannel"></label></li>
-              <li><label class="i18n" name="customvideosource"></label></li>
-            </ul>
-          </div>
-        </li>
-        <li class="nav-item">
-          <div>
-            <span><a class="nav-link" href="#3"><label class="i18n" name="plugins"></label></a></span>
-            <ul>
-              <li><label class="i18n" name="virtualbackground"></label></li>
-              <li><label class="i18n" name="beauty-extension"></label></li>
-              <li><label class="i18n" name="aidenoiser"></label></li>
-              <li><label class="i18n" name="spatialAudioExtention"></label></li>
-            </ul>
-          </div>
 
-        </li>
-        <li class="nav-item">
-          <div>
-            <span><a class="nav-link" href="#3"><label class="i18n" name="scenarios"></label></a></span>
-            <ul>
-              <li><label class="i18n" name="groupvideocalling"></label></li>
-              <li><label class="i18n" name="movietogether"></label></li>
-            </ul>
-          </div>
+  <div class="wrapper">
+    <!-- left -->
+    <section class="left">
+      <nav class="navbar bg-light">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <div>
+              <span><a class="nav-link" href="#1"><label class="i18n" name="basic"></label></a></span>
+              <ul>
+                <li>
+                  <a href="./basicVoiceCall/index.html">
+                    <label class="i18n" name="basicvoicecalling"></label>
+                  </a>
+                </li>
+                <li>
+                  <a href="./basicVideoCall/index.html">
+                    <label class="i18n" name="basicvideocalling"></label>
+                  </a>
+                </li>
+                <li>
+                  <a href="./basicLive/index.html">
+                    <label class="i18n" name="basiclivestreaming"></label>
+                  </a>
+                </li>
+                <li>
+                  <a href="./selfRendering/index.html">
+                    <label class="i18n" name="selfRendering"></label>
+                  </a>
+                </li>
+                <li>
+                  <a href="./selfCapturing/index.html">
+                    <label class="i18n" name="selfCapturing"></label>
+                  </a>
+                </li>
+                <li>
+                  <a href="./cloudProxy/index.html">
+                    <label class="i18n" name="cloudProxy"></label>
+                  </a>
+                </li>
+                <li>
+                  <a href="./screenshot/index.html">
+                    <label class="i18n" name="videoScreenshot"></label>
+                  </a>
+                </li>
+                <li>
+                  <a href="./shareTheScreen/index.html">
+                    <label class="i18n" name="sharescreen"></label>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </li>
+          <li class="nav-item">
+            <div>
+              <span><a class="nav-link" href="#2"><label class="i18n" name="advanced"></label></a></span>
+              <ul>
+                <li>
+                  <a href="./recordingDeviceControl/index.html">
+                    <label class="i18n" name="testdevices"></label>
+                  </a>
+                </li>
+                <li>
+                  <a href="./adjustVideoProfile/index.html">
+                    <label class="i18n" name="adjustvideoprofile"></label>
+                  </a>
+                </li>
+                <li>
+                  <a href="./displayCallStats/index.html">
+                    <label class="i18n" name="incallstats"></label>
+                  </a>
+                </li>
+                <li>
+                  <a href="./basicMute/index.html">
+                    <label class="i18n" name="muteaudiovideosetmuted"></label>
+                  </a>
+                </li>
+                <li>
+                  <a href="./basicMuteSetEnabled/index.html">
+                    <label class="i18n" name="muteaudiovideosetenabled"></label>
+                  </a>
+                </li>
+                <li>
+                  <a href="./basicMuteMediaStreamTrackEnabled/index.html">
+                    <label class="i18n" name="muteaudiovideomediastreamtrackenabled"></label>
+                  </a>
+                </li>
+                <li>
+                  <a href="./videoBeautyEffect/index.html">
+                    <label class="i18n" name="imageenhance"></label>
+                  </a>
+                </li>
+                <li>
+                  <a href="./audioMixingAndAudioEffect/index.html">
+                    <label class="i18n" name="audioeffect"></label>
+                  </a>
+                </li>
+                <li>
+                  <a href="./pushStreamToCDN/index.html">
+                    <label class="i18n" name="cdnstreaming"></label>
+                  </a>
+                </li>
+                <li>
+                  <a href="./dualStream/index.html">
+                    <label class="i18n" name="dualstream"></label>
+                  </a>
+                </li>
+                <li>
+                  <a href="./geoFencing/index.html">
+                    <label class="i18n" name="geofencing"></label>
+                  </a>
+                </li>
+                <li>
+                  <a href="./joinMutlipleChannel/index.html">
+                    <label class="i18n" name="multiplechannel"></label>
+                  </a>
+                </li>
+                <li>
+                  <a href="./customVideoSource/index.html">
+                    <label class="i18n" name="customvideosource"></label>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </li>
+          <li class="nav-item">
+            <div>
+              <span><a class="nav-link" href="#3"><label class="i18n" name="plugins"></label></a></span>
+              <ul>
+                <li>
+                  <a href="./virtualBackground/index.html">
+                    <label class="i18n" name="virtualbackground"></label>
+                  </a>
+                </li>
+                <li>
+                  <a href="./beauty-extension/index.html">
+                    <label class="i18n" name="beauty-extension"></label>
+                  </a>
+                </li>
+                <li>
+                  <a href="./aiDenoiser/index.html">
+                    <label class="i18n" name="aidenoiser"></label>
+                  </a>
+                </li>
+                <li>
+                  <a href="./spatialAudioExtention/index.html">
+                    <label class="i18n" name="spatialAudioExtention"></label>
+                  </a>
+                </li>
+              </ul>
+            </div>
 
-        </li>
-        <li class="nav-item">
-          <div>
-            <span><a class="nav-link" href="#4"><label class="i18n" name="faq"></label></a></span>
-            <ul>
-              <li><label class="i18n" name="autoplay"></label></li>
-              <li><label class="i18n" name="stringuid"></label></li>
-            </ul>
-          </div>
+          </li>
+          <li class="nav-item">
+            <div>
+              <span><a class="nav-link" href="#3"><label class="i18n" name="scenarios"></label></a></span>
+              <ul>
+                <li>
+                  <a href="https://github.com/AgoraIO-Community/AgoraMultiCall-vue">
+                    <label class="i18n" name="groupvideocalling"></label>
+                  </a>
+                </li>
+                <li>
+                  <a href="https://github.com/AgoraIO-Community/MovieTogether">
+                    <label class="i18n" name="movietogether"></label>
+                  </a>
+                </li>
+              </ul>
+            </div>
 
-        </li>
-      </ul>
-    </nav>
-  </div>
-  <div class="container">
-    <h1 id="1"><label class="i18n" name="basic"></label></h1>
-    <div class="card-deck">
-      <div class="card demo-card">
-        <div class="card-body">
-          <h5 class="card-title"><label class="i18n" name="basicvoicecalling"></label></h5>
-          <p class="card-text"><label class="i18n" name="basicvoicecallingnote"></label></p>
-          <a href="./basicVoiceCall/index.html" class=" btn btn-primary demo-card-btn"><label class="i18n"
-              name="tryitnow"></label></a>
-        </div>
-      </div>
-      <div class="card demo-card">
-        <div class="card-body">
-          <h5 class="card-title"><label class="i18n" name="basicvideocalling"></label></h5>
-          <p class="card-text"><label class="i18n" name="basicvideocallingnote"></label></p>
-          <a href="./basicVideoCall/index.html" class=" btn btn-primary demo-card-btn"><label class="i18n"
-              name="tryitnow"></label></a>
-        </div>
-      </div>
-      <div class="card demo-card">
-        <div class="card-body">
-          <h5 class="card-title"><label class="i18n" name="basiclivestreaming"></label></h5>
-          <p class="card-text"><label class="i18n" name="basiclivestreamingnote"></label></p>
-          <a href="./basicLive/index.html" class="btn btn-primary demo-card-btn"><label class="i18n"
-              name="tryitnow"></label></a>
-        </div>
-      </div>
-      <div class="card demo-card">
-        <div class="card-body">
-          <h5 class="card-title"><label class="i18n" name="cloudProxy"></label></h5>
-          <p class="card-text"><label class="i18n" name="cloudProxyNote"></label></p>
-          <a href="./cloudProxy/index.html" class="btn btn-primary demo-card-btn"><label class="i18n"
-              name="tryitnow"></label></a>
-        </div>
-      </div>
-      <div class="card demo-card">
-        <div class="card-body">
-          <h5 class="card-title"><label class="i18n" name="selfRendering"></label></h5>
-          <p class="card-text"><label class="i18n" name="selfRenderingNote"></label></p>
-          <a href="./selfRendering/index.html" class="btn btn-primary demo-card-btn"><label class="i18n"
-              name="tryitnow"></label></a>
-        </div>
-      </div>
-      <div class="card demo-card">
-        <div class="card-body">
-          <h5 class="card-title"><label class="i18n" name="selfCapturing"></label></h5>
-          <p class="card-text"><label class="i18n" name="selfCapturingNote"></label></p>
-          <a href="./selfCapturing/index.html" class="btn btn-primary demo-card-btn"><label class="i18n"
-              name="tryitnow"></label></a>
-        </div>
-      </div>
-      <div class="card demo-card">
-        <div class="card-body">
-          <h5 class="card-title"><label class="i18n" name="videoScreenshot"></label></h5>
-          <p class="card-text"><label class="i18n" name="videoScreenshotNote"></label></p>
-          <a href="./screenshot/index.html" class="btn btn-primary demo-card-btn"><label class="i18n"
-              name="tryitnow"></label></a>
-        </div>
-      </div>
-      <div class="card demo-card">
-        <div class="card-body">
-          <h5 class="card-title"><label class="i18n" name="sharescreen"></label></h5>
-          <p class="card-text"><label class="i18n" name="sharescreennote"></label><a
+          </li>
+          <li class="nav-item">
+            <div>
+              <span><a class="nav-link" href="#4"><label class="i18n" name="faq"></label></a></span>
+              <ul>
+                <li><label class="i18n" name="autoplay"></label></li>
+                <li><label class="i18n" name="stringuid"></label></li>
+              </ul>
+            </div>
+
+          </li>
+        </ul>
+      </nav>
+    </section>
+    <!-- right -->
+    <section class="right">
+      <div class="container">
+        <h1 id="1"><label class="i18n" name="basic"></label></h1>
+        <div class="card-deck">
+          <div class="card demo-card">
+            <div class="card-body">
+              <h5 class="card-title"><label class="i18n" name="basicvoicecalling"></label></h5>
+              <p class="card-text"><label class="i18n" name="basicvoicecallingnote"></label></p>
+              <a href="./basicVoiceCall/index.html" class=" btn btn-primary demo-card-btn"><label class="i18n"
+                  name="tryitnow"></label></a>
+            </div>
+          </div>
+          <div class="card demo-card">
+            <div class="card-body">
+              <h5 class="card-title"><label class="i18n" name="basicvideocalling"></label></h5>
+              <p class="card-text"><label class="i18n" name="basicvideocallingnote"></label></p>
+              <a href="./basicVideoCall/index.html" class=" btn btn-primary demo-card-btn"><label class="i18n"
+                  name="tryitnow"></label></a>
+            </div>
+          </div>
+          <div class="card demo-card">
+            <div class="card-body">
+              <h5 class="card-title"><label class="i18n" name="basiclivestreaming"></label></h5>
+              <p class="card-text"><label class="i18n" name="basiclivestreamingnote"></label></p>
+              <a href="./basicLive/index.html" class="btn btn-primary demo-card-btn"><label class="i18n"
+                  name="tryitnow"></label></a>
+            </div>
+          </div>
+          <div class="card demo-card">
+            <div class="card-body">
+              <h5 class="card-title"><label class="i18n" name="cloudProxy"></label></h5>
+              <p class="card-text"><label class="i18n" name="cloudProxyNote"></label></p>
+              <a href="./cloudProxy/index.html" class="btn btn-primary demo-card-btn"><label class="i18n"
+                  name="tryitnow"></label></a>
+            </div>
+          </div>
+          <div class="card demo-card">
+            <div class="card-body">
+              <h5 class="card-title"><label class="i18n" name="selfRendering"></label></h5>
+              <p class="card-text"><label class="i18n" name="selfRenderingNote"></label></p>
+              <a href="./selfRendering/index.html" class="btn btn-primary demo-card-btn"><label class="i18n"
+                  name="tryitnow"></label></a>
+            </div>
+          </div>
+          <div class="card demo-card">
+            <div class="card-body">
+              <h5 class="card-title"><label class="i18n" name="selfCapturing"></label></h5>
+              <p class="card-text"><label class="i18n" name="selfCapturingNote"></label></p>
+              <a href="./selfCapturing/index.html" class="btn btn-primary demo-card-btn"><label class="i18n"
+                  name="tryitnow"></label></a>
+            </div>
+          </div>
+          <div class="card demo-card">
+            <div class="card-body">
+              <h5 class="card-title"><label class="i18n" name="videoScreenshot"></label></h5>
+              <p class="card-text"><label class="i18n" name="videoScreenshotNote"></label></p>
+              <a href="./screenshot/index.html" class="btn btn-primary demo-card-btn"><label class="i18n"
+                  name="tryitnow"></label></a>
+            </div>
+          </div>
+          <div class="card demo-card">
+            <div class="card-body">
+              <h5 class="card-title"><label class="i18n" name="sharescreen"></label></h5>
+              <p class="card-text"><label class="i18n" name="sharescreennote"></label><a
                   href="https://docs.agora.io/en/Video/screensharing_web_ng?platform=Web"><label class="i18n"
-                                                                                                 name="doc"></label></a></p>
-          <a href="./shareTheScreen/index.html" class="btn btn-primary demo-card-btn"><label class="i18n"
-                                                                                             name="tryitnow"></label></a>
+                    name="doc"></label></a></p>
+              <a href="./shareTheScreen/index.html" class="btn btn-primary demo-card-btn"><label class="i18n"
+                  name="tryitnow"></label></a>
+            </div>
+          </div>
+
+
         </div>
       </div>
+      <div class="container">
+        <h1 id="2"><label class="i18n" name="advanced"></label></h1>
+        <div class="card-deck">
+          <div class="card demo-card">
+            <div class="card-body">
+              <h5 class="card-title"><label class="i18n" name="testdevices"></label></h5>
+              <p class="card-text"><label class="i18n" name="testdevicesnote"></label><a
+                  href="https://docs.agora.io/en/Video/test_switch_device_web_ng?platform=Web"><label class="i18n"
+                    name="doc"></label></a></p>
+              <a href="./recordingDeviceControl/index.html" class="btn btn-primary demo-card-btn"><label class="i18n"
+                  name="tryitnow"></label></a>
+            </div>
+          </div>
+          <div class="card demo-card">
+            <div class="card-body">
+              <h5 class="card-title"><label class="i18n" name="adjustvideoprofile"></label></h5>
+              <p class="card-text"><label class="i18n" name="adjustvideoprofilenote"></label><a
+                  href="https://docs.agora.io/en/Video/video_profile_web_ng?platform=Web"><label class="i18n"
+                    name="doc"></label></a></p>
+              <a href="./adjustVideoProfile/index.html" class="btn btn-primary demo-card-btn"><label class="i18n"
+                  name="tryitnow"></label></a>
+            </div>
+          </div>
+          <div class="card demo-card">
+            <div class="card-body">
+              <h5 class="card-title"><label class="i18n" name="incallstats"></label></h5>
+              <p class="card-text"><label class="i18n" name="incallstatsnote"></label><a
+                  href="https://docs.agora.io/en/Video/in-call_quality_web_ng?platform=Web"><label class="i18n"
+                    name="doc"></label></a></p>
+              <a href="./displayCallStats/index.html" class="btn btn-primary demo-card-btn"><label class="i18n"
+                  name="tryitnow"></label></a>
+            </div>
+          </div>
 
 
-    </div>
-    <div class="container">
-      <h1 id="2"><label class="i18n" name="advanced"></label></h1>
-      <div class="card-deck">
-        <div class="card demo-card">
-          <div class="card-body">
-            <h5 class="card-title"><label class="i18n" name="testdevices"></label></h5>
-            <p class="card-text"><label class="i18n" name="testdevicesnote"></label><a
-                href="https://docs.agora.io/en/Video/test_switch_device_web_ng?platform=Web"><label class="i18n"
-                  name="doc"></label></a></p>
-            <a href="./recordingDeviceControl/index.html" class="btn btn-primary demo-card-btn"><label class="i18n"
-                name="tryitnow"></label></a>
+          <div class="card demo-card">
+            <div class="card-body">
+              <h5 class="card-title"><label class="i18n" name="muteaudiovideosetmuted"></label></h5>
+              <p class="card-text"><label class="i18n" name="muteaudiovideosetmutednote"></label></p>
+              <a href="./basicMute/index.html" class="btn btn-primary demo-card-btn"><label class="i18n"
+                  name="tryitnow"></label></a>
+            </div>
           </div>
-        </div>
-        <div class="card demo-card">
-          <div class="card-body">
-            <h5 class="card-title"><label class="i18n" name="adjustvideoprofile"></label></h5>
-            <p class="card-text"><label class="i18n" name="adjustvideoprofilenote"></label><a
-                href="https://docs.agora.io/en/Video/video_profile_web_ng?platform=Web"><label class="i18n"
-                  name="doc"></label></a></p>
-            <a href="./adjustVideoProfile/index.html" class="btn btn-primary demo-card-btn"><label class="i18n"
-                name="tryitnow"></label></a>
+          <div class="card demo-card">
+            <div class="card-body">
+              <h5 class="card-title"><label class="i18n" name="muteaudiovideosetenabled"></label></h5>
+              <p class="card-text"><label class="i18n" name="muteaudiovideosetenablednote"></label></p>
+              <a href="./basicMuteSetEnabled/index.html" class="btn btn-primary demo-card-btn"><label class="i18n"
+                  name="tryitnow"></label></a>
+            </div>
           </div>
-        </div>
-        <div class="card demo-card">
-          <div class="card-body">
-            <h5 class="card-title"><label class="i18n" name="incallstats"></label></h5>
-            <p class="card-text"><label class="i18n" name="incallstatsnote"></label><a
-                href="https://docs.agora.io/en/Video/in-call_quality_web_ng?platform=Web"><label class="i18n"
-                  name="doc"></label></a></p>
-            <a href="./displayCallStats/index.html" class="btn btn-primary demo-card-btn"><label class="i18n"
-                name="tryitnow"></label></a>
+          <div class="card demo-card">
+            <div class="card-body">
+              <h5 class="card-title"><label class="i18n" name="muteaudiovideomediastreamtrackenabled"></label></h5>
+              <p class="card-text"><label class="i18n" name="muteaudiovideomediastreamtrackenablednote"></label></p>
+              <a href="./basicMuteMediaStreamTrackEnabled/index.html" class="btn btn-primary demo-card-btn"><label
+                  class="i18n" name="tryitnow"></label></a>
+            </div>
           </div>
-        </div>
-
-
-        <div class="card demo-card">
-          <div class="card-body">
-            <h5 class="card-title"><label class="i18n" name="muteaudiovideosetmuted"></label></h5>
-            <p class="card-text"><label class="i18n" name="muteaudiovideosetmutednote"></label></p>
-            <a href="./basicMute/index.html" class="btn btn-primary demo-card-btn"><label class="i18n"
-                name="tryitnow"></label></a>
-          </div>
-        </div>
-        <div class="card demo-card">
-          <div class="card-body">
-            <h5 class="card-title"><label class="i18n" name="muteaudiovideosetenabled"></label></h5>
-            <p class="card-text"><label class="i18n" name="muteaudiovideosetenablednote"></label></p>
-            <a href="./basicMuteSetEnabled/index.html" class="btn btn-primary demo-card-btn"><label class="i18n"
-                name="tryitnow"></label></a>
-          </div>
-        </div>
-        <div class="card demo-card">
-          <div class="card-body">
-            <h5 class="card-title"><label class="i18n" name="muteaudiovideomediastreamtrackenabled"></label></h5>
-            <p class="card-text"><label class="i18n" name="muteaudiovideomediastreamtrackenablednote"></label></p>
-            <a href="./basicMuteMediaStreamTrackEnabled/index.html" class="btn btn-primary demo-card-btn"><label
-                class="i18n" name="tryitnow"></label></a>
-          </div>
-        </div>
 
 
 
-        <div class="card demo-card">
-          <div class="card-body">
-            <h5 class="card-title"><label class="i18n" name="imageenhance"></label></h5>
-            <p class="card-text"><label class="i18n" name="imageenhancenote"></label></p>
-            <a href="./videoBeautyEffect/index.html" class="btn btn-primary demo-card-btn"><label class="i18n"
-                name="tryitnow"></label></a>
+          <div class="card demo-card">
+            <div class="card-body">
+              <h5 class="card-title"><label class="i18n" name="imageenhance"></label></h5>
+              <p class="card-text"><label class="i18n" name="imageenhancenote"></label></p>
+              <a href="./videoBeautyEffect/index.html" class="btn btn-primary demo-card-btn"><label class="i18n"
+                  name="tryitnow"></label></a>
+            </div>
           </div>
-        </div>
-        <div class="card demo-card">
-          <div class="card-body">
-            <h5 class="card-title"><label class="i18n" name="audioeffect"></label></h5>
-            <p class="card-text"><label class="i18n" name="audioeffectnote"></label><a
-                href="https://docs.agora.io/en/Video/audio_effect_mixing_web_ng?platform=Web"><label class="i18n"
-                  name="doc"></label></a></p>
-            <a href="./audioMixingAndAudioEffect/index.html" class="btn btn-primary demo-card-btn"><label class="i18n"
-                name="tryitnow"></label></a>
+          <div class="card demo-card">
+            <div class="card-body">
+              <h5 class="card-title"><label class="i18n" name="audioeffect"></label></h5>
+              <p class="card-text"><label class="i18n" name="audioeffectnote"></label><a
+                  href="https://docs.agora.io/en/Video/audio_effect_mixing_web_ng?platform=Web"><label class="i18n"
+                    name="doc"></label></a></p>
+              <a href="./audioMixingAndAudioEffect/index.html" class="btn btn-primary demo-card-btn"><label class="i18n"
+                  name="tryitnow"></label></a>
+            </div>
           </div>
-        </div>
-        <div class="card demo-card">
-          <div class="card-body">
-            <h5 class="card-title"><label class="i18n" name="cdnstreaming"></label></h5>
-            <p class="card-text"><label class="i18n" name="cdnstreamingnote"></label><a
-                href="https://docs.agora.io/en/Interactive%20Broadcast/cdn_streaming_web_ng?platform=Web"><label
-                  class="i18n" name="doc"></label></a></p>
-            <a href="./pushStreamToCDN/index.html" class="btn btn-primary demo-card-btn"><label class="i18n"
-                name="tryitnow"></label></a>
+          <div class="card demo-card">
+            <div class="card-body">
+              <h5 class="card-title"><label class="i18n" name="cdnstreaming"></label></h5>
+              <p class="card-text"><label class="i18n" name="cdnstreamingnote"></label><a
+                  href="https://docs.agora.io/en/Interactive%20Broadcast/cdn_streaming_web_ng?platform=Web"><label
+                    class="i18n" name="doc"></label></a></p>
+              <a href="./pushStreamToCDN/index.html" class="btn btn-primary demo-card-btn"><label class="i18n"
+                  name="tryitnow"></label></a>
+            </div>
           </div>
-        </div>
-        <div class="card demo-card">
-          <div class="card-body">
-            <h5 class="card-title"><label class="i18n" name="dualstream"></label></h5>
-            <p class="card-text"><label class="i18n" name="dualstreamnote"></label><a
-                href="https://docs.agora.io/en/Agora%20Platform/dual_stream_mode?platform=Web"><label class="i18n"
-                  name="doc"></label></a></p>
-            <a href="./dualStream/index.html" class="btn btn-primary demo-card-btn"><label class="i18n"
-                name="tryitnow"></label></a>
+          <div class="card demo-card">
+            <div class="card-body">
+              <h5 class="card-title"><label class="i18n" name="dualstream"></label></h5>
+              <p class="card-text"><label class="i18n" name="dualstreamnote"></label><a
+                  href="https://docs.agora.io/en/Agora%20Platform/dual_stream_mode?platform=Web"><label class="i18n"
+                    name="doc"></label></a></p>
+              <a href="./dualStream/index.html" class="btn btn-primary demo-card-btn"><label class="i18n"
+                  name="tryitnow"></label></a>
+            </div>
           </div>
-        </div>
-        <div class="card demo-card">
-          <div class="card-body">
-            <h5 class="card-title"><label class="i18n" name="geofencing"></label></h5>
-            <p class="card-text"><label class="i18n" name="geofencingnote"></label><a
-                href="https://docs.agora.io/en/Interactive%20Broadcast/region_web_ng_rtc?platform=Web"><label
-                  class="i18n" name="doc"></label></a></p>
-            <a href="./geoFencing/index.html" class="btn btn-primary demo-card-btn"><label class="i18n"
-                name="tryitnow"></label></a>
+          <div class="card demo-card">
+            <div class="card-body">
+              <h5 class="card-title"><label class="i18n" name="geofencing"></label></h5>
+              <p class="card-text"><label class="i18n" name="geofencingnote"></label><a
+                  href="https://docs.agora.io/en/Interactive%20Broadcast/region_web_ng_rtc?platform=Web"><label
+                    class="i18n" name="doc"></label></a></p>
+              <a href="./geoFencing/index.html" class="btn btn-primary demo-card-btn"><label class="i18n"
+                  name="tryitnow"></label></a>
+            </div>
           </div>
-        </div>
-        <div class="card demo-card">
-          <div class="card-body">
-            <h5 class="card-title"><label class="i18n" name="multiplechannel"></label></h5>
-            <p class="card-text"><label class="i18n" name="multiplechannelnote"></label></p>
-            <a href="./joinMutlipleChannel/index.html" class="btn btn-primary demo-card-btn"><label class="i18n"
-                name="tryitnow"></label></a>
+          <div class="card demo-card">
+            <div class="card-body">
+              <h5 class="card-title"><label class="i18n" name="multiplechannel"></label></h5>
+              <p class="card-text"><label class="i18n" name="multiplechannelnote"></label></p>
+              <a href="./joinMutlipleChannel/index.html" class="btn btn-primary demo-card-btn"><label class="i18n"
+                  name="tryitnow"></label></a>
+            </div>
           </div>
-        </div>
-        <div class="card demo-card">
-          <div class="card-body">
-            <h5 class="card-title"><label class="i18n" name="customvideosource"></label></h5>
-            <p class="card-text"><label class="i18n" name="customvideosourcenote"></label></p>
-            <a href="./customVideoSource/index.html" class="btn btn-primary demo-card-btn"><label class="i18n"
-                name="tryitnow"></label></a>
+          <div class="card demo-card">
+            <div class="card-body">
+              <h5 class="card-title"><label class="i18n" name="customvideosource"></label></h5>
+              <p class="card-text"><label class="i18n" name="customvideosourcenote"></label></p>
+              <a href="./customVideoSource/index.html" class="btn btn-primary demo-card-btn"><label class="i18n"
+                  name="tryitnow"></label></a>
+            </div>
           </div>
-        </div>
 
 
 
+        </div>
       </div>
-    </div>
-    <div class="container">
-      <h1 id="3"><label class="i18n" name="plugins"></label></h1>
-      <div class="card-deck">
+      <div class="container">
+        <h1 id="3"><label class="i18n" name="plugins"></label></h1>
+        <div class="card-deck">
 
-        <div class="card demo-card">
-          <div class="card-body">
-            <h5 class="card-title"><label class="i18n" name="virtualbackground"></label></h5>
-            <p class="card-text"><label class="i18n" name="virtualbackgroundnote"></label></p>
-            <a href="./virtualBackground/index.html" class="btn btn-primary demo-card-btn"><label class="i18n"
-                name="tryitnow"></label></a>
+          <div class="card demo-card">
+            <div class="card-body">
+              <h5 class="card-title"><label class="i18n" name="virtualbackground"></label></h5>
+              <p class="card-text"><label class="i18n" name="virtualbackgroundnote"></label></p>
+              <a href="./virtualBackground/index.html" class="btn btn-primary demo-card-btn"><label class="i18n"
+                  name="tryitnow"></label></a>
+            </div>
           </div>
-        </div>
-        <div class="card demo-card">
-          <div class="card-body">
-            <h5 class="card-title"><label class="i18n" name="beauty-extension"></label></h5>
-            <p class="card-text"><label class="i18n" name="beauty-extension-note"></label></p>
-            <a href="./beauty-extension/index.html" class="btn btn-primary demo-card-btn"><label class="i18n"
-                name="tryitnow"></label></a>
+          <div class="card demo-card">
+            <div class="card-body">
+              <h5 class="card-title"><label class="i18n" name="beauty-extension"></label></h5>
+              <p class="card-text"><label class="i18n" name="beauty-extension-note"></label></p>
+              <a href="./beauty-extension/index.html" class="btn btn-primary demo-card-btn"><label class="i18n"
+                  name="tryitnow"></label></a>
+            </div>
           </div>
-        </div>
 
-        <div class="card demo-card">
-          <div class="card-body">
-            <h5 class="card-title"><label class="i18n" name="aidenoiser"></label></h5>
-            <p class="card-text"><label class="i18n" name="aidenoisernote"></label></p>
-            <a href="./aiDenoiser/index.html" class="btn btn-primary demo-card-btn"><label class="i18n"
-                name="tryitnow"></label></a>
+          <div class="card demo-card">
+            <div class="card-body">
+              <h5 class="card-title"><label class="i18n" name="aidenoiser"></label></h5>
+              <p class="card-text"><label class="i18n" name="aidenoisernote"></label></p>
+              <a href="./aiDenoiser/index.html" class="btn btn-primary demo-card-btn"><label class="i18n"
+                  name="tryitnow"></label></a>
+            </div>
           </div>
-        </div>
-        <div class="card demo-card">
-          <div class="card-body">
-            <h5 class="card-title"><label class="i18n" name="spatialAudioExtention"></label></h5>
-            <p class="card-text"><label class="i18n" name="spatialAudioExtentionNote"></label></p>
-            <a href="./spatialAudioExtention/index.html" class="btn btn-primary demo-card-btn"><label class="i18n"
-                                                                                           name="tryitnow"></label></a>
+          <div class="card demo-card">
+            <div class="card-body">
+              <h5 class="card-title"><label class="i18n" name="spatialAudioExtention"></label></h5>
+              <p class="card-text"><label class="i18n" name="spatialAudioExtentionNote"></label></p>
+              <a href="./spatialAudioExtention/index.html" class="btn btn-primary demo-card-btn"><label class="i18n"
+                  name="tryitnow"></label></a>
+            </div>
           </div>
-        </div>
 
+        </div>
       </div>
-    </div>
-    <div class="container">
-      <h1 id="3"><label class="i18n" name="scenarios"></label></h1>
-      <div class="card-deck">
-        <div class="card demo-card">
-          <div class="card-body">
-            <h5 class="card-title"><label class="i18n" name="groupvideocalling"></label></h5>
-            <p class="card-text"><label class="i18n" name="groupvideocallingnote"></label></p>
-            <a href="https://github.com/AgoraIO-Community/AgoraMultiCall-vue"
-              class="btn btn-primary demo-card-btn"><label class="i18n" name="viewthecode"></label></a>
+      <div class="container">
+        <h1 id="3"><label class="i18n" name="scenarios"></label></h1>
+        <div class="card-deck">
+          <div class="card demo-card">
+            <div class="card-body">
+              <h5 class="card-title"><label class="i18n" name="groupvideocalling"></label></h5>
+              <p class="card-text"><label class="i18n" name="groupvideocallingnote"></label></p>
+              <a href="https://github.com/AgoraIO-Community/AgoraMultiCall-vue"
+                class="btn btn-primary demo-card-btn"><label class="i18n" name="viewthecode"></label></a>
+            </div>
           </div>
-        </div>
 
-        <div class="card demo-card">
-          <div class="card-body">
-            <h5 class="card-title"><label class="i18n" name="movietogether"></label></h5>
-            <p class="card-text"><label class="i18n" name="movietogethernote"></label></p>
-            <a href="https://github.com/AgoraIO-Community/MovieTogether" class="btn btn-primary demo-card-btn"><label
-                class="i18n" name="viewthecode"></label></a>
+          <div class="card demo-card">
+            <div class="card-body">
+              <h5 class="card-title"><label class="i18n" name="movietogether"></label></h5>
+              <p class="card-text"><label class="i18n" name="movietogethernote"></label></p>
+              <a href="https://github.com/AgoraIO-Community/MovieTogether" class="btn btn-primary demo-card-btn"><label
+                  class="i18n" name="viewthecode"></label></a>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="container">
-      <h1 id="4"><label class="i18n" name="faq"></label></h1>
-      <div class="card-deck">
-        <div class="card demo-card">
-          <div class="card-body">
-            <h5 class="card-title"><label class="i18n" name="autoplay"></label></h5>
-            <p class="card-text"><label class="i18n" name="autoplaynote"></label></p>
-            <a href="https://docs.agora.io/en/Interactive%20Broadcast/autoplay_policy_web?platform=Web"
-              class="btn btn-primary demo-card-btn">Check the Article</a>
+      <div class="container">
+        <h1 id="4"><label class="i18n" name="faq"></label></h1>
+        <div class="card-deck">
+          <div class="card demo-card">
+            <div class="card-body">
+              <h5 class="card-title"><label class="i18n" name="autoplay"></label></h5>
+              <p class="card-text"><label class="i18n" name="autoplaynote"></label></p>
+              <a href="https://docs.agora.io/en/Interactive%20Broadcast/autoplay_policy_web?platform=Web"
+                class="btn btn-primary demo-card-btn">Check the Article</a>
+            </div>
           </div>
-        </div>
-        <div class="card demo-card">
-          <div class="card-body">
-            <h5 class="card-title"><label class="i18n" name="stringuid"></label></h5>
-            <p class="card-text"><label class="i18n" name="stringuidnote"></label></p>
-            <a href="https://docs.agora.io/en/Interactive%20Broadcast/faq/string"
-              class="btn btn-primary demo-card-btn">Check the Article</a>
+          <div class="card demo-card">
+            <div class="card-body">
+              <h5 class="card-title"><label class="i18n" name="stringuid"></label></h5>
+              <p class="card-text"><label class="i18n" name="stringuidnote"></label></p>
+              <a href="https://docs.agora.io/en/Interactive%20Broadcast/faq/string"
+                class="btn btn-primary demo-card-btn">Check the Article</a>
+            </div>
           </div>
-        </div>
-        <div class="card demo-card">
+          <!-- <div class="card demo-card">
           <div class="card-body">
             <h5 class="card-title"><label class="i18n" name="legacywebdemo"></label></h5>
             <p class="card-text"><label class="i18n" name="legacywebdemonote"></label></p>
             <a href="https://webdemo.agora.io/agora-web-showcase/" class="btn btn-primary demo-card-btn">Check Legacy
               Web Demo</a>
           </div>
+        </div> -->
         </div>
       </div>
-    </div>
+    </section>
+  </div>
 
-    <script src="./assets/jquery-3.4.1.min.js"></script>
-    <script src="./assets/jquery.cookie.js"></script>
-    <script src="./assets/jquery.i18n.properties-min.js"></script>
-    <script src="./assets/bootstrap.bundle.min.js"></script>
-    <script src="./i18n/language.js"></script>
-    <script>
-      $(document).ready(function () {
-        var headHeight = 200;
-        var nav = $(".navbar");
-        console.log($(window).width());
+  
+  <script src="./assets/jquery-3.4.1.min.js"></script>
+  <script src="./assets/jquery.cookie.js"></script>
+  <script src="./assets/jquery.i18n.properties-min.js"></script>
+  <script src="./assets/bootstrap.bundle.min.js"></script>
+  <script src="./i18n/language.js"></script>
+
+  <script>
+    $(document).ready(function () {
+      var headHeight = 200;
+      var nav = $(".navbar");
+      console.log($(window).width());
+      if ($(window).width() < 1500) {
+        console.log("hide!");
+        nav.parent().hide();
+        return;
+      }
+      // $(window).scroll(function () {
+      //   if ($(this).scrollTop() > headHeight) {
+      //     nav.addClass("navFix");
+      //   }
+      //   else {
+      //     nav.removeClass("navFix");
+      //   }
+      // })
+      $(window).resize(function () {
+        nav = $(".navbar");
         if ($(window).width() < 1500) {
-          console.log("hide!");
-          nav.parent().hide();
+          nav.hide();
           return;
         }
-        $(window).scroll(function () {
-          if ($(this).scrollTop() > headHeight) {
-            nav.addClass("navFix");
-          }
-          else {
-            nav.removeClass("navFix");
-          }
-        })
-        $(window).resize(function () {
-          nav = $(".navbar");
-          if ($(window).width() < 1500) {
-            nav.hide();
-            return;
-          }
-          else {
-            nav.show()
-          }
-        })
+        else {
+          nav.show()
+        }
       })
-    </script>
+    })
+  </script>
 </body>
 
 </html>

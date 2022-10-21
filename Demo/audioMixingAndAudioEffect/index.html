@@ -33,12 +33,12 @@
   <div class="container">
     <form id="join-form">
       <div class="row join-info-group">
-          <div class="col-sm">
+          <div class="col-sm sso-hidden">
             <p class="join-info-text">AppID</p>
-            <input id="appid" type="text" placeholder="enter appid" required>
+            <input id="appid" type="text" placeholder="enter appid">
             <p class="tips">If you don`t know what is your appid, checkout <a href="https://docs.agora.io/en/Agora%20Platform/terms?platform=All%20Platforms#a-nameappidaapp-id">this</a></p>
           </div>
-          <div class="col-sm">
+          <div class="col-sm sso-hidden">
             <p class="join-info-text">Token(optional)</p>
             <input id="token" type="text" placeholder="enter token">
             <p class="tips">If you don`t know what is your token, checkout <a href="https://docs.agora.io/en/Agora%20Platform/terms?platform=All%20Platforms#a-namekeyadynamic-key">this</a></p>
@@ -99,6 +99,7 @@
     </div>
   </div>
 
+  
   <script src="../assets/jquery-3.4.1.min.js"></script>
   <script src="../assets/bootstrap.bundle.min.js"></script>
   <script src="https://download.agora.io/sdk/release/AgoraRTC_N.js"></script>

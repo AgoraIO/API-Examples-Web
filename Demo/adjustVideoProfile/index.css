@@ -1,3 +1,12 @@
+#pre-local-player {
+  width: 435px;
+  height: 300px;
+}
+
+.sso-hidden {
+  display: block;
+}
+
 .banner {
   padding: 0;
   background-color: #52575c;
@@ -42,9 +51,6 @@ input {
   display: none;
 }
 
-.input-group {
-  margin-top: 10px;
-}
 
 @media (max-width: 640px) {
   .player {

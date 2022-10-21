@@ -1,3 +1,16 @@
+#joined-setup {
+  display: none;
+}
+
+#pre-local-player {
+  width: 435px;
+  height: 300px;
+}
+
+.sso-hidden {
+  display: block;
+}
+
 .banner {
   padding: 0;
   background-color: #52575c;
@@ -69,6 +82,7 @@ input {
     width: 320px;
     height: 240px;
   }
+
   .player-with-stats {
     display: block;
   }

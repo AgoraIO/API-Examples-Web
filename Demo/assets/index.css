@@ -25,7 +25,7 @@
   margin-bottom: 50px;
 }
 
-.navFix {
+/* .navFix {
   background: #FFF;
   position: fixed;
   left: 0px;
@@ -34,7 +34,7 @@
   _position: absolute;
   top: expression((offsetParent.scrollTop)+0);
   z-index: 2;
-}
+} */
 
 label.i18n {
   margin-bottom: 0;

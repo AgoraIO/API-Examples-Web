@@ -1,4 +1,3 @@
-
 /*
  *  These procedures use Agora Voice Call SDK for Web to enable local and remote
  *  users to join and leave a Voice Call channel managed by Agora Platform.
@@ -10,7 +9,10 @@
  * @param {string} mode - The {@link https://docs.agora.io/en/Voice/API%20Reference/web_ng/interfaces/clientconfig.html#mode| streaming algorithm} used by Agora SDK.
  * @param  {string} codec - The {@link https://docs.agora.io/en/Voice/API%20Reference/web_ng/interfaces/clientconfig.html#codec| client codec} used by the browser.
  */
-var client = AgoraRTC.createClient({ mode: "rtc", codec: "vp8" });
+var client = AgoraRTC.createClient({
+  mode: "rtc",
+  codec: "vp8"
+});
 
 /*
  * Create an AgoraRTCClient object.
@@ -33,12 +35,10 @@ var options = {
   uid: null,
   token: null
 };
-
 AgoraRTC.onAutoplayFailed = () => {
-  alert("click to start autoplay!")
-}
-
-AgoraRTC.onMicrophoneChanged = async (changedDevice) => {
+  alert("click to start autoplay!");
+};
+AgoraRTC.onMicrophoneChanged = async changedDevice => {
   // When plugging in a device, switch to a device that is newly plugged in.
   if (changedDevice.state === "ACTIVE") {
     localTracks.audioTrack.setDevice(changedDevice.device.deviceId);
@@ -47,8 +47,7 @@ AgoraRTC.onMicrophoneChanged = async (changedDevice) => {
     const oldMicrophones = await AgoraRTC.getMicrophones();
     oldMicrophones[0] && localTracks.audioTrack.setDevice(oldMicrophones[0].deviceId);
   }
-}
-
+};
 
 /*
  * When this page is called with parameters in the URL, this procedure
@@ -56,18 +55,14 @@ AgoraRTC.onMicrophoneChanged = async (changedDevice) => {
  */
 $(() => {
   var urlParams = new URL(location.href).searchParams;
-  options.appid = urlParams.get("appid");
   options.channel = urlParams.get("channel");
-  options.token = urlParams.get("token");
   options.uid = urlParams.get("uid");
   if (options.appid && options.channel) {
     $("#uid").val(options.uid);
-    $("#appid").val(options.appid);
-    $("#token").val(options.token);
     $("#channel").val(options.channel);
     $("#join-form").submit();
   }
-})
+});
 
 /*
  * When a user clicks Join or Leave in the HTML form, this procedure gathers the information
@@ -78,12 +73,12 @@ $("#join-form").submit(async function (e) {
   e.preventDefault();
   $("#join").attr("disabled", true);
   try {
-    options.appid = $("#appid").val();
-    options.token = $("#token").val();
     options.channel = $("#channel").val();
     options.uid = Number($("#uid").val());
+    options.appid = $("#appid").val();
+    options.token = $("#token").val();
     await join();
-    if(options.token) {
+    if (options.token) {
       $("#success-alert-with-token").css("display", "block");
     } else {
       $("#success-alert a").attr("href", `index.html?appid=${options.appid}&channel=${options.channel}&token=${options.token}`);
@@ -94,32 +89,55 @@ $("#join-form").submit(async function (e) {
   } finally {
     $("#leave").attr("disabled", false);
   }
-})
+});
 
 /*
  * Called when a user clicks Leave in order to exit a channel.
  */
 $("#leave").click(function (e) {
   leave();
-})
+});
+$(".mic-list").delegate("a", "click", function (e) {
+  switchMicrophone(this.text);
+});
+$("#switch-devices").click(async function (e) {
+  $("#switch-devices-modal").modal("show");
+  if (!localTracks.audioTrack) {
+    localTracks.audioTrack = await AgoraRTC.createMicrophoneAudioTrack();
+  }
+  localTracks.audioTrack.play();
+  // get mics
+  mics = await AgoraRTC.getMicrophones();
+  const audioTrackLabel = localTracks.audioTrack.getTrackLabel();
+  currentMic = mics.find(item => item.label === audioTrackLabel);
+  $(".mic-input").val(currentMic.label);
+  $(".mic-list").empty();
+  mics.forEach(mic => {
+    $(".mic-list").append(`<a class="dropdown-item" href="#">${mic.label}</a>`);
+  });
+});
+async function switchMicrophone(label) {
+  currentMic = mics.find(mic => mic.label === label);
+  $(".mic-input").val(currentMic.label);
+  // switch device of local audio track.
+  await localTracks.audioTrack.setDevice(currentMic.deviceId);
+}
 
 /*
  * Join a channel, then create local audio tracks and publish them to the channel.
  */
 async function join() {
-
   // Add an event listener to play remote tracks when remote user publishes.
   client.on("user-published", handleUserPublished);
   client.on("user-unpublished", handleUserUnpublished);
 
   // Join a channel and create local tracks. Best practice is to use Promise.all and run them concurrently.
-  [ options.uid, localTracks.audioTrack ] = await Promise.all([
-    // Join the channel.
-    client.join(options.appid, options.channel, options.token || null, options.uid || null),
-    // Create tracks to the local microphone and camera.
-    AgoraRTC.createMicrophoneAudioTrack(),
-  ]);
-
+  [options.uid, localTracks.audioTrack] = await Promise.all([
+  // Join the channel.
+  client.join(options.appid, options.channel, options.token || null, options.uid || null),
+  // Create tracks to the local microphone and camera.
+  AgoraRTC.createMicrophoneAudioTrack()]);
+  $("#joined-setup").css("display", "flex");
   // Publish the local audio tracks to the channel.
   await client.publish(Object.values(localTracks));
   console.log("publish success");
@@ -131,7 +149,7 @@ async function join() {
 async function leave() {
   for (trackName in localTracks) {
     var track = localTracks[trackName];
-    if(track) {
+    if (track) {
       track.stop();
       track.close();
       localTracks[trackName] = undefined;
@@ -144,13 +162,12 @@ async function leave() {
 
   // leave the channel
   await client.leave();
-
   $("#local-player-name").text("");
   $("#join").attr("disabled", false);
   $("#leave").attr("disabled", true);
+  $("#joined-setup").css("display", "none");
   console.log("client leaves channel success");
 }
-
 
 /*
  * Add the local use to a remote channel.
@@ -190,6 +207,5 @@ function handleUserUnpublished(user, mediaType) {
     const id = user.uid;
     delete remoteUsers[id];
     $(`#player-wrapper-${id}`).remove();
-
   }
 }

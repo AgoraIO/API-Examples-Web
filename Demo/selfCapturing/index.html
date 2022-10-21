@@ -73,12 +73,12 @@
   -->
   <form id="join-form">
     <div class="row join-info-group">
-      <div class="col-sm">
+      <div class="col-sm sso-hidden">
         <p class="join-info-text">APP ID</p>
-        <input id="appid" type="text" placeholder="Enter the appid" required>
+        <input id="appid" type="text" placeholder="Enter the appid">
         <p class="tips">You find your APP ID in the <a href="https://console.agora.io/projects">Agora Console</a></p>
       </div>
-      <div class="col-sm">
+      <div class="col-sm sso-hidden">
         <p class="join-info-text">Token(optional)</p>
         <input id="token" type="text" placeholder="Enter the app token">
         <p class="tips">To create a temporary token, <a href="https://console.agora.io/projects">edit your project</a> in Agora Console.</p>
@@ -123,9 +123,12 @@
 <!--
   Import the Agora Video Call SDK for Web and local calls to it.
 -->
+
+
 <script src="../assets/jquery-3.4.1.min.js"></script>
 <script src="../assets/bootstrap.bundle.min.js"></script>
 <script src="https://download.agora.io/sdk/release/AgoraRTC_N.js"></script>
 <script src="./index.js"></script>
+
 </body>
 </html>

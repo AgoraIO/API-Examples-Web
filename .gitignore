@@ -1,2 +1,13 @@
+node_modules
+.env
+.env-dev
+.env.dev
+.env.prod
+*.txt
 .DS_Store
+*.sh
+*.sh~
+release
+build
+dist
 .vscode
