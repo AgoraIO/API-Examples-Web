@@ -11,7 +11,6 @@
 </head>
 
 <body>
-
   <!--
   This page interacts with the Agora Voice Call for Web Next Generation SDK to easily create Video Call
   functionality in a Web page.
@@ -107,25 +106,74 @@
       <!--
       Join or leave a Video Call channel.
     -->
-      <div class="button-group">
-        <button id="join" type="submit" class="btn btn-primary btn-sm">Join</button>
-        <button id="leave" type="button" class="btn btn-primary btn-sm" disabled>Leave</button>
-      </div>
+      <div class="button-group" style="display:inline-block">
+        <button id="join" type="submit" class="btn btn-primary btn-sm" style="height: 30px;">Join</button>
+        <button id="leave" type="button" class="btn btn-primary btn-sm" style="height: 30px;" disabled>Leave</button>
 
-      <div style="margin: 10px 0;" id="joined-setup">
-        <div class="button-group" style="display: flex">
-          <button id="switch-devices" type="button" class="btn btn-primary btn-sm" style="flex:0 0 auto;margin-right:10px">Switch Devices</button>
-          <div class="input-group" style="flex:0 0 500px">
-            <div class="input-group-prepend">
-              <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false">Video Profiles</button>
-              <div class="profile-list dropdown-menu"></div>
+        <div class="collapse-wrapper" style="height: 30px;">
+          <div class="collapse-content">
+            <button class="btn btn-primary btn-sm collapse-btn" type="button" data-toggle="collapse"
+              data-target="#agora-collapse" aria-expanded="false" aria-controls="agora-collapse">
+              ADVANCED SETTINGS
+            </button>
+            <!-- collapse -->
+            <div class="collapse" id="agora-collapse" style="width: 100%;z-index: 9999;">
+              <div class="card card-body">
+                <!-- Microphone -->
+                <h6 class="device-name">Microphone</h6>
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false">Mics</button>
+                    <div class="mic-list dropdown-menu"></div>
+                  </div>
+                  <input type="text" class="mic-input form-control" aria-label="Text input with dropdown button"
+                    readonly>
+                </div>
+                <!-- Camera -->
+                <h6 class="device-name">Camera</h6>
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false">Cams</button>
+                    <div class="cam-list dropdown-menu"></div>
+                  </div>
+                  <input type="text" class="cam-input form-control" aria-label="Text input with dropdown button"
+                    readonly>
+                </div>
+                <!-- CODEC -->
+                <h6 class="device-name">CODEC</h6>
+                <span style="padding-left: 1.25rem;">
+                  <input class="form-check-input" type="radio" name="radios" id="vp8" value="vp8"
+                    checked>
+                  <label class="form-check-label" for="vp8">
+                    vp8
+                  </label>
+                </span>
+                <span style="padding-left: 1.25rem;" class="mb-3">
+                  <input class="form-check-input" type="radio" name="radios" id="h264" value="h264">
+                  <label class="form-check-label" for="h264">
+                    h264
+                  </label>
+                </span>
+                <!-- profile -->
+                <h6 class="device-name">Video Profiles</h6>
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false">Profiles</button>
+                    <div class="profile-list dropdown-menu"></div>
+                  </div>
+                  <input type="text" class="profile-input form-control" aria-label="Text input with dropdown button"
+                    readonly>
+                </div>
+              </div>
             </div>
-            <input type="text" class="profile-input form-control" aria-label="Text input with dropdown button" readonly>
           </div>
         </div>
       </div>
     </form>
+
     <!--
     This local media splayer is enabled when the user has successfully joined a Video Call channel.
   -->
@@ -137,44 +185,6 @@
       <div class="w-100"></div>
       <div class="col">
         <div id="remote-playerlist"></div>
-      </div>
-    </div>
-
-    <!-- Modal -->
-    <div class="modal fade" id="switch-devices-modal" data-backdrop="static" tabindex="-1" role="dialog"
-      aria-labelledby="staticBackdropLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="modal-label">Switch Devices</h5>
-          </div>
-          <div class="modal-body">
-            <div class="container">
-              <h5 class="device-name">Microphone</h5>
-              <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                  <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false">Mics</button>
-                  <div class="mic-list dropdown-menu"></div>
-                </div>
-                <input type="text" class="mic-input form-control" aria-label="Text input with dropdown button" readonly>
-              </div>
-              <h5 class="device-name">Camera</h5>
-              <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                  <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false">Cams</button>
-                  <div class="cam-list dropdown-menu"></div>
-                </div>
-                <input type="text" class="cam-input form-control" aria-label="Text input with dropdown button" readonly>
-              </div>
-              <div id="pre-local-player"></div>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-primary" data-dismiss="modal" id="finish">Finish</button>
-          </div>
-        </div>
       </div>
     </div>
   </div>

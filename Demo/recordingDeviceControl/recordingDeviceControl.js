@@ -25,52 +25,6 @@ var currentCam; // the camera you are using
 
 let volumeAnimation;
 
-// you can find all the agora preset video profiles here https://docs.agora.io/en/Voice/API%20Reference/web_ng/globals.html#videoencoderconfigurationpreset
-var videoProfiles = [{
-  label: "360p_7",
-  detail: "480×360, 15fps, 320Kbps",
-  value: "360p_7"
-}, {
-  label: "360p_8",
-  detail: "480×360, 30fps, 490Kbps",
-  value: "360p_8"
-}, {
-  label: "480p_1",
-  detail: "640×480, 15fps, 500Kbps",
-  value: "480p_1"
-}, {
-  label: "480p_2",
-  detail: "640×480, 30fps, 1000Kbps",
-  value: "480p_2"
-}, {
-  label: "720p_1",
-  detail: "1280×720, 15fps, 1130Kbps",
-  value: "720p_1"
-}, {
-  label: "720p_2",
-  detail: "1280×720, 30fps, 2000Kbps",
-  value: "720p_2"
-}, {
-  label: "1080p_1",
-  detail: "1920×1080, 15fps, 2080Kbps",
-  value: "1080p_1"
-}, {
-  label: "1080p_2",
-  detail: "1920×1080, 30fps, 3000Kbps",
-  value: "1080p_2"
-}, {
-  label: "200×640",
-  detail: "200×640, 30fps",
-  value: {
-    width: 200,
-    height: 640,
-    frameRate: 30
-  }
-} // custom video profile
-];
-
-var curVideoProfile;
-
 // the demo can auto join channel with params in url
 $(async () => {
   $("#media-device-test").modal("show");
@@ -80,11 +34,9 @@ $(async () => {
   $(".mic-list").delegate("a", "click", function (e) {
     switchMicrophone(this.text);
   });
-  initVideoProfiles();
-  $(".profile-list").delegate("a", "click", function (e) {
-    changeVideoProfile(this.getAttribute("label"));
-  });
   var urlParams = new URL(location.href).searchParams;
+  options.appid = urlParams.get("appid");
+  options.channel = urlParams.get("channel");
   options.token = urlParams.get("token");
   options.uid = urlParams.get("uid");
   await mediaDeviceTest();
@@ -140,19 +92,6 @@ $("#media-device-test").on("hidden.bs.modal", function (e) {
     $("#join-form").submit();
   }
 });
-function initVideoProfiles() {
-  videoProfiles.forEach(profile => {
-    $(".profile-list").append(`<a class="dropdown-item" label="${profile.label}" href="#">${profile.label}: ${profile.detail}</a>`);
-  });
-  curVideoProfile = videoProfiles.find(item => item.label == '480p_1');
-  $(".profile-input").val(`${curVideoProfile.detail}`);
-}
-async function changeVideoProfile(label) {
-  curVideoProfile = videoProfiles.find(profile => profile.label === label);
-  $(".profile-input").val(`${curVideoProfile.detail}`);
-  // change the local video track`s encoder configuration
-  localTracks.videoTrack && (await localTracks.videoTrack.setEncoderConfiguration(curVideoProfile.value));
-}
 async function join() {
   // add event listener to play remote tracks when remote user publishs.
   client.on("user-published", handleUserPublished);

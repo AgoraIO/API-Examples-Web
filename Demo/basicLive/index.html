@@ -79,20 +79,6 @@
         <button id="leave" type="button" class="btn btn-primary btn-sm" disabled>Leave</button>
       </div>
 
-      <div style="margin: 10px 0;" id="joined-setup">
-        <div class="button-group" style="display: flex">
-          <button id="switch-devices" type="button" class="btn btn-primary btn-sm"
-            style="flex:0 0 auto;margin-right:10px">Switch Devices</button>
-          <div class="input-group" style="flex:0 0 500px">
-            <div class="input-group-prepend">
-              <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false">Video Profiles</button>
-              <div class="profile-list dropdown-menu"></div>
-            </div>
-            <input type="text" class="profile-input form-control" aria-label="Text input with dropdown button" readonly>
-          </div>
-        </div>
-      </div>
     </form>
     <!-- Single button -->
     <div class="row video-group">
@@ -106,43 +92,6 @@
       </div>
     </div>
 
-    <!-- Modal -->
-    <div class="modal fade" id="switch-devices-modal" data-backdrop="static" tabindex="-1" role="dialog"
-      aria-labelledby="staticBackdropLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="modal-label">Switch Devices</h5>
-          </div>
-          <div class="modal-body">
-            <div class="container">
-              <h5 class="device-name">Microphone</h5>
-              <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                  <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false">Mics</button>
-                  <div class="mic-list dropdown-menu"></div>
-                </div>
-                <input type="text" class="mic-input form-control" aria-label="Text input with dropdown button" readonly>
-              </div>
-              <h5 class="device-name">Camera</h5>
-              <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                  <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false">Cams</button>
-                  <div class="cam-list dropdown-menu"></div>
-                </div>
-                <input type="text" class="cam-input form-control" aria-label="Text input with dropdown button" readonly>
-              </div>
-              <div id="pre-local-player"></div>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-primary" data-dismiss="modal" id="finish">Finish</button>
-          </div>
-        </div>
-      </div>
-    </div>
   </div>
 
   

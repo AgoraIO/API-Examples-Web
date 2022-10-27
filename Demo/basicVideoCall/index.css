@@ -1,12 +1,3 @@
-#joined-setup {
-  display: none;
-}
-
-#pre-local-player {
-  width: 435px;
-  height: 300px;
-}
-
 .sso-hidden {
   display: block;
 }
@@ -37,7 +28,7 @@
   margin-bottom: 2px;
 }
 
-input {
+.join-info-group input {
   width: 100%;
   margin-bottom: 2px;
 }
@@ -59,5 +50,37 @@ input {
   .player {
     width: 320px;
     height: 240px;
+  }
+}
+
+.collapse-wrapper {
+  display: inline-block;
+  position: relative;
+}
+
+.collapse-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+
+.collapse-wrapper .collapse-btn {
+  padding-left: 6.5rem;
+  padding-right: 6.5rem
+}
+
+@media (max-width: 640px) {
+  .collapse-wrapper {
+    margin-top: 10px;
+  }
+}
+
+@media (max-width: 380px) {
+  .collapse-wrapper .collapse-btn {
+    padding-left: 4.5rem;
+    padding-right: 4.5rem
   }
 }

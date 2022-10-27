@@ -69,10 +69,14 @@ $(() => {
     changeVideoProfile(this.getAttribute("label"));
   });
   var urlParams = new URL(location.href).searchParams;
+  options.appid = urlParams.get("appid");
   options.channel = urlParams.get("channel");
+  options.token = urlParams.get("token");
   options.uid = urlParams.get("uid");
   if (options.appid && options.channel) {
     $("#uid").val(options.uid);
+    $("#appid").val(options.appid);
+    $("#token").val(options.token);
     $("#channel").val(options.channel);
     $("#join-form").submit();
   }
@@ -101,63 +105,6 @@ $("#join-form").submit(async function (e) {
 $("#leave").click(function (e) {
   leave();
 });
-$("#finish").click(function (e) {
-  const leaveDisabled = $("#leave").attr("disabled");
-  if (!leaveDisabled && localTracks.videoTrack) {
-    localTracks.videoTrack.play("local-player");
-  }
-});
-$(".cam-list").delegate("a", "click", function (e) {
-  switchCamera(this.text);
-});
-$(".mic-list").delegate("a", "click", function (e) {
-  switchMicrophone(this.text);
-});
-$("#switch-devices").click(async function (e) {
-  $("#switch-devices-modal").modal("show");
-  if (!localTracks.audioTrack) {
-    localTracks.audioTrack = await AgoraRTC.createMicrophoneAudioTrack();
-  }
-  if (!localTracks.videoTrack) {
-    localTracks.videoTrack = await AgoraRTC.createCameraVideoTrack();
-  }
-
-  // play local track on device detect dialog
-  localTracks.videoTrack.play("pre-local-player");
-  localTracks.audioTrack.play();
-
-  // get mics
-  mics = await AgoraRTC.getMicrophones();
-  const audioTrackLabel = localTracks.audioTrack.getTrackLabel();
-  currentMic = mics.find(item => item.label === audioTrackLabel);
-  $(".mic-input").val(currentMic.label);
-  $(".mic-list").empty();
-  mics.forEach(mic => {
-    $(".mic-list").append(`<a class="dropdown-item" href="#">${mic.label}</a>`);
-  });
-
-  // get cameras
-  cams = await AgoraRTC.getCameras();
-  const videoTrackLabel = localTracks.videoTrack.getTrackLabel();
-  currentCam = cams.find(item => item.label === videoTrackLabel);
-  $(".cam-input").val(currentCam.label);
-  $(".cam-list").empty();
-  cams.forEach(cam => {
-    $(".cam-list").append(`<a class="dropdown-item" href="#">${cam.label}</a>`);
-  });
-});
-async function switchCamera(label) {
-  currentCam = cams.find(cam => cam.label === label);
-  $(".cam-input").val(currentCam.label);
-  // switch device of local video track.
-  await localTracks.videoTrack.setDevice(currentCam.deviceId);
-}
-async function switchMicrophone(label) {
-  currentMic = mics.find(mic => mic.label === label);
-  $(".mic-input").val(currentMic.label);
-  // switch device of local audio track.
-  await localTracks.audioTrack.setDevice(currentMic.deviceId);
-}
 async function join() {
   // add event listener to play remote tracks when remote user publishs.
   client.on("user-published", handleUserPublished);

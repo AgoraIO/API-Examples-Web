@@ -1,12 +1,3 @@
-#joined-setup {
-  display: none;
-}
-
-#pre-local-player {
-  width: 435px;
-  height: 300px;
-}
-
 .sso-hidden {
   display: block;
 }
@@ -37,8 +28,11 @@
   margin-bottom: 2px;
 }
 
+.join-info-group input {
+  width: 100%;
+}
+
 input {
-  /* width: 100%; */
   margin-bottom: 2px;
 }
 

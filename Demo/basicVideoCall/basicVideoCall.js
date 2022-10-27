@@ -9,10 +9,7 @@
  * @param {string} mode - The {@link https://docs.agora.io/en/Voice/API%20Reference/web_ng/interfaces/clientconfig.html#mode| streaming algorithm} used by Agora SDK.
  * @param  {string} codec - The {@link https://docs.agora.io/en/Voice/API%20Reference/web_ng/interfaces/clientconfig.html#codec| client codec} used by the browser.
  */
-var client = AgoraRTC.createClient({
-  mode: "rtc",
-  codec: "vp8"
-});
+var client;
 
 /*
  * Clear the video and audio tracks used by `client` on initiation.
@@ -70,17 +67,7 @@ var videoProfiles = [{
   label: "1080p_2",
   detail: "1920×1080, 30fps, 3000Kbps",
   value: "1080p_2"
-}, {
-  label: "200×640",
-  detail: "200×640, 30fps",
-  value: {
-    width: 200,
-    height: 640,
-    frameRate: 30
-  }
-} // custom video profile
-];
-
+}];
 var curVideoProfile;
 AgoraRTC.onAutoplayFailed = () => {
   alert("click to start autoplay!");
@@ -105,6 +92,35 @@ AgoraRTC.onCameraChanged = async changedDevice => {
     oldCameras[0] && localTracks.videoTrack.setDevice(oldCameras[0].deviceId);
   }
 };
+async function initDevices() {
+  if (!localTracks.audioTrack) {
+    localTracks.audioTrack = await AgoraRTC.createMicrophoneAudioTrack();
+  }
+  if (!localTracks.videoTrack) {
+    localTracks.videoTrack = await AgoraRTC.createCameraVideoTrack({
+      encoderConfig: curVideoProfile.value
+    });
+  }
+  // get mics
+  mics = await AgoraRTC.getMicrophones();
+  const audioTrackLabel = localTracks.audioTrack.getTrackLabel();
+  currentMic = mics.find(item => item.label === audioTrackLabel);
+  $(".mic-input").val(currentMic.label);
+  $(".mic-list").empty();
+  mics.forEach(mic => {
+    $(".mic-list").append(`<a class="dropdown-item" href="#">${mic.label}</a>`);
+  });
+
+  // get cameras
+  cams = await AgoraRTC.getCameras();
+  const videoTrackLabel = localTracks.videoTrack.getTrackLabel();
+  currentCam = cams.find(item => item.label === videoTrackLabel);
+  $(".cam-input").val(currentCam.label);
+  $(".cam-list").empty();
+  cams.forEach(cam => {
+    $(".cam-list").append(`<a class="dropdown-item" href="#">${cam.label}</a>`);
+  });
+}
 async function switchCamera(label) {
   currentCam = cams.find(cam => cam.label === label);
   $(".cam-input").val(currentCam.label);
@@ -141,18 +157,16 @@ $(() => {
     changeVideoProfile(this.getAttribute("label"));
   });
   var urlParams = new URL(location.href).searchParams;
+  options.appid = urlParams.get("appid");
   options.channel = urlParams.get("channel");
+  options.token = urlParams.get("token");
   options.uid = urlParams.get("uid");
   if (options.appid && options.channel) {
     $("#uid").val(options.uid);
+    $("#appid").val(options.appid);
+    $("#token").val(options.token);
     $("#channel").val(options.channel);
     $("#join-form").submit();
-  }
-});
-$("#finish").click(function (e) {
-  const leaveDisabled = $("#leave").attr("disabled");
-  if (!leaveDisabled && localTracks.videoTrack) {
-    localTracks.videoTrack.play("local-player");
   }
 });
 
@@ -165,6 +179,12 @@ $("#join-form").submit(async function (e) {
   e.preventDefault();
   $("#join").attr("disabled", true);
   try {
+    if (!client) {
+      client = AgoraRTC.createClient({
+        mode: "rtc",
+        codec: getCodec()
+      });
+    }
     options.channel = $("#channel").val();
     options.uid = Number($("#uid").val());
     options.appid = $("#appid").val();
@@ -189,44 +209,14 @@ $("#join-form").submit(async function (e) {
 $("#leave").click(function (e) {
   leave();
 });
+$('#agora-collapse').on('show.bs.collapse	', function () {
+  initDevices();
+});
 $(".cam-list").delegate("a", "click", function (e) {
   switchCamera(this.text);
 });
 $(".mic-list").delegate("a", "click", function (e) {
   switchMicrophone(this.text);
-});
-$("#switch-devices").click(async function (e) {
-  $("#switch-devices-modal").modal("show");
-  if (!localTracks.audioTrack) {
-    localTracks.audioTrack = await AgoraRTC.createMicrophoneAudioTrack();
-  }
-  if (!localTracks.videoTrack) {
-    localTracks.videoTrack = await AgoraRTC.createCameraVideoTrack();
-  }
-
-  // play local track on device detect dialog
-  localTracks.videoTrack.play("pre-local-player");
-  localTracks.audioTrack.play();
-
-  // get mics
-  mics = await AgoraRTC.getMicrophones();
-  const audioTrackLabel = localTracks.audioTrack.getTrackLabel();
-  currentMic = mics.find(item => item.label === audioTrackLabel);
-  $(".mic-input").val(currentMic.label);
-  $(".mic-list").empty();
-  mics.forEach(mic => {
-    $(".mic-list").append(`<a class="dropdown-item" href="#">${mic.label}</a>`);
-  });
-
-  // get cameras
-  cams = await AgoraRTC.getCameras();
-  const videoTrackLabel = localTracks.videoTrack.getTrackLabel();
-  currentCam = cams.find(item => item.label === videoTrackLabel);
-  $(".cam-input").val(currentCam.label);
-  $(".cam-list").empty();
-  cams.forEach(cam => {
-    $(".cam-list").append(`<a class="dropdown-item" href="#">${cam.label}</a>`);
-  });
 });
 
 /*
@@ -242,7 +232,9 @@ async function join() {
     localTracks.audioTrack = await AgoraRTC.createMicrophoneAudioTrack();
   }
   if (!localTracks.videoTrack) {
-    localTracks.videoTrack = await AgoraRTC.createCameraVideoTrack();
+    localTracks.videoTrack = await AgoraRTC.createCameraVideoTrack({
+      encoderConfig: curVideoProfile.value
+    });
   }
 
   // Play the local video track to the local browser and update the UI with the user ID.
@@ -330,4 +322,14 @@ function handleUserUnpublished(user, mediaType) {
     delete remoteUsers[id];
     $(`#player-wrapper-${id}`).remove();
   }
+}
+function getCodec() {
+  var radios = document.getElementsByName("radios");
+  var value;
+  for (var i = 0; i < radios.length; i++) {
+    if (radios[i].checked) {
+      value = radios[i].value;
+    }
+  }
+  return value;
 }

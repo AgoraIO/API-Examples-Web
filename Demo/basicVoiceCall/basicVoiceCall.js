@@ -55,10 +55,14 @@ AgoraRTC.onMicrophoneChanged = async changedDevice => {
  */
 $(() => {
   var urlParams = new URL(location.href).searchParams;
+  options.appid = urlParams.get("appid");
   options.channel = urlParams.get("channel");
+  options.token = urlParams.get("token");
   options.uid = urlParams.get("uid");
   if (options.appid && options.channel) {
     $("#uid").val(options.uid);
+    $("#appid").val(options.appid);
+    $("#token").val(options.token);
     $("#channel").val(options.channel);
     $("#join-form").submit();
   }
@@ -97,31 +101,6 @@ $("#join-form").submit(async function (e) {
 $("#leave").click(function (e) {
   leave();
 });
-$(".mic-list").delegate("a", "click", function (e) {
-  switchMicrophone(this.text);
-});
-$("#switch-devices").click(async function (e) {
-  $("#switch-devices-modal").modal("show");
-  if (!localTracks.audioTrack) {
-    localTracks.audioTrack = await AgoraRTC.createMicrophoneAudioTrack();
-  }
-  localTracks.audioTrack.play();
-  // get mics
-  mics = await AgoraRTC.getMicrophones();
-  const audioTrackLabel = localTracks.audioTrack.getTrackLabel();
-  currentMic = mics.find(item => item.label === audioTrackLabel);
-  $(".mic-input").val(currentMic.label);
-  $(".mic-list").empty();
-  mics.forEach(mic => {
-    $(".mic-list").append(`<a class="dropdown-item" href="#">${mic.label}</a>`);
-  });
-});
-async function switchMicrophone(label) {
-  currentMic = mics.find(mic => mic.label === label);
-  $(".mic-input").val(currentMic.label);
-  // switch device of local audio track.
-  await localTracks.audioTrack.setDevice(currentMic.deviceId);
-}
 
 /*
  * Join a channel, then create local audio tracks and publish them to the channel.
