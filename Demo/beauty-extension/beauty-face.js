@@ -55,10 +55,6 @@ $("#join-form").submit(async function (e) {
   $("#join").attr("disabled", true);
   try {
     options.channel = $("#channel").val();
-    const {
-      appId,
-      token
-    } = await agoraGetAppData(options);
     options.appid = appId;
     options.token = token;
     await join();
