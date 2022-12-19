@@ -62,8 +62,6 @@ $("#join-form").submit(async function (e) {
     options.appid = appId;
     options.token = token;
     await join();
-    agoraReportData(options);
-    agoraContentInspect(client, options);
     if (options.token) {
       $("#success-alert-with-token").css("display", "block");
     } else {
