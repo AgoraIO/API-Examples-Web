@@ -119,7 +119,9 @@ async function join() {
     });
   }
   if (!localTracks.audioTrack) {
-    localTracks.audioTrack = await AgoraRTC.createMicrophoneAudioTrack();
+    localTracks.audioTrack = await AgoraRTC.createMicrophoneAudioTrack({
+      encoderConfig: "music_standard"
+    });
   }
 
   // play local video track

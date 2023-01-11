@@ -95,7 +95,9 @@ async function join() {
   if (options.role === "host") {
     // create local audio and video tracks
     if (!localTracks.audioTrack) {
-      localTracks.audioTrack = await AgoraRTC.createMicrophoneAudioTrack();
+      localTracks.audioTrack = await AgoraRTC.createMicrophoneAudioTrack({
+        encoderConfig: "music_standard"
+      });
     }
     if (!localTracks.videoTrack) {
       localTracks.videoTrack = await AgoraRTC.createCameraVideoTrack();

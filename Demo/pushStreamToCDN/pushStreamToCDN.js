@@ -98,7 +98,9 @@ async function join() {
   options.uid = await client.join(options.appid, options.channel, options.token || null, options.uid || null);
   if (options.role === "host") {
     // create local audio and video tracks
-    localTracks.audioTrack = await AgoraRTC.createMicrophoneAudioTrack();
+    localTracks.audioTrack = await AgoraRTC.createMicrophoneAudioTrack({
+      encoderConfig: "music_standard"
+    });
     localTracks.videoTrack = await AgoraRTC.createCameraVideoTrack();
     // play local video track
     localTracks.videoTrack.play("local-player");

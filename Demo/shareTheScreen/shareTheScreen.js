@@ -68,7 +68,9 @@ async function join() {
   // join the channel
   client.join(options.appid, options.channel, options.token || null, options.uid || null),
   // ** create local tracks, using microphone and screen
-  AgoraRTC.createMicrophoneAudioTrack(), AgoraRTC.createScreenVideoTrack({
+  AgoraRTC.createMicrophoneAudioTrack({
+    encoderConfig: "music_standard"
+  }), AgoraRTC.createScreenVideoTrack({
     encoderConfig: "720p"
   }, "auto")]);
   if (screenTrack instanceof Array) {

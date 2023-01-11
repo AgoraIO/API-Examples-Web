@@ -103,7 +103,8 @@ async function join() {
     [localTracks.audioTrack, localTracks.videoTrack] = await Promise.all([
     // create local tracks, using microphone and camera
     AgoraRTC.createMicrophoneAudioTrack({
-      microphoneId: currentMic.deviceId
+      microphoneId: currentMic.deviceId,
+      encoderConfig: "music_standard"
     }), AgoraRTC.createCameraVideoTrack({
       cameraId: currentCam.deviceId
     })]);
@@ -122,7 +123,9 @@ async function mediaDeviceTest() {
   // create local tracks
   [localTracks.audioTrack, localTracks.videoTrack] = await Promise.all([
   // create local tracks, using microphone and camera
-  AgoraRTC.createMicrophoneAudioTrack(), AgoraRTC.createCameraVideoTrack()]);
+  AgoraRTC.createMicrophoneAudioTrack({
+    encoderConfig: "music_standard"
+  }), AgoraRTC.createCameraVideoTrack()]);
 
   // play local track on device detect dialog
   localTracks.videoTrack.play("pre-local-player");
@@ -161,7 +164,8 @@ async function doNetworkTest() {
     [localTracks.audioTrack, localTracks.videoTrack] = await Promise.all([
     // create local tracks, using microphone and camera
     AgoraRTC.createMicrophoneAudioTrack({
-      microphoneId: currentMic.deviceId
+      microphoneId: currentMic.deviceId,
+      encoderConfig: "music_standard"
     }), AgoraRTC.createCameraVideoTrack({
       cameraId: currentCam.deviceId
     })]);

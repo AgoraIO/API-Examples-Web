@@ -66,7 +66,9 @@ async function join() {
   // Add an event listener to play remote tracks when remote user publishes.
   client.on("user-published", handleUserPublished);
   client.on("user-unpublished", handleUserUnpublished);
-  [options.uid, localTracks.audioTrack, localTracks.videoTrack] = await Promise.all([client.join(options.appid, options.channel, options.token || null, options.uid || null), AgoraRTC.createMicrophoneAudioTrack(), AgoraRTC.createCameraVideoTrack()]);
+  [options.uid, localTracks.audioTrack, localTracks.videoTrack] = await Promise.all([client.join(options.appid, options.channel, options.token || null, options.uid || null), AgoraRTC.createMicrophoneAudioTrack({
+    encoderConfig: "music_standard"
+  }), AgoraRTC.createCameraVideoTrack()]);
   if (localTracks.videoTrack) {
     $("#vb-area").removeClass("hide").addClass("show");
   }

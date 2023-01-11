@@ -206,7 +206,9 @@ async function join() {
   // join the channel
   client.join(options.appid, options.channel, options.token || null, options.uid || null),
   // create local tracks, using microphone and camera
-  AgoraRTC.createMicrophoneAudioTrack(), AgoraRTC.createCameraVideoTrack()]);
+  AgoraRTC.createMicrophoneAudioTrack({
+    encoderConfig: "music_standard"
+  }), AgoraRTC.createCameraVideoTrack()]);
   // play local video track
   localTracks.videoTrack.play("local-player");
   $("#local-player-name").text(`localVideo(${options.uid})`);

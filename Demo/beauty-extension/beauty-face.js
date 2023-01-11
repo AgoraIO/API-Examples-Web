@@ -37,7 +37,9 @@ var virtualBackgroundInstance;
 // the demo can auto join channel with params in url
 $(() => {});
 document.getElementById('start').onclick = async () => {
-  localTracks.audioTrack = localTracks.audioTrack || (await AgoraRTC.createMicrophoneAudioTrack());
+  localTracks.audioTrack = localTracks.audioTrack || (await AgoraRTC.createMicrophoneAudioTrack({
+    encoderConfig: "music_standard"
+  }));
   localTracks.videoTrack = localTracks.videoTrack || (await AgoraRTC.createCameraVideoTrack({
     cameraId: videoSelect.value,
     encoderConfig: '720p_2'
@@ -55,8 +57,8 @@ $("#join-form").submit(async function (e) {
   $("#join").attr("disabled", true);
   try {
     options.channel = $("#channel").val();
-    options.appid = appId;
-    options.token = token;
+    options.appid = $("#appid").val();
+    options.token = $("#token").val();
     await join();
     if (options.token) {
       $("#success-alert-with-token").css("display", "block");

@@ -112,7 +112,9 @@ async function join() {
   client.on("user-unpublished", handleUserUnpublished);
 
   // Default publish local microphone audio track to both options.
-  localTracks.audioTrack = await AgoraRTC.createMicrophoneAudioTrack();
+  localTracks.audioTrack = await AgoraRTC.createMicrophoneAudioTrack({
+    encoderConfig: "music_standard"
+  });
   if (currentStream == "camera") {
     // Join a channel and create local tracks. Best practice is to use Promise.all and run them concurrently.
     [options.uid, localTracks.videoTrack] = await Promise.all([

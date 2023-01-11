@@ -131,7 +131,9 @@ async function join() {
     localTracks.videoTrack = await AgoraRTC.createCameraVideoTrack();
   }
   if (!localTracks.audioTrack) {
-    localTracks.audioTrack = await AgoraRTC.createMicrophoneAudioTrack();
+    localTracks.audioTrack = await AgoraRTC.createMicrophoneAudioTrack({
+      encoderConfig: "music_standard"
+    });
   }
 
   // Play the local video track to the local browser and update the UI with the user ID.

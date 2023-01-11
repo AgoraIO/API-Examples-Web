@@ -115,7 +115,9 @@ async function join() {
   // Join the channel.
   client.join(options.appid, options.channel, options.token || null, options.uid || null),
   // Create tracks to the local microphone and camera.
-  AgoraRTC.createMicrophoneAudioTrack()]);
+  AgoraRTC.createMicrophoneAudioTrack({
+    encoderConfig: "music_standard"
+  })]);
   $("#joined-setup").css("display", "flex");
   // Publish the local audio tracks to the channel.
   await client.publish(Object.values(localTracks));

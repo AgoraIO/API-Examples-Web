@@ -118,7 +118,7 @@ async function join() {
   if (!localTracks.audioTrack || !localTracks.videoTrack) {
     [localTracks.audioTrack, localTracks.videoTrack] = await Promise.all([
       // create local tracks, using microphone and camera
-      AgoraRTC.createMicrophoneAudioTrack({ microphoneId: currentMic.deviceId }),
+      AgoraRTC.createMicrophoneAudioTrack({ microphoneId: currentMic.deviceId, encoderConfig: "music_standard" }),
       AgoraRTC.createCameraVideoTrack({ cameraId: currentCam.deviceId })
     ]);
   }
@@ -136,7 +136,9 @@ async function mediaDeviceTest() {
   // create local tracks
   [localTracks.audioTrack, localTracks.videoTrack] = await Promise.all([
     // create local tracks, using microphone and camera
-    AgoraRTC.createMicrophoneAudioTrack(),
+    AgoraRTC.createMicrophoneAudioTrack({
+      encoderConfig: "music_standard"
+    }),
     // Video has a default parameter that may differ from the browser's default options，So I assign a value {}
     AgoraRTC.createCameraVideoTrack({})
   ]);
@@ -174,7 +176,7 @@ async function doNetworkTest() {
   if (!localTracks.audioTrack || !localTracks.videoTrack) {
     [localTracks.audioTrack, localTracks.videoTrack] = await Promise.all([
       // create local tracks, using microphone and camera
-      AgoraRTC.createMicrophoneAudioTrack({ microphoneId: currentMic.deviceId }),
+      AgoraRTC.createMicrophoneAudioTrack({ microphoneId: currentMic.deviceId, encoderConfig: "music_standard" }),
       AgoraRTC.createCameraVideoTrack({ cameraId: currentCam.deviceId })
     ]);
   }
