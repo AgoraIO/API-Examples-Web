@@ -46,7 +46,7 @@ $("#join-form").submit(async function (e) {
   e.preventDefault();
 
   //check the id of submitter to decide to join a channel or do netwwork test
-  let submitterId = e.originalEvent.submitter.attributes[0].value;
+  let submitterId = e.originalEvent ? e.originalEvent.submitter.attributes[0].value : "join"
   options.channel = $("#channel").val();
   options.uid = Number($("#uid").val());
   options.appid = $("#appid").val();
