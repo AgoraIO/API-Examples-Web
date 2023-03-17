@@ -1,14 +1,10 @@
 import { useState, useEffect } from 'react';
 import AgoraRTC, {
   IAgoraRTCClient, IAgoraRTCRemoteUser, ILocalVideoTrack, ILocalAudioTrack } from 'agora-rtc-sdk-ng';
-
 import AIDenoiserEnabler from "./AIDenoiserEnabler";
 import { AIDenoiserExtension } from 'agora-extension-ai-denoiser';
 
-
 let localTracks = { videoTrack: undefined, audioTrack: undefined };
-
-
 
 export default function useAgora(client: IAgoraRTCClient | undefined)
   :
@@ -25,47 +21,16 @@ export default function useAgora(client: IAgoraRTCClient | undefined)
     {
   const [localVideoTrack, setLocalVideoTrack] = useState<ILocalVideoTrack | undefined>(undefined);
   const [localAudioTrack, setLocalAudioTrack] = useState<ILocalAudioTrack | undefined>(undefined);
-
   const [joinState, setJoinState] = useState(false);
-
   const [aiDenoiserState, setAIDenoiser] = useState(false);
-
-
   const [remoteUsers, setRemoteUsers] = useState<IAgoraRTCRemoteUser[]>([]);
   
   let enableDenoiser4AudioTrack: { enabler: any; processor: any; controler: any; denoiser?: AIDenoiserExtension; } | null = null;
-
-
   let options = { appid: null, channel: null, uid: null, token: null };
 
-
-
-  // async function createLocalTracks(audioConfig?: MicrophoneAudioTrackInitConfig, videoConfig?: CameraVideoTrackInitConfig)
-  // : Promise<void> {
-  //   // [localTracks.audioTrack, localTracks.videoTrack] = await AgoraRTC.createMicrophoneAndCameraTracks(audioConfig, videoConfig);
-  //   // setLocalAudioTrack(localTracks.audioTrack);
-  //   // setLocalVideoTrack(localTracks.videoTrack);
-  //   // return [microphoneTrack, cameraTrack];
-  // }
-
   async function join(appid: string, channel: string, token?: string, uid?: string | number | null) {
-
     if (!client) return;
-
-    // let microphoneAudioTrack = await AgoraRTC.createMicrophoneAudioTrack() ;
-
-    // let cameraVideoTrack = await AgoraRTC.createCameraVideoTrack();
-
-
-
-    // localTracks = { videoTrack: cameraVideoTrack, audioTrack: microphoneAudioTrack };
-
-
     enableDenoiser4AudioTrack = AIDenoiserEnabler();
-
-    
-    // await client.join(appid, channel, token || null);
-
 
     // @ts-ignore
     [options.uid, localTracks.audioTrack, localTracks.videoTrack] = await Promise.all([
@@ -74,13 +39,8 @@ export default function useAgora(client: IAgoraRTCClient | undefined)
       AgoraRTC.createCameraVideoTrack(),
     ]);
 
-
-
-
     await enableDenoiser4AudioTrack.enabler(localTracks.audioTrack);
     setAIDenoiser(enableDenoiser4AudioTrack.processor.enabled);
-    
-
     setLocalAudioTrack(localTracks.audioTrack);
     setLocalVideoTrack(localTracks.videoTrack);
     
@@ -111,8 +71,6 @@ export default function useAgora(client: IAgoraRTCClient | undefined)
     await enableDenoiser4AudioTrack?.controler(flag);
     console.log("execute controler function with flag: " + flag);
   }
-
-
 
 
   useEffect(() => {
