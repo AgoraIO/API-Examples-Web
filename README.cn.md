@@ -61,8 +61,8 @@ Web SDK 4.x 具有以下优势：
 
 | 特性     | 示例项目位置 |
 | -------- | ------------ |
-| 视频通话 | [/ReactDemo](/ReactDemo)  |
-| OpenLive   | [/OpenLive](/OpenLive) |
+| 视频通话 | [/react/simple-demo](/react/simple-demo)  |
+| OpenLive   | [/react/open-live](/react/open-live) |
 
 ### 如何运行示例项目
 
@@ -73,7 +73,7 @@ Web SDK 4.x 具有以下优势：
 
 #### ReactDemo 的运行步骤
 
-1. 导航至 `ReactDemo` 并运行下面的命令安装依赖项。
+1. 导航至 [/react/simple-demo](/react/simple-demo) 并运行下面的命令安装依赖项。
 
    ```shell
    npm install
@@ -91,7 +91,7 @@ Web SDK 4.x 具有以下优势：
 
 #### OpenLive 的运行步骤
 
-1. 导航至 [/OpenLive](/OpenLive)。 将 **.env.example** 重命名为 **.env**。在 **.env** 文件中，使用 App ID 替换 `<#YOUR APP ID#>`，使用 token 替换 `<#YOUR TOKEN#>`.
+1. 导航至 [/react/open-live](/react/open-live)。 将 **.env.example** 重命名为 **.env**。在 **.env** 文件中，使用 App ID 替换 `<#YOUR APP ID#>`，使用 token 替换 `<#YOUR TOKEN#>`.
 
    > 关于 App ID 和 Token 的获取方法参考 [开始使用 Agora 平台](https://docs.agora.io/cn/Agora%20Platform/get_appid_token)。你可以获取一个临时 token，快速运行示例项目。
 

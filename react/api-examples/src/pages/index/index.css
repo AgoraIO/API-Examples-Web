@@ -1,0 +1,12 @@
+.index-page {
+  overflow: hidden;
+  padding: 15px;
+}
+
+.index-page .text{
+  height: 42px;
+}
+
+.index-page .card-footer {
+  text-align: end;
+}

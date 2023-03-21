@@ -4,17 +4,17 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "demo:dev": "nodemon ./scripts/dev-demo.js",
-    "demo:del-sso": "node ./scripts/del-demo-sso.js"
+    "demo:dev": "nodemon ./scripts/server.js",
+    "purge": "node ./scripts/purge.js"
   },
   "devDependencies": {
-    "express": "^4.18.2",
-    "nodemon": "^2.0.20",
-    "@babel/parser":"^7.19.4",
-    "@babel/generator":"^7.19.5",
-    "@babel/traverse":"^7.19.4",
-    "@babel/types":"^7.19.4"
+    "express":"^4.18.2",
+    "@babel/core": "^7.19.4",
+    "@babel/parser": "^7.19.4",
+    "@babel/generator": "^7.19.5",
+    "@babel/traverse": "^7.19.4",
+    "@babel/types": "^7.19.4"
   },
-  "author": "",
+  "author": "qz",
   "license": "ISC"
 }
