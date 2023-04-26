@@ -7,7 +7,6 @@ var getNavLanguage = function () {
 }
 
 var i18nLanguage = "en";
-
 var webLanguage = ['zh-CN', 'en'];
 
 var execI18n = function () {
@@ -62,10 +61,6 @@ var execI18n = function () {
     });
 
 }
-
-
-
-
 
 /*页面执行加载执行*/
 $(function () {
