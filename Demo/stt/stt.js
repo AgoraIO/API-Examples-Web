@@ -130,6 +130,7 @@ function GetAuthorization() {
   return authorization;
 }
 function handleStreammessage(msgUid, data) {
+  // use protobuf decode data
   const msg = $protobufRoot.lookup("Text").decode(data) || {};
   console.log("handleStreammessage", msg);
   const {
@@ -139,15 +140,7 @@ function handleStreammessage(msgUid, data) {
     duration_ms,
     uid
   } = msg;
-  if (data_type == "translate") {
-    if (trans.length) {
-      trans.forEach(item => {
-        let text = "";
-        item?.texts.forEach(v => text += v);
-        console.log(text);
-      });
-    }
-  } else {
+  if (data_type == "transcribe") {
     if (words.length) {
       let isFinal = false;
       let text = "";
@@ -161,6 +154,14 @@ function handleStreammessage(msgUid, data) {
       if (isFinal) {
         curSentenceIndex++;
       }
+    }
+  } else {
+    if (trans.length) {
+      trans.forEach(item => {
+        let text = "";
+        item?.texts.forEach(v => text += v);
+        console.log(text);
+      });
     }
   }
 }
@@ -181,6 +182,8 @@ async function acquireToken() {
     res = await res.json();
     return res;
   } else {
+    // status: 504
+    // please enable the realtime transcription service for this appid
     console.error(res.status, res);
     throw new Error(res);
   }
