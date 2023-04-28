@@ -149,8 +149,9 @@ const loadImage = url => {
     image.src = url;
     image.style = "display:none;width:10px;height:10px;";
     image.crossOrigin = "anonymous";
-    resolve(image);
-    image.onload = () => {};
+    image.onload = () => {
+      resolve(image);
+    };
     document.body.appendChild(image);
   });
 };
