@@ -182,7 +182,7 @@ $("#openVirtualBackground").click(async e => {
       console.warn("Performance warning!!!!!!!!!!!!!!!!!");
     });
     try {
-      await processor.init("./agora-extension-virtual-background/wasms");
+      await processor.init("./node_module/agora-extension-virtual-background/wasms");
       $("#success-alert-processor-init").removeClass("hide").addClass("show");
       setTimeout(() => {
         $("#success-alert-processor-init").removeClass("show").addClass("hide");
