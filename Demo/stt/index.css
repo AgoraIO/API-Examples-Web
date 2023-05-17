@@ -50,18 +50,41 @@ input {
   margin-bottom: 2px;
 }
 
-.stt-trans .title {
+#stt-transcribe {
+  display: inline-block;
+  position: relative;
+  width: 50vw;
+}
+
+
+.title {
   font-size: 20px;
   line-height: 20px;
   font-weight: bold;
   margin: 10px 0;
 }
 
-.stt-trans .content {
+#stt-transcribe .content {
   max-height: 500px;
   overflow: auto;
   margin: 10px 0;
 }
+
+
+#stt-translate {
+  display: inline-block;
+  position: relative;
+  width: 50vw;
+}
+
+
+#stt-translate .content {
+  max-height: 500px;
+  overflow: auto;
+  margin: 10px 0;
+}
+
+
 
 .player {
   width: 480px;
@@ -72,7 +95,7 @@ input {
   margin: 8px 0;
 }
 
-#key-form{
+#key-form {
   margin-top: 10px;
 }
 
@@ -80,9 +103,10 @@ input {
   display: none;
 }
 
-#danger-alert {
+#alert-wrapper {
   display: none;
 }
+
 
 @media (max-width: 640px) {
   .player {

@@ -1,4 +1,3 @@
-
 var $protobuf  = protobuf
 
 var $protobufRoot = ($protobuf.roots.default || ($protobuf.roots.default = new $protobuf.Root()))

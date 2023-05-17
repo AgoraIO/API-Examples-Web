@@ -18,9 +18,15 @@ var options = {
 };
 
 var gatewayAddress = "https://api.agora.io";
-let curSentenceIndex = 0;
+let transcribeIndex = 0;
+let translateIndex = 0;
 let taskId = '';
 let tokenName = '';
+$(document).ready(function () {
+  $("#parameters-alert").hide();
+  $("#rtc-alert").hide();
+  $("#alert-wrapper").css("display", "block");
+});
 
 // the demo can auto join channel with params in url
 $(() => {
@@ -72,12 +78,25 @@ $("#leave").click(function (e) {
   leave();
 });
 $("#start-trans").click(async function (e) {
-  $("#start-trans").attr("disabled", true);
-  $("#stop-trans").attr("disabled", false);
-  $("#stt-trans").css("display", "block");
-  await startTranscription();
+  e.preventDefault();
+  const appId = options.appid;
+  const channel = options.channel;
+  if (!appId || !channel) {
+    $("#rtc-alert").show();
+    throw new Error("appid or channel is empty");
+  }
+  try {
+    await startTranscription();
+    $("#start-trans").attr("disabled", true);
+    $("#stop-trans").attr("disabled", false);
+    $("#stt-transcribe").css("display", "block");
+    $("#stt-translate").css("display", "block");
+  } catch (err) {
+    $("#parameters-alert").show();
+  }
 });
 $("#stop-trans").click(function (e) {
+  e.preventDefault();
   stopTranscription();
   $("#start-trans").attr("disabled", false);
   $("#stop-trans").attr("disabled", true);
@@ -150,17 +169,20 @@ function handleStreammessage(msgUid, data) {
         }
         text += item?.text;
       });
-      addTransItem(uid, text);
+      addTranscribeItem(uid, text);
       if (isFinal) {
-        curSentenceIndex++;
+        transcribeIndex++;
       }
     }
-  } else {
+  } else if (data_type == "translate") {
     if (trans.length) {
       trans.forEach(item => {
         let text = "";
         item?.texts.forEach(v => text += v);
-        console.log(text);
+        addTranslateItem(uid, text);
+        if (item.isFinal) {
+          translateIndex++;
+        }
       });
     }
   }
@@ -189,12 +211,6 @@ async function acquireToken() {
   }
 }
 async function startTranscription() {
-  const appId = options.appid;
-  const channel = options.channel;
-  if (!appId || !channel) {
-    $("#danger-alert").css("display", "block");
-    return;
-  }
   const authorization = GetAuthorization();
   if (!authorization) {
     throw new Error("key or secret is empty");
@@ -206,8 +222,9 @@ async function startTranscription() {
   const pullToken = $("#puller-token").val();
   const pushUid = $("#pusher-uid").val();
   const pushToken = $("#pusher-token").val();
-  const language = $("#language").val();
-  const body = JSON.stringify({
+  const speakingLanguage = $("#speaking-language").val();
+  const translationLanguage = $("#translation-language").val();
+  let body = {
     "audio": {
       "subscribeSource": "AGORARTC",
       "agoraRtcConfig": {
@@ -224,7 +241,7 @@ async function startTranscription() {
     "config": {
       "features": ["RECOGNIZE"],
       "recognizeConfig": {
-        "language": language,
+        "language": speakingLanguage,
         "model": "Model",
         "connectionTimeout": 60,
         "output": {
@@ -237,14 +254,22 @@ async function startTranscription() {
         }
       }
     }
-  });
+  };
+  if (translationLanguage) {
+    body.config.translateConfig = {
+      "languages": [{
+        "source": speakingLanguage,
+        "target": [translationLanguage]
+      }]
+    };
+  }
   let res = await fetch(url, {
     method: 'POST',
     headers: {
       "Content-Type": "application/json",
       "Authorization": authorization
     },
-    body: body
+    body: JSON.stringify(body)
   });
   res = await res.json();
   taskId = res.taskId;
@@ -263,15 +288,25 @@ async function stopTranscription() {
   });
   taskId = null;
 }
-function addTransItem(uid, msg) {
-  $("#stt-trans").css("display", "block");
-  if ($(`#sentence-${curSentenceIndex}`)[0]) {
-    $(`#sentence-${curSentenceIndex} .msg`).html(msg);
+function addTranscribeItem(uid, msg) {
+  if ($(`#transcribe-${transcribeIndex}`)[0]) {
+    $(`#transcribe-${transcribeIndex} .msg`).html(msg);
   } else {
-    const $item = $(`<div class="item" id="sentence-${curSentenceIndex}">
+    const $item = $(`<div class="item" id="transcribe-${transcribeIndex}">
     <span class="uid">${uid}</span>:
     <span class="msg">${msg}</span>
   </div>`);
-    $("#stt-trans .content").append($item);
+    $("#stt-transcribe .content").append($item);
+  }
+}
+function addTranslateItem(uid, msg) {
+  if ($(`#translate-${translateIndex}`)[0]) {
+    $(`#translate-${translateIndex} .msg`).html(msg);
+  } else {
+    const $item = $(`<div class="item" id="translate-${translateIndex}">
+    <span class="uid">${uid}</span>:
+    <span class="msg">${msg}</span>
+  </div>`);
+    $("#stt-translate .content").append($item);
   }
 }

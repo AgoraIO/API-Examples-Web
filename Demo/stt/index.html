@@ -24,20 +24,28 @@
     </a>
   </div>
 
-  <div id="success-alert" class="alert alert-success alert-dismissible fade show" role="alert">
-    <strong>Congratulations!</strong><span> You can invite others to watch your live by click </span><a href=""
-      target="_blank">here</a>
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
+  <section id="alert-wrapper">
+    <div id="success-alert" class="alert alert-success alert-dismissible fade show" role="alert">
+      <strong>Congratulations!</strong><span> You can invite others to watch your live by click </span><a href=""
+        target="_blank">here</a>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div id="rtc-alert" class="alert alert-danger alert-dismissible fade show" role="alert">
+      You should first join rtc!
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div id="parameters-alert" class="alert alert-danger alert-dismissible" role="alert">
+      Please check the parameters!
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  </section>
 
-  <div id="danger-alert" class="alert alert-danger alert-dismissible fade show" role="alert">
-    You should first join rtc!
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
 
   <div class="container">
     <!-- rtc -->
@@ -65,7 +73,7 @@
         </div>
         <div class="col-sm">
           <p class="join-info-text">User ID(optional)</p>
-          <input id="uid" type="text" onkeyup="this.value=this.value.replace(/[^0-9]/g,'')"
+          <input id="uid" type="text" onkeyup="this.value=this.value.replace(/[^0-9]/g,'')" value="123456"
             onafterpaste="this.value=this.value.replace(/[^0-9]/g,'')" placeholder="Enter the user ID">
         </div>
       </div>
@@ -80,25 +88,24 @@
     <form id="key-form" name="key-form">
       <div class="row join-info-group">
         <div class="col-sm">
-          <p class="join-info-key">key</p>
+          <div class="join-info-key">key</div>
           <input id="key" type="text" placeholder="enter the key">
           <p class="tips">The restful API security
             You find your key and secret in the <a href="https://console.agora.io/">Agora Console</a>
           </p>
         </div>
         <div class="col-sm">
-          <p class="join-info-secret">secret</p>
+          <div class="join-info-secret">secret</div>
           <input id="secret" type="text" placeholder="enter the secret">
         </div>
       </div>
-
     </form>
     <!-- stt -->
     <form id="stt-form" name="stt-form">
       <div class="row join-info-group">
         <div class="col-sm">
           <p class="join-info-text">User ID for the bot to pull the audio from channel</p>
-          <input id="puller-uid" type="text" placeholder="enter the int uid"
+          <input id="puller-uid" type="text" placeholder="enter the int uid" value="111111"
             onkeyup="this.value=this.value.replace(/[^0-9]/g,'')"
             onafterpaste="this.value=this.value.replace(/[^0-9]/g,'')">
         </div>
@@ -108,7 +115,7 @@
         </div>
         <div class="col-sm">
           <p class="join-info-text">User ID for the bot to push the text to channel</p>
-          <input id="pusher-uid" type="text" placeholder="enter the int uid"
+          <input id="pusher-uid" type="text" placeholder="enter the int uid" value="222222"
             onkeyup="this.value=this.value.replace(/[^0-9]/g,'')"
             onafterpaste="this.value=this.value.replace(/[^0-9]/g,'')">
         </div>
@@ -116,9 +123,18 @@
           <p class="join-info-text">Token(optional)</p>
           <input id="pusher-token" type="text" placeholder="token of the pusher">
         </div>
+      </div>
+
+      <!-- language -->
+      <div class="row">
         <div class="col-sm">
           <p class="join-info-text">Speaking Language</p>
-          <input id="language" type="text" placeholder="language code" value="en-US">
+          <input id="speaking-language" type="text" placeholder="language code" value="en-US">
+          <p class="tips">input the language code, such as en-US, zh-CN</p>
+        </div>
+        <div class="col-sm">
+          <p class="join-info-text">Translation Language(optional)</p>
+          <input id="translation-language" type="text" placeholder="language code" value="zh-CN">
           <p class="tips">input the language code, such as en-US, zh-CN</p>
         </div>
       </div>
@@ -128,23 +144,20 @@
         <button id="stop-trans" type="button" class="btn btn-primary btn-sm" disabled>Stop task</button>
       </div>
     </form>
-    <!-- Single button -->
-    <!-- <div class="row video-group">
-      <div class="col">
-        <p id="local-player-name" class="player-name"></p>
-        <div id="local-player" class="player"></div>
-      </div>
-      <div class="w-100"></div>
-      <div class="col">
-        <div id="remote-playerlist"></div>
-      </div>
-    </div> -->
+
+
     <!-- trans -->
-    <div class="stt-trans" id="stt-trans" style="display:none">
-      <div class="title">After start the transcription, Please say something, you wil see the text here</div>
-      <div class="content">
+    <div class="title">After start the transcription, Please say something, you wil see the text here</div>
+    <section class="row">
+      <div class="col-sm" id="stt-transcribe" style="display:none">
+        <div class="content">
+        </div>
       </div>
-    </div>
+      <div class="col-sm" id="stt-translate" style="display:none">
+        <div class="content">
+        </div>
+      </div>
+    </section>
   </div>
 
   
