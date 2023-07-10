@@ -23,5 +23,3 @@ dist
 *.sw?
 
 
-# wasm
-public/external
