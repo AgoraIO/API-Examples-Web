@@ -22,14 +22,12 @@ var remoteUsersSound = [
   // './resources/1.mp3',
   // './resources/2.mp3',
   './resources/3.mp3',
-  // './resources/4.mp3',
 ];
 
 var localPlayerSound = [
   // './resources/1.mp3',
   './resources/2.mp3',
   // './resources/3.mp3',
-  // './resources/4.mp3',
 ];
 var localPlayTracks = [];
 var localPlayProcessors = [];

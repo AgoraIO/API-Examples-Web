@@ -1,34 +1,29 @@
 import { useLocation } from "react-router-dom"
 import { useRef, useEffect, useCallback } from "react"
+import { decodeUrlQuery } from "./utils"
 
-export const useUrlQuery = () => {
+export const useUrlQuery = (formRef) => {
   const { search } = useLocation() || {}
-  let query = useRef(null)
-
-  if (query.current) {
-    return query.current
-  }
-  if (search.length) {
-    query.current = search
-      .slice(1)
-      .split('&')
-      .map((str) => [str.split('=')[0], str.split('=')[1]])
-      .reduce((acc, a) => {
-        acc[a[0]] = a[1];
-        return acc;
-      }, {});
-  }
-  return query.current || {}
+  useEffect(() => {
+    const query = decodeUrlQuery(search)
+    if (query.appId || query.channel) {
+      formRef.current.setValue(query)
+    }
+  }, [formRef, search])
 }
 
+export const useEffectOnce = (effect) => {
+  useEffect(effect, []);
+};
 
 
 export const useUnMount = (cb) => {
-  useEffect(() => {
-    return () => cb();
-  }, []);
-};
+  const fnRef = useRef(cb);
+  // update the ref each render so if it change the newest callback will be invoked
+  fnRef.current = cb;
 
+  useEffectOnce(() => () => fnRef.current());
+};
 
 export const useAnimationFrame = (isRunning = true, callback = () => { }) => {
   const reqIdRef = useRef();
@@ -45,3 +40,5 @@ export const useAnimationFrame = (isRunning = true, callback = () => { }) => {
     return () => cancelAnimationFrame(reqIdRef.current);
   }, [loop])
 }
+
+
