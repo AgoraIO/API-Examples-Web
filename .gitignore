@@ -23,5 +23,5 @@ dist
 *.sw?
 
 
-# wasm
-public/external
+# wasm external files
+**/public/external

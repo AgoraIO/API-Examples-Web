@@ -42,7 +42,7 @@ defineExpose({
     appId: appId.value,
     token: token.value,
     channel: channel.value,
-    uid: uid.value
+    uid: uid.value ? Number(uid.value) : null
   }),
   setValue: (data) => {
     if (data.appId) {
