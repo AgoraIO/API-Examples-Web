@@ -55,7 +55,6 @@ function BasicVideoCall() {
    * @param {trackMediaType - The {@link https://docs.agora.io/en/Voice/API%20Reference/web_ng/interfaces/itrack.html#trackmediatype | media type} to add.
    */
   const handleUserPublished = async (user, mediaType) => {
-    debugger;
     const id = user.uid;
     await subscribe(user, mediaType);
     setRemoteUsers(prev => ({
@@ -89,16 +88,7 @@ function BasicVideoCall() {
           codec: codec
         });
       }
-      // Add event listeners to the client.
-      client.on("user-joined", async user => {
-        debugger;
-      });
-      client.on("user-published", () => {
-        console.log(1111);
-      });
-      client.on("user-published", () => {
-        console.log(2222);
-      });
+      client.on("user-published", handleUserPublished);
       client.on("user-unpublished", handleUserUnpublished);
       let tracks = [audioTrack, videoTrack];
       if (!audioTrack && !videoTrack) {
