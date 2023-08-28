@@ -6,8 +6,6 @@ _[English](README.md) | 简体中文_
 
 此仓库包含基于 Agora RTC Web SDK 4.x 的示例项目。
 
-<hr>
-
 **如果你还不熟悉 Agora RTC Web SDK 4.x，建议你先通过我们提供的 [社区版互动教程](https://agorawebsdktutorialmain.gatsbyjs.io/) 快速理解 SDK 的功能并通过 CodePen 控件在浏览器中直接调用 SDK。**
 
 <hr>
@@ -61,8 +59,8 @@ Web SDK 4.x 具有以下优势：
 
 | 特性     | 示例项目位置 |
 | -------- | ------------ |
-| 视频通话 | [/react/simple-demo](/react/simple-demo)  |
-| OpenLive   | [/react/open-live](/react/open-live) |
+| React api example | [/react/api-examples](/react/api-examples) |
+|                   |                                            |
 
 ### 如何运行示例项目
 
@@ -73,7 +71,7 @@ Web SDK 4.x 具有以下优势：
 
 #### ReactDemo 的运行步骤
 
-1. 导航至 [/react/simple-demo](/react/simple-demo) 并运行下面的命令安装依赖项。
+1. 导航至 [/react/api-examples](/react/api-examples) 并运行下面的命令安装依赖项。
 
    ```shell
    npm install
@@ -82,38 +80,51 @@ Web SDK 4.x 具有以下优势：
 2. 运行下面的命令启动示例项目。
 
    ```shell
-   npm run start
+   npm run dev
    ```
 
 3. 在示例项目页面上，输入 App ID、Token 和频道名，然后加入频道。
    - 关于 App ID 和 Token 的获取方法参考 [开始使用 Agora 平台](https://docs.agora.io/cn/Agora%20Platform/get_appid_token)。你可以获取一个临时 token，快速运行示例项目。
    - 生成 Token 使用的频道名必须和加入频道时使用的频道名一致。
 
-#### OpenLive 的运行步骤
 
-1. 导航至 [/react/open-live](/react/open-live)。 将 **.env.example** 重命名为 **.env**。在 **.env** 文件中，使用 App ID 替换 `<#YOUR APP ID#>`，使用 token 替换 `<#YOUR TOKEN#>`.
 
-   > 关于 App ID 和 Token 的获取方法参考 [开始使用 Agora 平台](https://docs.agora.io/cn/Agora%20Platform/get_appid_token)。你可以获取一个临时 token，快速运行示例项目。
+## 示例项目（使用 Vue）
 
-   ```bash
-   REACT_APP_AGORA_APP_ID=<#YOUR APP ID#>
-   REACT_APP_AGORA_APP_TOKEN=<#YOUR TOKEN#>
-   REACT_APP_AGORA_LOG=true
-   ```
+| 特性            | 示例项目位置                           |
+| --------------- | -------------------------------------- |
+| Vue api example | [/vue/api-examples](/vue/api-examples) |
+|                 |                                        |
 
-2. 运行下面的命令安装依赖项。
+### 如何运行示例项目
+
+#### 前提条件
+
+- 你必须使用 SDK 支持的浏览器运行示例项目。关于支持的浏览器列表参考 [产品概述](https://docs.agora.io/cn/Interactive%20Broadcast/product_live?platform=Web#compatibility)。
+- [npm](https://www.npmjs.com/)
+
+#### VueDemo 的运行步骤
+
+1. 导航至 [/vue/api-examples](/vue/api-examples) 并运行下面的命令安装依赖项。
 
    ```shell
    npm install
    ```
 
-3. 运行下面的命令启动示例项目。
-
-   > 生成 Token 使用的频道名必须和加入频道时使用的频道名一致。
+2. 运行下面的命令启动示例项目。
 
    ```shell
    npm run dev
    ```
+
+3. 在示例项目页面上，输入 App ID、Token 和频道名，然后加入频道。
+
+   - 关于 App ID 和 Token 的获取方法参考 [开始使用 Agora 平台](https://docs.agora.io/cn/Agora%20Platform/get_appid_token)。你可以获取一个临时 token，快速运行示例项目。
+   - 生成 Token 使用的频道名必须和加入频道时使用的频道名一致。
+
+
+
+
 
 ## 参考
 

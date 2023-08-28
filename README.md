@@ -61,8 +61,8 @@ You need a supported browser to run the sample projects. See [Product Overview](
 
 | Feature    | Sample project location |
 | ---------- | ----------------------- |
-| Video call | [/react/simple-demo](/react/simple-demo) |
-| OpenLive   | [/react/open-live](/react/open-live) |
+| React api example | [/react/api-examples](/react/api-examples) |
+|    |  |
 
 ### How to run the sample projects
 
@@ -73,7 +73,7 @@ You need a supported browser to run the sample projects. See [Product Overview](
 
 #### Steps to run the ReactDemo
 
-1. Navigate to [/react/simple-demo](/react/simple-demo) and run the following command to install dependencies.
+1. Navigate to [/react/api-examples](/react/api-examples) and run the following command to install dependencies.
 
    ```shell
    npm install
@@ -82,39 +82,47 @@ You need a supported browser to run the sample projects. See [Product Overview](
 2. Use the following command to run the sample project.
 
    ```shell
-   npm run start
+   npm run dev
    ```
 
 3. In the demo page, enter your App ID, token, and channel name and join the channel.
    - See [Get Started with Agora](https://docs.agora.io/en/Agora%20Platform/get_appid_token) to learn how to get an App ID and token. You can get a temporary access token to quickly try out this sample project.
    - The channel name must be the same as the channel ID used to generate the token.
 
-#### Steps to run OpenLive
+## Projects using Vue.js
 
-1. Navigate to [/react/open-live](/react/open-live). Rename the **.env.example** file as **.env**. In the **.env** file, replace `<#YOUR APP ID#>` with the App ID, and
- replace `<#YOUR TOKEN#>` with the token.
+| Feature         | Sample project location                |
+| --------------- | -------------------------------------- |
+| Vue api example | [/vue/api-examples](/vue/api-examples) |
+|                 |                                        |
 
-   > See [Get Started with Agora](https://docs.agora.io/en/Agora%20Platform/get_appid_token) to learn how to get an App ID and token. You can get a temporary access token to quickly try out this sample project.
+### How to run the sample projects
 
-   ```shell
-   REACT_APP_AGORA_APP_ID=<#YOUR APP ID#>
-   REACT_APP_AGORA_APP_TOKEN=<#YOUR TOKEN#>
-   REACT_APP_AGORA_LOG=true
-   ```
+#### Prerequisites
 
-2. Run the following command to install dependencies.
+- You need a supported browser to run the sample projects. See [Product Overview](https://docs.agora.io/en/Interactive%20Broadcast/product_live?platform=Web#compatibility) for a list of supported browsers.
+- [npm](https://www.npmjs.com/)
+
+#### Steps to run the VueDemo
+
+1. Navigate to [/vue/api-examples](/vue/api-examples) and run the following command to install dependencies.
 
    ```shell
    npm install
    ```
 
-3. Run the following command to start the project.
-
-   > The channel name must be the same as the channel ID used to generate the token.
+2. Use the following command to run the sample project.
 
    ```shell
    npm run dev
    ```
+
+3. In the demo page, enter your App ID, token, and channel name and join the channel.
+
+   - See [Get Started with Agora](https://docs.agora.io/en/Agora%20Platform/get_appid_token) to learn how to get an App ID and token. You can get a temporary access token to quickly try out this sample project.
+   - The channel name must be the same as the channel ID used to generate the token.
+
+
 
 ## Reference
 
