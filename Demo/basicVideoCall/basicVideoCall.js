@@ -181,12 +181,10 @@ $("#join-form").submit(async function (e) {
   e.preventDefault();
   $("#join").attr("disabled", true);
   try {
-    if (!client) {
-      client = AgoraRTC.createClient({
-        mode: "rtc",
-        codec: getCodec()
-      });
-    }
+    client = AgoraRTC.createClient({
+      mode: "rtc",
+      codec: getCodec()
+    });
     options.channel = $("#channel").val();
     options.uid = Number($("#uid").val());
     options.appid = $("#appid").val();

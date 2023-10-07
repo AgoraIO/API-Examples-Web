@@ -1,8 +1,5 @@
 // create Agora client
-var client = AgoraRTC.createClient({
-  mode: "rtc",
-  codec: "vp8"
-});
+var client;
 var localTracks = {
   videoTrack: null,
   audioTrack: null
@@ -60,13 +57,28 @@ var videoProfiles = [{
 } // custom video profile
 ];
 
+var CodecList = [{
+  label: "vp8",
+  value: "vp8"
+}, {
+  label: "vp9",
+  value: "vp9"
+}, {
+  label: "h264",
+  value: "h264"
+}];
 var curVideoProfile;
+var curCodec;
 
 // the demo can auto join channel with params in url
 $(() => {
   initVideoProfiles();
+  initCodecList();
   $(".profile-list").delegate("a", "click", function (e) {
     changeVideoProfile(this.getAttribute("label"));
+  });
+  $(".codec-list").delegate("a", "click", function (e) {
+    changeCodec(this.getAttribute("label"));
   });
   var urlParams = new URL(location.href).searchParams;
   options.appid = urlParams.get("appid");
@@ -85,6 +97,10 @@ $("#join-form").submit(async function (e) {
   e.preventDefault();
   $("#join").attr("disabled", true);
   try {
+    client = AgoraRTC.createClient({
+      mode: "rtc",
+      codec: curCodec
+    });
     options.channel = $("#channel").val();
     options.uid = Number($("#uid").val());
     options.appid = $("#appid").val();
@@ -178,11 +194,22 @@ function initVideoProfiles() {
   curVideoProfile = videoProfiles.find(item => item.label == '480p_1');
   $(".profile-input").val(`${curVideoProfile.detail}`);
 }
+function initCodecList() {
+  CodecList.forEach(item => {
+    $(".codec-list").append(`<a class="dropdown-item" label="${item.label}" href="#">${item.label}</a>`);
+  });
+  curCodec = "vp8";
+  $(".codec-input").val(curCodec);
+}
 async function changeVideoProfile(label) {
   curVideoProfile = videoProfiles.find(profile => profile.label === label);
   $(".profile-input").val(`${curVideoProfile.detail}`);
   // change the local video track`s encoder configuration
   localTracks.videoTrack && (await localTracks.videoTrack.setEncoderConfiguration(curVideoProfile.value));
+}
+function changeCodec(label) {
+  curCodec = label;
+  $(".codec-input").val(curCodec);
 }
 function handleUserPublished(user, mediaType) {
   const id = user.uid;

@@ -1,111 +1,115 @@
-// for delete sso related code just for github
+// for delete sso related code
 const { readdirSync, existsSync, readFileSync, writeFileSync, statSync } = require('fs')
 const path = require("path")
 const { exec } = require('child_process')
+const { exit } = require("process")
 const { parse } = require("@babel/parser");
 const generate = require("@babel/generator").default
 const traverse = require("@babel/traverse").default
 const t = require("@babel/types")
 
-const TARGET_DIR = path.resolve(__dirname, '../react/api-examples');
-const SRC_DIR = path.resolve(TARGET_DIR, './src');
-const REG_SSO_UTIL_PATH = /utils\/sso$/
-const REG_JSX_PATH = /\.jsx$/
+const TARGET_DIR = path.resolve(__dirname, '../Demo');
+const REG_SSO_SCRIPT = /\<script src="\S*js\/sso\.js"\>\<\/script\>/gm
+const REG_JS_SUFFIX = /\.js$/;
+const REG_ESM_SUFFIX = /\.esm\.js$/
+const REG_MIN_SUFFIX = /\.min\.js$/
+const EXCLUDES_DIR_NAME = ['assets', "hotPlug", "js", "i18n", "spatialAudioExtention"]
+const EXCLUDES_FILE_NAME = ["agora-extension-super-clarity"]
 
 // scan files
-// del utils/sso.js
+// del js/sso
+// del sso/*
 async function delSSORelatedFile() {
   console.log('delSSORelatedFile ***********************************************');
-  const ssoJsPath = path.resolve(TARGET_DIR, './src/utils/sso.js');
-  if (existsSync(ssoJsPath)) {
-    exec(`rm -rf ${ssoJsPath}`);
+  const ssoJs = path.join(TARGET_DIR, 'js/sso.js');
+  const ssoDir = path.join(TARGET_DIR, 'sso');
+  if (existsSync(ssoJs)) {
+    exec(`rm -rf ${ssoJs}`);
+  }
+  if (existsSync(ssoDir)) {
+    exec(`rm -rf ${ssoDir}`);
   }
 }
 
-
-async function delPackageJsonSSOInfo() {
-  console.log('delPackageJsonSSOInfo ***********************************************');
-  const jsonPath = path.resolve(TARGET_DIR, './package.json');
-  const res = readFileSync(jsonPath, 'utf-8');
-  const obj = JSON.parse(res, {
-
-  });
-  const devCmd = obj.scripts.dev;
-  obj.scripts = {
-    dev: devCmd
+// scan html files
+// del <script src="../js/sso.js"></script> 
+async function delSSORelatedHTMLCode() {
+  console.log('delSSORelatedHTMLCode ***********************************************');
+  const rootIndexHtml = path.join(TARGET_DIR, './index.html');
+  if (existsSync(rootIndexHtml)) {
+    removeSSOScript(rootIndexHtml)
   }
-  writeFileSync(jsonPath, JSON.stringify(obj, null, 2));
+  const dirs = readdirSync(TARGET_DIR);
+  dirs.forEach(dir => {
+    const indexHtml = path.join(TARGET_DIR, dir, './index.html');
+    if (existsSync(indexHtml)) {
+      removeSSOScript(indexHtml);
+    }
+  })
 }
 
-
-// del  /** SSO */
-// del import from "utils/sso"
-// del if (isSSOMode()){}
-// del component with isSSOMode
-async function delSSORelatedCode() {
+// if (openSSO) {
+//  A...
+// } else {
+//  B...
+// }
+// to
+// B...
+async function delSSORelatedJSCode() {
   console.log('delSSORelatedJSCode ***********************************************');
-  const files = _getAllFiles(SRC_DIR)
-  files.forEach(p => {
-    ASTDelSSOCode(p)
+  const dirs = readdirSync(TARGET_DIR);
+  dirs.forEach(dir => {
+    if (!EXCLUDES_DIR_NAME.includes(dir)) {
+      const curDir = path.join(TARGET_DIR, dir)
+      const stats = statSync(curDir);
+      if (stats.isDirectory()) {
+        const names = readdirSync(curDir);
+        names.forEach(name => {
+          if (REG_JS_SUFFIX.test(name) && !REG_ESM_SUFFIX.test(name) && !REG_MIN_SUFFIX.test(name) && !_IsExcludeFile(name)) {
+            const finJsPath = path.join(curDir, name);
+            ASTDelSSOCode(finJsPath)
+          }
+        })
+      }
+    }
   })
 }
 
 
 
+
+function removeSSOScript(htmlPath) {
+  let html = readFileSync(htmlPath, 'utf-8');
+  html = html.replace(REG_SSO_SCRIPT, '');
+  writeFileSync(htmlPath, html);
+}
+
 function ASTDelSSOCode(p) {
   let code = readFileSync(p, 'utf-8');
-  const ast = parse(code, {
-    sourceType: "module",
-    plugins: [
-      "jsx",
-    ],
-  });
-  // traverse ast
+  const ast = parse(code);
   traverse(ast, {
     IfStatement(path) {
       const node = path.node
       const test = node.test
       // in if
-      // const consequent = node.consequent || {}
+      const consequent = node.consequent || {}
       // in else 
-      // const alternate = node.alternate || {}
-      if (t.isCallExpression(test)) {
-        const callee = test.callee
-        if (callee.name == 'isSSOMode') {
-          path.remove()
-        }
-      }
-    },
-    JSXExpressionContainer(path) {
-      const node = path.node
-      const expression = node.expression
-      const alternate = expression.alternate
-      const consequent = expression.consequent
-      const test = expression.test
-      if (t.isConditionalExpression(expression)) {
-        if (t.isCallExpression(test)) {
-          const callee = test.callee
-          if (callee.name == 'isSSOMode') {
-            path.replaceWithMultiple(alternate)
+      const alternate = node.alternate || {}
+      if (t.isIdentifier(test)) {
+        if (test.name == "openSSO" || test.name == 'window.openSSO') {
+          if (alternate.body && alternate.body.length > 0) {
+            path.replaceWithMultiple(alternate.body)
+          } else {
+            path.remove()
           }
         }
       }
-    },
-    ImportDeclaration(path) {
-      const node = path.node
-      const { source = {} } = node
-      const { value = "" } = source
-      if (REG_SSO_UTIL_PATH.test(value)) {
-        path.remove()
-      }
     }
   });
-  // generate code
   const output = generate(
     ast,
     {
-      compact: false,
-      // retainLines: true,
+      // ...options
     },
     code
   );
@@ -113,27 +117,22 @@ function ASTDelSSOCode(p) {
 }
 
 
+function _IsExcludeFile(name) {
+  for (let exclude of EXCLUDES_FILE_NAME) {
+    if (name.includes(exclude)) {
+      return true
+    }
+  }
+
+  return false
+}
+
+
 function run() {
   delSSORelatedFile();
-  delPackageJsonSSOInfo()
-  delSSORelatedCode();
+  delSSORelatedHTMLCode();
+  delSSORelatedJSCode();
 }
-
-
-function _getAllFiles(dirPath, arrayOfFiles = []) {
-  files = readdirSync(dirPath)
-  files.forEach(file => {
-    if (statSync(dirPath + "/" + file).isDirectory()) {
-      arrayOfFiles = _getAllFiles(dirPath + "/" + file, arrayOfFiles)
-    } else {
-      if (REG_JSX_PATH.test(file)) {
-        arrayOfFiles.push(path.join(dirPath, "/", file))
-      }
-    }
-  })
-  return arrayOfFiles
-}
-
 
 
 run()
