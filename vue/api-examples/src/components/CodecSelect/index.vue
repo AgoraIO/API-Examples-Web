@@ -3,6 +3,7 @@
     <span>Codec:</span>
     <el-radio-group v-model="value" class="ml-4" :style="{ marginLeft: '10px' }">
       <el-radio label="vp8" size="large">vp8</el-radio>
+      <el-radio label="vp9" size="large">vp9</el-radio>
       <el-radio label="h264" size="large">h264</el-radio>
     </el-radio-group>
   </div>

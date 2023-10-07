@@ -1,52 +1,53 @@
-import { Dropdown, Button, Space, Typography, Radio } from "antd";
-import { useState, useRef, useEffect } from "react";
+import { Dropdown, Button } from "antd";
 import MicrophoneSelect from "../MicrophoneSelect";
 import CameraSelect from "../CameraSelect";
 import VideoProfileSelect from "../VideoProfileSelect";
-const {
-  Text
-} = Typography;
-const Codec = ({
-  onCodecChange,
-  defaultValue = 'vp8'
-}) => {
-  const [value, setValue] = useState(defaultValue);
-  const onChange = e => {
-    setValue(e.target.value);
-    onCodecChange && onCodecChange(e.target.value);
-  };
-  return <Space>
-    <Text>Codec: </Text>
-    <Radio.Group onChange={onChange} value={value}>
-      <Radio value={"vp8"}>vp8</Radio>
-      <Radio value={"h264"}>h264</Radio>
-    </Radio.Group>
-  </Space>;
-};
+import CodecSelect from "../CodecSelect";
+import { useState } from "react";
 const AdvancedSettings = ({
   audioTrack,
   videoTrack,
   onCodecChange,
   onProfileChange,
+  defaultProfile,
+  defaultCodec,
+  onOpenChange,
+  disable = [],
   className = ""
 }) => {
+  const [open, setOpen] = useState(false);
   const items = [{
     label: <MicrophoneSelect audioTrack={audioTrack}></MicrophoneSelect>,
-    key: "0"
+    key: "MicrophoneSelect"
   }, {
     label: <CameraSelect videoTrack={videoTrack}></CameraSelect>,
-    key: "1"
+    key: "CameraSelect"
   }, {
-    label: <Codec onCodecChange={onCodecChange}></Codec>,
-    key: "2"
+    label: <CodecSelect onCodecChange={onCodecChange} defaultValue={defaultCodec}></CodecSelect>,
+    key: "CodecSelect"
   }, {
-    label: <VideoProfileSelect onChange={onProfileChange}></VideoProfileSelect>,
-    key: "3"
+    label: <VideoProfileSelect onChange={onProfileChange} defaultValue={defaultProfile}></VideoProfileSelect>,
+    key: "VideoProfileSelect"
   }];
+  if (disable.length) {
+    items.forEach((item, index) => {
+      if (disable.includes(item.key)) {
+        items.splice(index, 1);
+      }
+    });
+  }
+  const handleMenuClick = () => {
+    setOpen(true);
+  };
+  const handleOpenChange = val => {
+    setOpen(val);
+    onOpenChange && onOpenChange(val);
+  };
   return <Dropdown menu={{
     items,
+    onClick: handleMenuClick,
     selectable: false
-  }} placement="bottom" className={className}>
+  }} onOpenChange={handleOpenChange} open={open} placement="bottom" className={className}>
     <Button type="primary" style={{
       width: "350px"
     }}>ADVANCED SETTINGS</Button>

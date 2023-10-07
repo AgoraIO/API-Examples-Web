@@ -4,8 +4,6 @@ export const zh = {
   plugins: '插件',
   scenarios: '场景',
   faq: '常见问题',
-  vp9: "vp9",
-  vp9Note: "启用vp9编解码",
   hotPlug: '热拔插',
   hotPlugNote: '热拔插示例。',
   basicVoiceCalling: '基础语音通话',
@@ -79,5 +77,7 @@ export const zh = {
   logout: '退出',
   ssoText: '正在登录中...',
   okText: "确认",
-  cancelText: "取消"
+  cancelText: "取消",
+  superClarityExtention: "AI画质",
+  superClarityExtentionNote: "使用SDK插件为video track添加基于AI的画质增强功能"
 }

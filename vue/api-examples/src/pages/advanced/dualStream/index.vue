@@ -87,8 +87,6 @@ const handleUserUnpublished = (user, mediaType) => {
 
 const onVideoClick = async (uid) => {
   console.log('videoRefs', videoRefs)
-  debugger
-
   uid = Number(uid)
   const ref = videoRefs.current[uid]
   try {

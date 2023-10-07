@@ -4,8 +4,6 @@ export const en = {
   plugins: "Plugins",
   scenarios: "Scenarios",
   faq: 'FAQ & Best Practice',
-  vp9: "vp9",
-  vp9Note: "enable vp9 codec",
   hotPlug: 'Hot Plug',
   hotPlugNote: 'Hot Plug Demo',
   basicVoiceCalling: 'Basic Voice Calling',
@@ -80,6 +78,8 @@ export const en = {
   ssoText: 'Logging in...',
   okText: 'OK',
   cancelText: 'Cancel',
+  superClarityExtention: 'Super Clarify',
+  superClarityExtentionNote: 'Add video quality enhancement with AI for video track with a SDK plugin.'
 }
 
 

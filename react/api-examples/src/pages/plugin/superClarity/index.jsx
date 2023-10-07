@@ -1,20 +1,24 @@
 import AgoraRTC from "agora-rtc-sdk-ng";
-import { useEffect, useRef, useState } from "react";
-import { Button, Space, Typography, App } from "antd";
-import { showJoinedMessage, createMicrophoneAudioTrack, createCameraVideoTrack } from "@/utils/utils";
+import { SuperClarityExtension, SuperClarityEvents } from "agora-extension-super-clarity";
+import { useEffect, useRef, useState, useMemo } from "react";
+import { Button, Space, Typography, App, Switch } from "antd";
+import { showJoinedMessage, genPublicPath } from "@/utils/utils";
 import { useUrlQuery, useUnMount } from "@/utils/hooks";
 import JoinForm from "@/components/JoinForm";
 import AgoraVideoPlayer from "@/components/VideoPlayer";
-import Responsive from "@/components/Responsive";
-import VideoProfileSelect from "@/components/VideoProfileSelect";
+import AdvancedSetting from "@/components/AdvancedSetting";
 const {
-  Title
+  Title,
+  Text,
+  Paragraph
 } = Typography;
-let client = AgoraRTC.createClient({
-  mode: "rtc",
-  codec: "vp9"
-});
-function BasicVideoCall() {
+let client = null;
+let codec = 'vp8';
+let videoProfile = "720p_1";
+const extension = new SuperClarityExtension();
+AgoraRTC.registerExtensions([extension]);
+const processorMap = new Map();
+function SuperClarity() {
   const formRef = useRef();
   useUrlQuery(formRef);
   const [joined, setJoined] = useState(false);
@@ -22,6 +26,7 @@ function BasicVideoCall() {
   const [audioTrack, setAudioTrack] = useState(null);
   const [remoteUsers, setRemoteUsers] = useState({});
   const [localUid, setLocalUid] = useState("");
+  const [superClarifyOpen, setSuperClarifyOpen] = useState(true);
   const {
     message
   } = App.useApp();
@@ -31,10 +36,24 @@ function BasicVideoCall() {
     }
   });
   const initTracks = async () => {
-    const tracks = await Promise.all([createMicrophoneAudioTrack(), createCameraVideoTrack()]);
+    if (audioTrack && videoTrack) {
+      return [audioTrack, videoTrack];
+    }
+    const tracks = await Promise.all([AgoraRTC.createMicrophoneAudioTrack(), AgoraRTC.createCameraVideoTrack({
+      encoderConfig: videoProfile
+    })]);
     setAudioTrack(tracks[0]);
     setVideoTrack(tracks[1]);
     return tracks;
+  };
+  const onOpenChange = async val => {
+    if (val) {
+      await initTracks();
+    }
+  };
+  const onProfileChange = async val => {
+    videoProfile = val;
+    await videoTrack.setEncoderConfiguration(videoProfile);
   };
 
   /*
@@ -60,6 +79,9 @@ function BasicVideoCall() {
       ...prev,
       [id]: user
     }));
+    if (mediaType === 'video') {
+      await toggleSuperClarifyOne(user);
+    }
   };
 
   /*
@@ -81,16 +103,18 @@ function BasicVideoCall() {
   const join = async () => {
     try {
       const options = formRef.current.getValue();
+      client = AgoraRTC.createClient({
+        mode: "live",
+        codec: codec,
+        role: "host"
+      });
       // Add event listeners to the client.
       client.on("user-published", handleUserPublished);
       client.on("user-unpublished", handleUserUnpublished);
-      let tracks = [audioTrack, videoTrack];
-      if (!audioTrack && !videoTrack) {
-        tracks = await initTracks();
-      }
       // Join a channel
       options.uid = await client.join(options.appId, options.channel, options.token || null, options.uid || null);
       setLocalUid(options.uid);
+      let tracks = await initTracks();
       await client.publish(tracks);
       showJoinedMessage(message, options);
       setJoined(true);
@@ -106,29 +130,68 @@ function BasicVideoCall() {
     setVideoTrack(null);
     setRemoteUsers({});
     await client?.leave();
-    // leave the channel
     setJoined(false);
     const msg = "client leaves channel success!";
     message.success(msg);
   };
-  const onProfileChange = async val => {
-    await videoTrack?.setEncoderConfiguration(val);
+  const toggleSuperClarifyAll = async val => {
+    setSuperClarifyOpen(val);
+    const uids = Object.keys(remoteUsers);
+    for (let uid of uids) {
+      const user = remoteUsers[uid];
+      let processor = processorMap.get(uid);
+      if (!processor) {
+        processor = extension.createProcessor();
+        processorMap.set(uid, processor);
+        user.videoTrack.pipe(processor).pipe(user.videoTrack.processorDestination);
+      }
+      if (val) {
+        await processor.enable();
+      } else {
+        await processor.disable();
+      }
+    }
   };
+  async function toggleSuperClarifyOne(user) {
+    const uid = user.uid.toString();
+    let processor = processorMap.get(uid);
+    if (!processor) {
+      processor = extension.createProcessor();
+      processorMap.set(uid, processor);
+      user.videoTrack.pipe(processor).pipe(user.videoTrack.processorDestination);
+    }
+    if (superClarifyOpen) {
+      await processor.enable();
+    } else {
+      await processor.disable();
+    }
+  }
   return <div className="padding-20">
     <JoinForm ref={formRef}></JoinForm>
-    <Responsive style={{
+    <Space style={{
       marginTop: "10px"
     }}>
-      <Space>
-        <Button type="primary" onClick={join} disabled={joined}>Join</Button>
-        <Button onClick={leave} disabled={!joined}>Leave</Button>
-      </Space>
+      <Button type="primary" onClick={join} disabled={joined}>Join</Button>
+      <Button onClick={leave} disabled={!joined}>Leave</Button>
+    </Space>
+    <div style={{
+      marginTop: "10px"
+    }}>
+      <div>
+        <Text>If you want to experience super clarity, join the channel as a remote user</Text>
+      </div>
       <Space style={{
-        marginLeft: "10px"
+        marginTop: "10px"
       }}>
-        <VideoProfileSelect onChange={onProfileChange}></VideoProfileSelect>
+        <Switch checked={superClarifyOpen} onChange={toggleSuperClarifyAll}></Switch>
+        <span>Super Clarify</span>
       </Space>
-    </Responsive>
+      <div style={{
+        marginTop: "10px"
+      }}>
+        <AdvancedSetting className="responsive-ml" audioTrack={audioTrack} videoTrack={videoTrack} defaultProfile={videoProfile} onOpenChange={onOpenChange} onProfileChange={onProfileChange} disable={["MicrophoneSelect", "CodecSelect"]}></AdvancedSetting>
+      </div>
+    </div>
     {joined ? <div className="mt-10">
       <Title level={4}>Local User</Title>
       <div className="mt-10 mb-10">uid: {localUid}</div>
@@ -140,4 +203,4 @@ function BasicVideoCall() {
       </div> : null}
   </div>;
 }
-export default BasicVideoCall;
+export default SuperClarity;

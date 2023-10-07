@@ -6,13 +6,12 @@ import { useUrlQuery, useUnMount } from "@/utils/hooks";
 import JoinForm from "@/components/JoinForm";
 import AgoraVideoPlayer from "@/components/VideoPlayer";
 import VideoProfileSelect from "@/components/VideoProfileSelect";
+import CodecSelect from "@/components/CodecSelect";
 const {
   Title
 } = Typography;
-const client = AgoraRTC.createClient({
-  mode: "rtc",
-  codec: "vp8"
-});
+let client = null;
+let codec = "vp8";
 function AdjustVideoProfile() {
   const formRef = useRef();
   useUrlQuery(formRef);
@@ -80,6 +79,10 @@ function AdjustVideoProfile() {
   const join = async () => {
     try {
       const options = formRef.current.getValue();
+      client = AgoraRTC.createClient({
+        mode: "rtc",
+        codec: codec
+      });
       // Add event listeners to the client.
       client.on("user-published", handleUserPublished);
       client.on("user-unpublished", handleUserUnpublished);
@@ -109,6 +112,9 @@ function AdjustVideoProfile() {
   const onProfileChange = async val => {
     await videoTrack.setEncoderConfiguration(val);
   };
+  const onCodecChange = val => {
+    codec = val;
+  };
   return <div className="padding-20">
     <JoinForm ref={formRef}></JoinForm>
     <Space style={{
@@ -116,8 +122,17 @@ function AdjustVideoProfile() {
     }}>
       <Button type="primary" onClick={join} disabled={joined}>Join</Button>
       <Button onClick={leave} disabled={!joined}>Leave</Button>
-      <VideoProfileSelect onChange={onProfileChange} disabled={!joined}></VideoProfileSelect>
     </Space>
+    <div style={{
+      marginTop: "10px"
+    }}>
+      <VideoProfileSelect onChange={onProfileChange} disabled={!joined}></VideoProfileSelect>
+    </div>
+    <div style={{
+      marginTop: "10px"
+    }}>
+      <CodecSelect onCodecChange={onCodecChange}></CodecSelect>
+    </div>
     {joined ? <div className="mt-10">
       <Title level={4}>Local User</Title>
       <div className="mt-10 mb-10">uid: {localUid}</div>

@@ -4,6 +4,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "build": "vite build --mode prod",
     "postinstall": "node ./scripts/copy.js"
   },
   "dependencies": {
@@ -20,7 +21,8 @@
     "agora-extension-virtual-background": "^1.1.3",
     "agora-extension-spatial-audio": "^1.0.0-beta1",
     "agora-extension-video-compositor": "^1.0.0-beta",
-    "agora-rtc-sdk-ng": "^4.18.1"
+    "agora-extension-super-clarity": "^0.1.5-beta",
+    "agora-rtc-sdk-ng": "latest"
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^3.0.0",

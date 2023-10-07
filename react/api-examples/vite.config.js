@@ -18,13 +18,13 @@ const genBaseUrl = (mode) => {
 const genOutDir = (mode) => {
   switch (mode) {
     case "test":
-      return "test"
+      return "build/test"
     case "test:sso":
-      return "test-sso"
+      return "build/test-sso"
     case "prod":
-      return "build"
+      return "build/prod"
     case "prod:sso":
-      return "build-sso"
+      return "build/prod-sso"
     default:
       return "dist"
   }

@@ -11,7 +11,6 @@ const SelfRendering = lazy(() => import('../pages/basic/selfRendering'));
 const SelfCapturing = lazy(() => import('../pages/basic/selfCapturing'));
 const Screenshot = lazy(() => import('../pages/basic/screenshot'));
 const Sharescreen = lazy(() => import('../pages/basic/shareTheScreen'));
-const Vp9 = lazy(() => import('../pages/basic/vp9'));
 // advanced routes
 const RecordingDeviceControl = lazy(() => import('../pages/advanced/recordingDeviceControl'));
 const AdjustVideoProfile = lazy(() => import('../pages/advanced/adjustVideoProfile'));
@@ -31,6 +30,8 @@ const VideoCompositor = lazy(() => import('../pages/plugin/videoCompositor'));
 const VirtualBackground = lazy(() => import('../pages/plugin/virtualBackground'));
 const AiDenoiser = lazy(() => import('../pages/plugin/aiDenoiser'));
 const SpatialAudio = lazy(() => import('../pages/plugin/spatialAudio'));
+const SuperClarity = lazy(() => import('../pages/plugin/superClarity'));
+
 // sso routes
 const SSOPage = lazy(() => import('../pages/sso/index'));
 const basicRoutes = [{
@@ -57,9 +58,6 @@ const basicRoutes = [{
 }, {
   path: '/sharescreen',
   element: <Sharescreen></Sharescreen>
-}, {
-  path: "/vp9",
-  element: <Vp9></Vp9>
 }];
 const advancedRoutes = [{
   path: '/recording-device-control',
@@ -113,6 +111,9 @@ const pluginRoutes = [{
 }, {
   path: '/video-compositor',
   element: <VideoCompositor></VideoCompositor>
+}, {
+  path: '/super-clarity',
+  element: <SuperClarity></SuperClarity>
 }];
 export const routes = [{
   path: "/",

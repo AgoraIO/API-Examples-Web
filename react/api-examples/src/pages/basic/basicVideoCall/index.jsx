@@ -82,12 +82,10 @@ function BasicVideoCall() {
   const join = async () => {
     try {
       const options = formRef.current.getValue();
-      if (!client) {
-        client = AgoraRTC.createClient({
-          mode: "rtc",
-          codec: codec
-        });
-      }
+      client = AgoraRTC.createClient({
+        mode: "rtc",
+        codec: codec
+      });
       client.on("user-published", handleUserPublished);
       client.on("user-unpublished", handleUserUnpublished);
       let tracks = [audioTrack, videoTrack];

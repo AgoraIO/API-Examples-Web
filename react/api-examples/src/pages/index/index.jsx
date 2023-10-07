@@ -39,10 +39,6 @@ const basicItems = [{
   title: 'sharescreen',
   content: 'sharescreenNote',
   to: "/sharescreen"
-}, {
-  title: 'vp9',
-  content: 'vp9Note',
-  to: "/vp9"
 }];
 const advancedItems = [{
   title: 'testdevices',
@@ -113,6 +109,10 @@ const pluginItems = [{
   title: 'videoCompositor',
   content: 'videoCompositorNote',
   to: "/video-compositor"
+}, {
+  title: 'superClarityExtention',
+  content: 'superClarityExtentionNote',
+  to: "/super-clarity"
 }];
 const scenarioItems = [{
   title: 'groupvideocalling',
