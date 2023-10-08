@@ -8,7 +8,7 @@
     <div v-if="joined" class="mt-10">
       <div class="text">Click Remote User Video Player Change Stream Type</div>
       <div class="text">Local User</div>
-      <AgoraVideoPlayer :audioTrack="audioTrack" :videoTrack="videoTrack"></AgoraVideoPlayer>
+      <AgoraVideoPlayer :isLocal="true" :audioTrack="audioTrack" :videoTrack="videoTrack"></AgoraVideoPlayer>
     </div>
     <div v-if="Object.keys(remoteUsers).length">
       <div class="text">Remote Users</div>

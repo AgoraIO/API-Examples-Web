@@ -2,7 +2,7 @@
   <div :style="style">
     <div v-if="text" :style="{ marginTop: '10px', marginBottom: '10px' }">{{ text }}</div>
     <div ref="videoRef" :style="{ width, height }" />
-</div>
+  </div>
 </template>
 
 
@@ -30,6 +30,10 @@ const props = defineProps({
     type: Object,
     default: {}
   },
+  isLocal: {
+    type: Boolean,
+    default: false
+  },
   text: {
     type: [String, Number],
     default: ''
@@ -48,12 +52,14 @@ const props = defineProps({
   },
 })
 
-const { videoTrack, audioTrack, config } = props
+const { videoTrack, audioTrack, config, isLocal } = props
 
 
 onMounted(() => {
   videoTrack?.play(videoRef.value, config)
-  audioTrack?.play()
+  if (!isLocal) {
+    audioTrack?.play()
+  }
 })
 
 watch(() => props.videoTrack, track => {
@@ -64,7 +70,9 @@ watch(() => props.videoTrack, track => {
 
 
 watch(() => props.audioTrack, (track) => {
-  track?.play()
+  if (!isLocal) {
+    track?.play()
+  }
 })
 
 

@@ -10,7 +10,7 @@
     </div>
     <div v-if="joined" class="mt-10">
       <div class="text">Local User</div>
-      <AgoraVideoPlayer :audioTrack="audioTrack" :videoTrack="videoTrack"></AgoraVideoPlayer>
+      <AgoraVideoPlayer :audioTrack="audioTrack" :videoTrack="videoTrack" :isLocal="true"></AgoraVideoPlayer>
     </div>
     <div v-if="Object.keys(remoteUsers).length">
       <div class="text">Remote Users</div>
@@ -18,7 +18,7 @@
         :audioTrack="item.audioTrack" :text="item.uid">
       </AgoraVideoPlayer>
     </div>
-</div>
+  </div>
 </template>
 
 <script setup>

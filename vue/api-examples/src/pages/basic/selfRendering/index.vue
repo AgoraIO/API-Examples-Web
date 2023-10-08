@@ -9,7 +9,7 @@
     </div>
     <div v-if="joined" class="mt-10">
       <div class="text">Local User</div>
-      <AgoraVideoPlayer :audioTrack="audioTrack" :videoTrack="videoTrack"></AgoraVideoPlayer>
+      <AgoraVideoPlayer :isLocal="true" :audioTrack="audioTrack" :videoTrack="videoTrack"></AgoraVideoPlayer>
       <div :style="{ marginTop: '10px', display: 'inline-block', border: '2px dashed red' }">
         <video ref="mirrorPlayerRef" playsInline="" muted="" :style="{
           width: '480p',
