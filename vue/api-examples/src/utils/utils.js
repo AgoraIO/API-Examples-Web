@@ -13,7 +13,7 @@ export const getDefaultLanguage = () => {
 
 export const showJoinedMessage = (options) => {
   if (options.token) {
-    message.success("Congratulations! Joined room successfully.")
+    ElMessage.success("Congratulations! Joined room successfully.")
   } else {
     const href = window.location.href.split('?')[0]
     const finHref = `${href}?appId=${options.appId}&channel=${options.channel}`
