@@ -146,7 +146,7 @@ function ShareTheScreen() {
     {joined ? <div className="mt-10">
       <Title level={4}>Local User</Title>
       <div className="mt-10 mb-10">uid: {localUid}</div>
-      <AgoraVideoPlayer videoTrack={screenVideoTrack} audioTrack={screenAudioTrack || audioTrack}></AgoraVideoPlayer>
+      <AgoraVideoPlayer videoTrack={screenVideoTrack} audioTrack={screenAudioTrack}></AgoraVideoPlayer>
     </div> : null}
     {Object.keys(remoteUsers).length ? <div className="mt-10">
         <Title level={4}>Remote Users</Title>

@@ -12,11 +12,13 @@ const AgoraVideoPlayer = forwardRef((props, ref) => {
     width: defaultWidth = DEFAULT_WIDTH,
     height: defaultHeight = DEFAULT_HEIGHT,
     style = {},
-    onClick = () => {}
+    onClick = () => {},
   } = props;
+
   const [width, setWidth] = useState(defaultWidth);
   const [height, setHeight] = useState(defaultHeight);
   const vidDiv = useRef(null);
+
   useImperativeHandle(ref, () => ({
     setOptions({
       width,
@@ -26,6 +28,7 @@ const AgoraVideoPlayer = forwardRef((props, ref) => {
       width && setWidth(width);
     }
   }));
+
   useLayoutEffect(() => {
     if (vidDiv.current !== null) {
       videoTrack?.play(vidDiv.current, config);
@@ -34,12 +37,14 @@ const AgoraVideoPlayer = forwardRef((props, ref) => {
       videoTrack?.stop();
     };
   }, [videoTrack]);
+
   useLayoutEffect(() => {
     audioTrack?.play();
     return () => {
       audioTrack?.stop();
     };
   }, [audioTrack]);
+
   return <div style={style}>
     {text ? <div style={{
       marginTop: "10px",
@@ -51,4 +56,5 @@ const AgoraVideoPlayer = forwardRef((props, ref) => {
     }} onClick={onClick} />
   </div>;
 });
+
 export default AgoraVideoPlayer;

@@ -164,7 +164,7 @@ function DualStream() {
       <Title level={5}>Click Remote User Video Player Change Stream Type</Title>
       <Title level={4}>Local User</Title>
       <div className="mt-10 mb-10">uid: {localUid}</div>
-      <AgoraVideoPlayer videoTrack={videoTrack} audioTrack={audioTrack}></AgoraVideoPlayer>
+      <AgoraVideoPlayer videoTrack={videoTrack} ></AgoraVideoPlayer>
     </div> : null}
     {Object.keys(remoteUsers).length ? <div className="mt-10">
         <Title level={4}>Remote Users</Title>

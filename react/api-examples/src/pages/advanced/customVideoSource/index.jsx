@@ -24,7 +24,7 @@ const items = [{
 }];
 const VideoSourceSelect = ({
   disabled = false,
-  onChange = () => {}
+  onChange = () => { }
 }) => {
   const [value, setValue] = useState(items[0].key);
   const label = useMemo(() => {
@@ -186,12 +186,12 @@ function CustomVideoSource() {
     {joined && videoSource.current == 'camera' ? <div className="mt-10">
       <Title level={4}>Local User</Title>
       <div className="mt-10 mb-10">uid: {localUid}</div>
-      <AgoraVideoPlayer videoTrack={videoTrack} audioTrack={audioTrack}></AgoraVideoPlayer>
+      <AgoraVideoPlayer videoTrack={videoTrack}></AgoraVideoPlayer>
     </div> : null}
     {Object.keys(remoteUsers).length ? <div className="mt-10">
-        <Title level={4}>Remote Users</Title>
-        {Object.keys(remoteUsers).map(id => <AgoraVideoPlayer videoTrack={remoteUsers[id]?.videoTrack} audioTrack={remoteUsers[id]?.audioTrack} text={`uid: ${id}`} key={id}></AgoraVideoPlayer>)}
-      </div> : null}
+      <Title level={4}>Remote Users</Title>
+      {Object.keys(remoteUsers).map(id => <AgoraVideoPlayer videoTrack={remoteUsers[id]?.videoTrack} audioTrack={remoteUsers[id]?.audioTrack} text={`uid: ${id}`} key={id}></AgoraVideoPlayer>)}
+    </div> : null}
   </div>;
 }
 export default CustomVideoSource;

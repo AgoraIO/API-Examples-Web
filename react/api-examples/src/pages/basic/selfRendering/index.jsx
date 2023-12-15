@@ -167,7 +167,7 @@ function SelfRendering() {
     {joined ? <div className="mt-10">
       <Title level={4}>Local User</Title>
       <div className="mt-10 mb-10">uid: {localUid}</div>
-      <AgoraVideoPlayer videoTrack={videoTrack} audioTrack={audioTrack}></AgoraVideoPlayer>
+      <AgoraVideoPlayer videoTrack={videoTrack} ></AgoraVideoPlayer>
       <div style={{
         marginTop: "10px",
         display: "inline-block",
