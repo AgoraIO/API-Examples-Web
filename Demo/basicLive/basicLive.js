@@ -86,6 +86,8 @@ async function join() {
     client.on("user-published", handleUserPublished);
     client.on("user-unpublished", handleUserUnpublished);
   } else {
+    client.getListeners("user-published").includes(handleUserPublished) && client.off("user-published", handleUserPublished);
+    client.getListeners("user-unpublished").includes(handleUserUnpublished) && client.off("user-unpublished", handleUserUnublished);
     client.setClientRole(options.role);
   }
 
