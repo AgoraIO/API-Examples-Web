@@ -1,0 +1,12 @@
+{
+  "name": "agora-extension-video-compositor",
+  "version": "1.0.0-beta",
+  "description": "Video track compositing plugin of Agora WebSDK",
+  "keywords": [],
+  "main": "agora-extension-video-compositor.js",
+  "typings": "index.d.ts",
+  "declaration": true,
+  "declarationMap": true,
+  "author": "agora",
+  "license": ""
+}

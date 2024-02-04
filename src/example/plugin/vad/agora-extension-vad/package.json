@@ -1,0 +1,25 @@
+{
+	"name": "agora-extension-vad",
+	"version": "1.0.0-beta.1",
+	"description": "Agora Web SDK plugin for voice activity detection",
+	"main": "index.js",
+	"module": "index.esm.js",
+	"types": "index.d.ts",
+	"declaration": true,
+	"author": "Agora WebRTC Team",
+	"keywords": [
+		"VAD",
+		"Web VAD",
+		"WebRTC",
+		"agora"
+	],
+	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/AgoraIO/agora-rtc-web.git"
+	},
+	"bugs": {
+		"url": "https://github.com/AgoraIO/agora-rtc-web/issues"
+	},
+	"homepage": "https://api-ref.agora.io/en/voice-sdk/web/4.x/index.html"
+}
