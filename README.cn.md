@@ -1,3 +1,5 @@
+**新版本web demo 已经移动至 : [https://github.com/AgoraIO/API-Examples-Web/tree/new](https://github.com/AgoraIO/API-Examples-Web/tree/new)**
+
 # Agora RTC Web SDK 4.x 示例项目
 
 _[English](README.md) | 简体中文_

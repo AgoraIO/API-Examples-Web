@@ -1,3 +1,5 @@
+**new web demo has been moved to : [https://github.com/AgoraIO/API-Examples-Web/tree/new](https://github.com/AgoraIO/API-Examples-Web/tree/new)**
+
 # Sample projects for Agora RTC Web SDK 4.x
 
 _English | [简体中文](README.cn.md)_
