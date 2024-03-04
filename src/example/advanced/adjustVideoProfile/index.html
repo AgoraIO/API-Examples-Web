@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="../../../assets/favicon.ico" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Adjust Video Profile -- Agora</title>
+  <link rel="stylesheet" href="../../../assets/bootstrap.min.css">
+  <link rel="stylesheet" href="../../../common/common.css">
+</head>
+
+<body>
+  <div class="container">
+    <!-- left -->
+    <section class="left">
+    </section>
+    <!-- right -->
+    <section class="right row">
+      <!-- video -->
+      <div class="video-group col-md-12 col-lg-6">
+        <!-- local stream -->
+        <section class="card">
+          <div class="card-header">
+            local stream
+          </div>
+          <div class="card-body">
+            <div id="local-player" class="player">
+              <div class="card-text local-player-name" id="local-player-name"></div>
+            </div>
+          </div>
+        </section>
+        <!-- remote stream -->
+        <section class="card">
+          <div class="card-header">
+            remote stream
+          </div>
+          <div class="card-body">
+            <div id="remote-playerlist"></div>
+          </div>
+        </section>
+      </div>
+      <!-- form -->
+      <div class="form-wrapper col-lg-6">
+        <form id="join-form" name="join-form">
+          <div class="join-info-group">
+            <div class="form-item">
+              <label class="form-label">Channel</label>
+              <input class="form-control" id="channel" type="text" placeholder="enter channel name" required>
+              <div class="tips">If you don`t know what is your channel, checkout <a
+                  href="https://docs.agora.io/en/Agora%20Platform/terms?platform=All%20Platforms#channel">this</a></div>
+            </div>
+            <div class="form-item">
+              <label class="form-label">User ID(optional)
+            </div>
+            <input class="form-control" id="uid" type="text" onkeyup="this.value=this.value.replace(/[^0-9]/g,'')"
+              onafterpaste="this.value=this.value.replace(/[^0-9]/g,'')" placeholder="Enter the user ID">
+          </div>
+          <div class="button-group">
+            <label class="form-label">Video Profiles</label>
+            <select class="form-select profile-list" id="">
+            </select>
+            <label class="form-label mt-2">CODEC</label>
+            <select class="form-select codec-list" id="">
+            </select>
+          </div>
+          <div class="button-group">
+            <button id="join" type="submit" class="btn btn-primary btn-sm">Join</button>
+            <button id="leave" type="button" class="btn btn-primary btn-sm" disabled>Leave</button>
+          </div>
+        </form>
+      </div>
+      <!-- app info -->
+      <div id="app-info"></div>
+    </section>
+  </div>
+
+  <script src="../../../assets/jquery-3.4.1.min.js"></script>
+  <script src="../../../assets/bootstrap.bundle.min.js"></script>
+  <script src="../../../common/constant.js"></script>
+  <script src="../../../common/utils.js"></script>
+  <script src="../../../common/left-menu.js"></script>
+  <script src="../../../i18n/language.js"></script>
+  <script src="https://download.agora.io/sdk/release/AgoraRTC_N.js"></script>
+  <script src="./index.js"></script>
+</body>
+
+</html>

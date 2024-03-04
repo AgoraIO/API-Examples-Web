@@ -1,0 +1,14 @@
+{
+  "name": "agora-extension-ai-denoiser",
+  "version": "1.1.0",
+  "description": "",
+  "keywords": [],
+  "main": "index.js",
+  "module": "index.esm.js",
+  "typings": "index.d.ts",
+  "author": "agora",
+  "peerDependencies": {
+    "agora-rtc-sdk-ng": ">=4.15.0"
+  },
+  "license": "MIT"
+}

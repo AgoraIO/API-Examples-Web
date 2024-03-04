@@ -6,9 +6,6 @@ _English | [简体中文](README.cn.md)_
 
 This repository contains sample projects using the Agora RTC Web SDK 4.x.
 
-<hr>
-
-**If you are still not familiar with Agora RTC Web SDK 4.x, please follow [our community interactive tutorial](https://agorawebsdktutorialenusmain.gtsb.io/) to quickly understand the SDK and use CodePen iframes to call the SDK in your browser.**
 
 <hr>
 
@@ -26,23 +23,13 @@ Compared to the Web SDK 3.x, the Web SDK 4.x has the following advantages:
 
 | Feature             | Sample project location                     |
 | ------------------- | -------------------------------- |
-| Adjust video profile        | [/Demo/adjustVideoProfile](/Demo/adjustVideoProfile)        |
-| Audio mixing and audio effect          | [/Demo/audioMixingAndAudioEffect](/Demo/audioMixingAndAudioEffect) |
-| Live streaming            | [/Demo/basicLive](/Demo/basicLive)                 |
-| Enable/disable Video/Audio track | [/Demo/basicMute](/Demo/basicMute)                 |
-| Video call            | [/Demo/basicVideoCall](/Demo/basicVideoCall)            |
-| Cloud proxy            | [/Demo/cloudProxy](/Demo/cloudProxy)            |
-| Custom video source            | [/Demo/customVideoSource](/Demo/customVideoSource)            |
-| Display call status        | [/Demo/displayCallStats](/Demo/displayCallStats)          |
-| Dual stream            | [/Demo/dualStream](/Demo/dualStream)                |
-| Geofencing          | [/Demo/geoFencing](/Demo/geoFencing)           |
-| Join multiple channels          | [/Demo/joinMultipleChannel](/Demo/joinMultipleChannel)           |
-| Push stream to CDN          | [/Demo/pushStreamToCDN](/Demo/pushStreamToCDN)           |
-| Control recording devices        | [/Demo/recordingDeviceControl](/Demo/recordingDeviceControl)    |
-| Custom rendering            | [/Demo/selfRendering](/Demo/selfRendering)            |
-| Custom Capturing            | [/Demo/selfCapturing](/Demo/selfCapturing)            |
-| Share the screen            | [/Demo/shareTheScreen](/Demo/shareTheScreen)            |
-|  Video beauty effect                 | [/Demo/videoBeautyEffect](/Demo/videoBeautyEffect)         |
+| Basic Examples      | [/src/example/basic](/src/example/basic)        |
+| Advanced Examples      | [/src/example/advanced](/src/example/advanced) |
+| Plugin Examples      | [/src/example/plugin](/src/example/plugin)            |
+| Other Examples     | [/src/example/others](/src/example/others)            |
+| Vue Framework Example   | [/src/example/framework/vue](/src/example/framework/vue)        |
+| React Framework Example | [/src/example/framework/react](/src/example/framework/react)  |
+
 
 ### How to run the sample projects
 
@@ -52,28 +39,7 @@ You need a supported browser to run the sample projects. See [Product Overview](
 
 #### Steps to run
 
-1. Use a supported browser to open `Demo/index.html` and select a demo.
-2. In the demo page, enter your App ID, token, and channel name and join the channel.
-   - See [Get Started with Agora](https://docs.agora.io/en/Agora%20Platform/get_appid_token) to learn how to get an App ID and token. You can get a temporary access token to quickly try out this sample project.
-   - The channel name must be the same as the channel ID used to generate the token.
-
-## Projects using React.js
-
-| Feature    | Sample project location |
-| ---------- | ----------------------- |
-| React api example | [/react/api-examples](/react/api-examples) |
-|    |  |
-
-### How to run the sample projects
-
-#### Prerequisites
-
-- You need a supported browser to run the sample projects. See [Product Overview](https://docs.agora.io/en/Interactive%20Broadcast/product_live?platform=Web#compatibility) for a list of supported browsers.
-- [npm](https://www.npmjs.com/)
-
-#### Steps to run the ReactDemo
-
-1. Navigate to [/react/api-examples](/react/api-examples) and run the following command to install dependencies.
+1. In the project root path run the following command to install dependencies.
 
    ```shell
    npm install
@@ -85,44 +51,10 @@ You need a supported browser to run the sample projects. See [Product Overview](
    npm run dev
    ```
 
-3. In the demo page, enter your App ID, token, and channel name and join the channel.
-   - See [Get Started with Agora](https://docs.agora.io/en/Agora%20Platform/get_appid_token) to learn how to get an App ID and token. You can get a temporary access token to quickly try out this sample project.
-   - The channel name must be the same as the channel ID used to generate the token.
+3. Open link [http://localhost:3001/index.html](http://localhost:3001/index.html) in browser. 
 
-## Projects using Vue.js
-
-| Feature         | Sample project location                |
-| --------------- | -------------------------------------- |
-| Vue api example | [/vue/api-examples](/vue/api-examples) |
-|                 |                                        |
-
-### How to run the sample projects
-
-#### Prerequisites
-
-- You need a supported browser to run the sample projects. See [Product Overview](https://docs.agora.io/en/Interactive%20Broadcast/product_live?platform=Web#compatibility) for a list of supported browsers.
-- [npm](https://www.npmjs.com/)
-
-#### Steps to run the VueDemo
-
-1. Navigate to [/vue/api-examples](/vue/api-examples) and run the following command to install dependencies.
-
-   ```shell
-   npm install
-   ```
-
-2. Use the following command to run the sample project.
-
-   ```shell
-   npm run dev
-   ```
-
-3. In the demo page, enter your App ID, token, and channel name and join the channel.
-
-   - See [Get Started with Agora](https://docs.agora.io/en/Agora%20Platform/get_appid_token) to learn how to get an App ID and token. You can get a temporary access token to quickly try out this sample project.
-   - The channel name must be the same as the channel ID used to generate the token.
-
-
+4. In the demo setting page, enter your App ID and App Certificate, then click SetUp button.
+   - See [Get Started with Agora](https://docs.agora.io/en/Agora%20Platform/get_appid_token) to learn how to get an App ID and App Certificate.
 
 ## Reference
 
@@ -144,4 +76,4 @@ If you have any problems or suggestions regarding the sample projects, feel free
 
 ## License
 
-The sample projects are under the MIT license. See the [LICENSE](./LICENSE) file for details.
+The sample projects are under the MIT license. 
