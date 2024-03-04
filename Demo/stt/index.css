@@ -1,0 +1,116 @@
+.sso-hidden {
+  display: block;
+}
+
+
+
+.banner {
+  padding: 0;
+  background-color: #52575c;
+  color: white;
+}
+
+.banner-text {
+  padding: 8px 20px;
+  margin: 0;
+}
+
+.button-group {
+  margin-top: 10px;
+}
+
+
+#join-form {
+  margin-top: 10px;
+}
+
+
+#stt-form {
+  margin-top: 10px;
+}
+
+#stt-form .join-info-text {
+  display: flex;
+  align-items: flex-end;
+  min-height: 50px;
+}
+
+.tips {
+  font-size: 12px;
+  margin-bottom: 2px;
+  color: gray;
+}
+
+.join-info-text {
+  margin-bottom: 2px;
+}
+
+input {
+  width: 100%;
+  margin-bottom: 2px;
+}
+
+#stt-transcribe {
+  display: inline-block;
+  position: relative;
+  width: 50vw;
+}
+
+
+.title {
+  font-size: 20px;
+  line-height: 20px;
+  font-weight: bold;
+  margin: 10px 0;
+}
+
+#stt-transcribe .content {
+  max-height: 500px;
+  overflow: auto;
+  margin: 10px 0;
+}
+
+
+#stt-translate {
+  display: inline-block;
+  position: relative;
+  width: 50vw;
+}
+
+
+#stt-translate .content {
+  max-height: 500px;
+  overflow: auto;
+  margin: 10px 0;
+}
+
+
+
+.player {
+  width: 480px;
+  height: 320px;
+}
+
+.player-name {
+  margin: 8px 0;
+}
+
+#key-form {
+  margin-top: 10px;
+}
+
+#success-alert, #success-alert-with-token {
+  display: none;
+}
+
+#alert-wrapper {
+  display: none;
+}
+
+
+@media (max-width: 640px) {
+  .player {
+    width: 320px;
+    height: 240px;
+  }
+}

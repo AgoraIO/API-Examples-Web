@@ -1,0 +1,86 @@
+.sso-hidden {
+  display: block;
+}
+
+.banner {
+  padding: 0;
+  background-color: #52575c;
+  color: white;
+}
+
+.banner-text {
+  padding: 8px 20px;
+  margin: 0;
+}
+
+
+#join-form {
+  margin-top: 10px;
+}
+
+.tips {
+  font-size: 12px;
+  margin-bottom: 2px;
+  color: gray;
+}
+
+.join-info-text {
+  margin-bottom: 2px;
+}
+
+.join-info-group input {
+  width: 100%;
+  margin-bottom: 2px;
+}
+
+.player {
+  width: 480px;
+  height: 320px;
+}
+
+.player-name {
+  margin: 8px 0;
+}
+
+#success-alert, #success-alert-with-token {
+  display: none;
+}
+
+@media (max-width: 640px) {
+  .player {
+    width: 320px;
+    height: 240px;
+  }
+}
+
+.collapse-wrapper {
+  display: inline-block;
+  position: relative;
+}
+
+.collapse-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+
+.collapse-wrapper .collapse-btn {
+  padding-left: 6.5rem;
+  padding-right: 6.5rem
+}
+
+@media (max-width: 640px) {
+  .collapse-wrapper {
+    margin-top: 10px;
+  }
+}
+
+@media (max-width: 380px) {
+  .collapse-wrapper .collapse-btn {
+    padding-left: 4.5rem;
+    padding-right: 4.5rem
+  }
+}
