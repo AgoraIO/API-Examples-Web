@@ -20,16 +20,9 @@ const __alert = (message, type) => {
 function __queryUrlParams() {
   var urlParams = new URL(location.href).searchParams;
   if (urlParams.size) {
-    let appid = urlParams.get("appid");
+    // let appid = urlParams.get("appid");
     let channel = urlParams.get("channel");
     let uid = urlParams.get("uid");
-    let certificate = urlParams.get("certificate");
-    if (appid) {
-      setOptionsToLocal({ appid })
-    }
-    if (certificate) {
-      setOptionsToLocal({ certificate })
-    }
     if (channel) {
       setOptionsToLocal({ channel })
       $("#channel").val(channel);
@@ -50,6 +43,10 @@ function __queryUrlParams() {
 function __checkLocalOptions() {
   if (window.location.href != SETUP_PAGE_URL) {
     let options = getOptionsFromLocal()
+    let res = __getEncryptFromUrl()
+    if (res.encryptedId && res.encryptedSecret) {
+      return
+    }
     if (!options.appid) {
       alert("Need to set up appID and appCertificate!")
       window.location.href = SETUP_PAGE_URL
@@ -59,8 +56,16 @@ function __checkLocalOptions() {
 
 function __addAppInfoUI() {
   const options = getOptionsFromLocal()
-  let appid = options.appid || ""
-  let certificate = options.certificate || ""
+  let appid = ""
+  let certificate = ""
+  const res = __getEncryptFromUrl()
+  if (!res.encryptedId || !res.encryptedSecret) {
+    appid = options.appid || ""
+    certificate = options.certificate || ""
+  } else {
+    appid = "encryptedId"
+    certificate = "encryptedSecret"
+  }
   let language = getLanguage()
   const href = window.location.href
   let reg = /\/(\w+)\/index\.html$/
@@ -154,6 +159,18 @@ function __genUUID() {
   });
 }
 
+
+function __getEncryptFromUrl() {
+  let encryptedId = ""
+  let encryptedSecret = ""
+  var urlParams = new URL(location.href).searchParams;
+  if (urlParams.size) {
+    encryptedId = urlParams.get("encryptedId");
+    encryptedSecret = urlParams.get("encryptedSecret");
+  }
+  return { encryptedId, encryptedSecret }
+}
+
 // public functions
 const message = {
   success: (message) => __alert(message, 'success'),
@@ -179,6 +196,10 @@ function deepCopy(obj) {
 }
 
 function setOptionsToLocal(option) {
+  const res = __getEncryptFromUrl()
+  if (res.encryptedId && res.encryptedSecret) {
+    return
+  }
   option = deepCopy(option)
   if (option.token) {
     option.token = ""
@@ -218,16 +239,32 @@ function escapeHTML(unsafeText) {
 async function agoraGetAppData(config) {
   const { uid, channel } = config
   const { appid, certificate } = getOptionsFromLocal()
-  const url = 'https://toolbox.bj2.agoralab.co/v2/token/generate';
-  const data = {
-    appId: appid,
-    appCertificate: certificate,
-    channelName: channel,
-    expire: 7200,
-    src: "web",
-    types: [1, 2],
-    uid: uid
-  };
+  const res = __getEncryptFromUrl()
+  let encryptedId = res.encryptedId
+  let encryptedSecret = res.encryptedSecret
+  let data = {}
+  let url = ""
+  if (encryptedId && encryptedSecret) {
+    url = `${BASE_URL}/v1/webdemo/encrypted/token`;
+    data = {
+      channelName: channel,
+      encryptedId,
+      encryptedSecret,
+      traceId: __genUUID(),
+      src: "webdemo"
+    }
+  } else {
+    url = `${BASE_URL}/v2/token/generate`;
+    data = {
+      appId: appid,
+      appCertificate: certificate,
+      channelName: channel,
+      expire: 7200,
+      src: "web",
+      types: [1, 2],
+      uid: uid
+    };
+  }
   let resp = await fetch(url, {
     method: 'POST',
     headers: {
@@ -236,7 +273,13 @@ async function agoraGetAppData(config) {
     body: JSON.stringify(data)
   })
   resp = await resp.json() || {}
-  return resp?.data?.token || null
+  const respData = resp?.data || {}
+
+  if (respData.appid) {
+    config.appid = respData.appid
+  }
+
+  return respData.token
 }
 
 function addSuccessIcon(query) {

@@ -257,7 +257,6 @@ async function leave() {
   $("#audio-effect").attr("disabled", true);
   $("#stop-audio-mixing").attr("disabled", true);
   $("#local-audio-mixing").attr("disabled", true);
-  $("#local-file-name").text("");
   console.log("client leaves channel success");
 }
 

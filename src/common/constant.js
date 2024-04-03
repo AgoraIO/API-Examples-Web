@@ -1,4 +1,4 @@
-const ENV = "dev" // dev, test, prod
+const ENV = "prod" // dev, test, prod
 const AREA = "external"  // internal, external 
 const ORIGIN_URL = __calcOriginUrl()
 const SETUP_PAGE_URL = `${ORIGIN_URL}/index.html`
@@ -7,15 +7,15 @@ let BASE_URL = '' // request base url
 
 switch (ENV) {
   case "dev":
-    BASE_URL = "https://test-toolbox.bj2.agoralab.co"
+    BASE_URL = "https://service-staging.agora.io/toolbox"
     REDIRECT_URI = "http://localhost:3001/sso/index.html";
     break;
   case "test":
-    BASE_URL = "https://test-toolbox.bj2.agoralab.co"
+    BASE_URL = "https://service-staging.agora.io/toolbox"
     REDIRECT_URI = "https://fullapp.oss-cn-beijing.aliyuncs.com/api-examples-test/sso/index.html";
     break;
   case "prod":
-    BASE_URL = "https://toolbox.bj2.agoralab.co"
+    BASE_URL = "https://service.agora.io/toolbox"
     REDIRECT_URI = "https://webdemo.agora.io/sso/index.html";
     break;
 }

@@ -58,8 +58,7 @@ async function join() {
   if (mode != 0 && !isNaN(mode)) {
     client.startProxyServer(mode);
   }
-
-  client.setClientRole(options.role,);
+  client.setClientRole(options.role);
   let screenTrack;
   options.uid = await client.join(options.appid, options.channel, options.token || null, options.uid || null)
   message.success("join channel success!");
