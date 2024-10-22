@@ -1,5 +1,3 @@
-**新版本web demo 已经移动至 : [https://github.com/AgoraIO/API-Examples-Web/tree/new](https://github.com/AgoraIO/API-Examples-Web/tree/new)**
-
 # Agora RTC Web SDK 4.x 示例项目
 
 _[English](README.md) | 简体中文_
@@ -24,25 +22,25 @@ Web SDK 4.x 具有以下优势：
 
 ## 示例项目（使用 jQuery 和 Bootstrap）
 
-| 功能             | 示例项目位置                     |
-| ------------------- | -------------------------------- |
-| 调整视频参数        | [/Demo/adjustVideoProfile](/Demo/adjustVideoProfile)        |
+| 功能                | 示例项目位置                                                       |
+| ------------------- | ------------------------------------------------------------------ |
+| 调整视频参数        | [/Demo/adjustVideoProfile](/Demo/adjustVideoProfile)               |
 | 混音与音效          | [/Demo/audioMixingAndAudioEffect](/Demo/audioMixingAndAudioEffect) |
-| 视频直播            | [/Demo/basicLive](/Demo/basicLive)                 |
-| 启用/禁用音视频轨道 | [/Demo/basicMute](/Demo/basicMute)                 |
-| 视频通话            | [/Demo/basicVideoCall](/Demo/basicVideoCall)            |
-| 云代理            | [/Demo/cloudProxy](/Demo/cloudProxy)            |
-| 自定义视频源            | [/Demo/customVideoSource](/Demo/customVideoSource)            |
-| 显示呼叫状态        | [/Demo/displayCallStats](/Demo/displayCallStats)          |
-| 双流模式            | [/Demo/dualStream](/Demo/dualStream)                |
-| 地理区域限制          | [/Demo/geoFencing](/Demo/geoFencing)           |
-| 加入多频道          | [/Demo/joinMultipleChannel](/Demo/joinMultipleChannel)           |
-| 推流到 CDN          | [/Demo/pushStreamToCDN](/Demo/pushStreamToCDN)           |
-| 控制录制设备        | [/Demo/recordingDeviceControl](/Demo/recordingDeviceControl)    |
-| 自定义音视频渲染            | [/Demo/selfRendering](/Demo/selfRendering)            |
-| 自定义音视频采集            | [/Demo/selfCapturing](/Demo/selfCapturing)            |
-| 屏幕共享            | [/Demo/shareTheScreen](/Demo/shareTheScreen)            |
-| 美颜                | [/Demo/videoBeautyEffect](/Demo/videoBeautyEffect)         |
+| 视频直播            | [/Demo/basicLive](/Demo/basicLive)                                 |
+| 启用/禁用音视频轨道 | [/Demo/basicMute](/Demo/basicMute)                                 |
+| 视频通话            | [/Demo/basicVideoCall](/Demo/basicVideoCall)                       |
+| 云代理              | [/Demo/cloudProxy](/Demo/cloudProxy)                               |
+| 自定义视频源        | [/Demo/customVideoSource](/Demo/customVideoSource)                 |
+| 显示呼叫状态        | [/Demo/displayCallStats](/Demo/displayCallStats)                   |
+| 双流模式            | [/Demo/dualStream](/Demo/dualStream)                               |
+| 地理区域限制        | [/Demo/geoFencing](/Demo/geoFencing)                               |
+| 加入多频道          | [/Demo/joinMultipleChannel](/Demo/joinMultipleChannel)             |
+| 推流到 CDN          | [/Demo/pushStreamToCDN](/Demo/pushStreamToCDN)                     |
+| 控制录制设备        | [/Demo/recordingDeviceControl](/Demo/recordingDeviceControl)       |
+| 自定义音视频渲染    | [/Demo/selfRendering](/Demo/selfRendering)                         |
+| 自定义音视频采集    | [/Demo/selfCapturing](/Demo/selfCapturing)                         |
+| 屏幕共享            | [/Demo/shareTheScreen](/Demo/shareTheScreen)                       |
+| 美颜                | [/Demo/videoBeautyEffect](/Demo/videoBeautyEffect)                 |
 
 ### 如何运行示例项目
 
@@ -59,8 +57,8 @@ Web SDK 4.x 具有以下优势：
 
 ## 示例项目（使用 React）
 
-| 特性     | 示例项目位置 |
-| -------- | ------------ |
+| 特性              | 示例项目位置                               |
+| ----------------- | ------------------------------------------ |
 | React api example | [/react/api-examples](/react/api-examples) |
 |                   |                                            |
 
@@ -88,8 +86,6 @@ Web SDK 4.x 具有以下优势：
 3. 在示例项目页面上，输入 App ID、Token 和频道名，然后加入频道。
    - 关于 App ID 和 Token 的获取方法参考 [开始使用 Agora 平台](https://docs.agora.io/cn/Agora%20Platform/get_appid_token)。你可以获取一个临时 token，快速运行示例项目。
    - 生成 Token 使用的频道名必须和加入频道时使用的频道名一致。
-
-
 
 ## 示例项目（使用 Vue）
 
@@ -123,10 +119,6 @@ Web SDK 4.x 具有以下优势：
 
    - 关于 App ID 和 Token 的获取方法参考 [开始使用 Agora 平台](https://docs.agora.io/cn/Agora%20Platform/get_appid_token)。你可以获取一个临时 token，快速运行示例项目。
    - 生成 Token 使用的频道名必须和加入频道时使用的频道名一致。
-
-
-
-
 
 ## 参考
 
