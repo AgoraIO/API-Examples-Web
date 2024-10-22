@@ -1,8 +1,0 @@
-.setting-item {
-  display: flex;
-  align-items: center;
-}
-
-section+section {
-  margin-top: 5px;
-}

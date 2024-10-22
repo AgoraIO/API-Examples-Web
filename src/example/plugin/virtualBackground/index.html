@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="../../../assets/favicon.ico" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Virtual background -- Agora</title>
+  <link rel="stylesheet" href="../../../assets/bootstrap.min.css">
+  <link rel="stylesheet" href="../../../common/common.css">
+</head>
+
+<body>
+
+
+  <div class="container">
+    <!-- left -->
+    <section class="left">
+    </section>
+    <!-- right -->
+    <section class="right row">
+      <!-- video -->
+      <div class="video-group col-md-12 col-lg-6">
+        <!-- local stream -->
+        <section class="card">
+          <div class="card-header">
+            local stream
+          </div>
+          <div class="card-body">
+            <div id="local-player" class="player">
+              <div class="card-text local-player-name" id="local-player-name"></div>
+            </div>
+          </div>
+        </section>
+        <!-- remote stream -->
+        <section class="card">
+          <div class="card-header">
+            remote stream
+          </div>
+          <div class="card-body">
+            <div id="remote-playerlist"></div>
+          </div>
+        </section>
+      </div>
+      <!-- form -->
+      <div class="form-wrapper col-lg-6">
+        <form id="join-form" name="join-form">
+          <div class="join-info-group">
+            <div class="form-item">
+              <label class="form-label">Channel</label>
+              <input class="form-control" id="channel" type="text" placeholder="enter channel name" required>
+              <div class="tips">If you don`t know what is your channel, checkout <a
+                  href="https://docs.agora.io/en/Agora%20Platform/terms?platform=All%20Platforms#channel">this</a></div>
+            </div>
+            <div class="form-item">
+              <label class="form-label">User ID(optional)</label>
+              <input class="form-control" id="uid" type="text" onkeyup="this.value=this.value.replace(/[^0-9]/g,'')"
+                onafterpaste="this.value=this.value.replace(/[^0-9]/g,'')" placeholder="Enter the user ID">
+            </div>
+          </div>
+          <div class="button-group">
+            <button id="join" type="submit" class="btn btn-primary btn-sm">Join</button>
+            <button id="leave" type="button" class="btn btn-primary btn-sm" disabled>Leave</button>
+          </div>
+          <!-- vb -->
+          <div id="vb-area" style="display: none;">
+            <div class="button-group g-10">
+              <button id="openVirtualBackground" type="submit" class="btn btn-primary btn-sm">
+                Open Virtual Background for LocalVideoTrack
+              </button>
+            </div>
+            <div class="button-group g-10">
+              <button id="enableVirtualBackground" type="submit" class="btn btn-primary btn-sm">
+                Enable Virtual Background
+              </button>
+            </div>
+            <div>
+              <blockquote class="blockquote">
+                <div id="vb-option-tip" class="mb-0"></div>
+              </blockquote>
+
+              <label class="form-label">Virtual background type</label>
+              <select class="form-select" id="pills-tab" required="" style="max-width: 300px;">
+                <option value="blur" selected>Blur</option>
+                <option value="color">Color</option>
+                <option value="image">Image</option>
+              </select>
+              <!-- Blur -->
+              <section class="mt-2" id="blur-wrapper">
+                <label class="form-label">
+                  Blur effect
+                </label>
+                <select class="form-select vb-blur-level" style="max-width: 300px;">
+                  <option value="1" selected>Level 1</option>
+                  <option value="2">Level 2</option>
+                  <option value="3">Level 3</option>
+                </select>
+              </section>
+              <!-- Color -->
+              <section class="mt-2 flex" id="color-wrapper">
+                <span>Select a color</span>
+                <input class="mx-2" type="color" id="vb-color-input" value="#00ff00">
+              </section>
+              <!-- Image -->
+              <section class="mt-2" id="image-wrapper">
+                <div>Choose An Image</div>
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon3">https://</span>
+                  </div>
+                  <input type="text" class="form-control" placeholder="xxxx.com/xxx" id="vb-image-url"
+                    aria-describedby="basic-addon3">
+                </div>
+              </section>
+
+              <button id="vb-require" type="submit" class="btn btn-primary btn-sm mb-2 mt-2">
+                Change Effect
+              </button>
+            </div>
+          </div>
+
+        </form>
+      </div>
+      <!-- app info -->
+      <div id="app-info"></div>
+    </section>
+  </div>
+
+
+
+  </div>
+
+
+
+  <script src="../../../assets/jquery-3.4.1.min.js"></script>
+  <script src="../../../assets/bootstrap.bundle.min.js"></script>
+  <script src="../../../common/constant.js"></script>
+  <script src="../../../common/utils.js"></script>
+  <script src="../../../common/left-menu.js"></script>
+  <script src="../../../i18n/language.js"></script>
+  <script src="https://download.agora.io/sdk/release/AgoraRTC_N.js"></script>
+  <script src="./agora-extension-virtual-background/agora-extension-virtual-background.js"></script>
+  <script src="./index.js"></script>
+</body>
+
+</html>

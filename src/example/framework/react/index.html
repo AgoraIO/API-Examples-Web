@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="../../../assets/favicon.ico" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Use React -- Agora</title>
+  <link rel="stylesheet" href="../../../assets/bootstrap.min.css">
+  <link rel="stylesheet" href="../../../common/common.css">
+</head>
+
+<body>
+  <div class="container">
+    <!-- left -->
+    <section class="left">
+    </section>
+    <!-- right -->
+    <section class="right row" style="display:flex;align-items: top; justify-content: center;">
+      <div id="react-wrapper" class="row"></div>
+      <!-- app info -->
+      <div id="app-info"></div>
+    </section>
+  </div>
+
+
+  <script src="../../../assets/jquery-3.4.1.min.js"></script>
+  <script src="../../../assets/bootstrap.bundle.min.js"></script>
+  <script src="../../../common/constant.js"></script>
+  <script src="../../../common/utils.js"></script>
+  <script src="../../../common/left-menu.js"></script>
+  <script src="../../../i18n/language.js"></script>
+  <script src="https://download.agora.io/sdk/release/AgoraRTC_N.js"></script>
+  <script src="./assets/react.production.min.js"></script>
+  <script src="./assets/react-dom.production.min.js"></script>
+  <script src="./assets/babel.min.js" type="text/javascript"></script>
+  <!-- we use type="text/babel" for the script tag, which tells the browser to treat the code as JSX -->
+  <script src="./index.js" type="text/babel"></script>
+</body>
+
+</html>
