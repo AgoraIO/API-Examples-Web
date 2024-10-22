@@ -1,5 +1,3 @@
-**new web demo has been moved to : [https://github.com/AgoraIO/API-Examples-Web/tree/new](https://github.com/AgoraIO/API-Examples-Web/tree/new)**
-
 # Sample projects for Agora RTC Web SDK 4.x
 
 _English | [简体中文](README.cn.md)_
@@ -7,7 +5,6 @@ _English | [简体中文](README.cn.md)_
 ## Overview
 
 This repository contains sample projects using the Agora RTC Web SDK 4.x.
-
 
 <hr>
 
@@ -23,15 +20,14 @@ Compared to the Web SDK 3.x, the Web SDK 4.x has the following advantages:
 
 ## Projects using jQuery and Bootstrap
 
-| Feature             | Sample project location                     |
-| ------------------- | -------------------------------- |
-| Basic Examples      | [/src/example/basic](/src/example/basic)        |
-| Advanced Examples      | [/src/example/advanced](/src/example/advanced) |
-| Plugin Examples      | [/src/example/plugin](/src/example/plugin)            |
-| Other Examples     | [/src/example/others](/src/example/others)            |
-| Vue Framework Example   | [/src/example/framework/vue](/src/example/framework/vue)        |
-| React Framework Example | [/src/example/framework/react](/src/example/framework/react)  |
-
+| Feature                 | Sample project location                                      |
+| ----------------------- | ------------------------------------------------------------ |
+| Basic Examples          | [/src/example/basic](/src/example/basic)                     |
+| Advanced Examples       | [/src/example/advanced](/src/example/advanced)               |
+| Plugin Examples         | [/src/example/plugin](/src/example/plugin)                   |
+| Other Examples          | [/src/example/others](/src/example/others)                   |
+| Vue Framework Example   | [/src/example/framework/vue](/src/example/framework/vue)     |
+| React Framework Example | [/src/example/framework/react](/src/example/framework/react) |
 
 ### How to run the sample projects
 
@@ -53,7 +49,7 @@ You need a supported browser to run the sample projects. See [Product Overview](
    npm run dev
    ```
 
-3. Open link [http://localhost:3001/index.html](http://localhost:3001/index.html) in browser. 
+3. Open link [http://localhost:3001/index.html](http://localhost:3001/index.html) in browser.
 
 4. In the demo setting page, enter your App ID and App Certificate, then click SetUp button.
    - See [Get Started with Agora](https://docs.agora.io/en/Agora%20Platform/get_appid_token) to learn how to get an App ID and App Certificate.
@@ -78,4 +74,4 @@ If you have any problems or suggestions regarding the sample projects, feel free
 
 ## License
 
-The sample projects are under the MIT license. 
+The sample projects are under the MIT license.

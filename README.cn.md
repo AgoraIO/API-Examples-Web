@@ -1,5 +1,3 @@
-**新版本web demo 已经移动至 : [https://github.com/AgoraIO/API-Examples-Web/tree/new](https://github.com/AgoraIO/API-Examples-Web/tree/new)**
-
 # Agora RTC Web SDK 4.x 示例项目
 
 _[English](README.md) | 简体中文_
@@ -22,15 +20,14 @@ Web SDK 4.x 具有以下优势：
 
 ## 示例项目（使用 jQuery 和 Bootstrap）
 
-| 功能             | 示例项目位置                     |
-| ------------------- | -------------------------------- |
-| 基础示例      | [/src/example/basic](/src/example/basic)        |
-| 进阶示例      | [/src/example/advanced](/src/example/advanced) |
-| 插件示例      | [/src/example/plugin](/src/example/plugin)            |
-| 其他示例      | [/src/example/others](/src/example/others)            |
-| vue框架示例   | [/src/example/framework/vue](/src/example/framework/vue)        |
-| react框架示例 | [/src/example/framework/react](/src/example/framework/react)  |
-
+| 功能           | 示例项目位置                                                 |
+| -------------- | ------------------------------------------------------------ |
+| 基础示例       | [/src/example/basic](/src/example/basic)                     |
+| 进阶示例       | [/src/example/advanced](/src/example/advanced)               |
+| 插件示例       | [/src/example/plugin](/src/example/plugin)                   |
+| 其他示例       | [/src/example/others](/src/example/others)                   |
+| vue 框架示例   | [/src/example/framework/vue](/src/example/framework/vue)     |
+| react 框架示例 | [/src/example/framework/react](/src/example/framework/react) |
 
 ### 如何运行示例项目
 
