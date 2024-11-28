@@ -9,7 +9,6 @@
   margin: 0;
 }
 
-
 #join-form {
   margin-top: 10px;
 }
@@ -20,9 +19,7 @@
   color: gray;
 }
 
-.join-info-text {
-  margin-bottom: 2px;
-}
+
 
 input {
   width: 100%;
@@ -38,7 +35,8 @@ input {
   margin: 8px 0;
 }
 
-#success-alert, #success-alert-with-token {
+#success-alert,
+#success-alert-with-token {
   display: none;
 }
 
@@ -48,7 +46,6 @@ input {
     height: 240px;
   }
 }
-
 
 .collapse-wrapper {
   display: inline-block;
@@ -63,10 +60,9 @@ input {
   z-index: 999;
 }
 
-
 .collapse-wrapper .collapse-btn {
   padding-left: 6.5rem;
-  padding-right: 6.5rem
+  padding-right: 6.5rem;
 }
 
 @media (max-width: 640px) {
@@ -78,11 +74,9 @@ input {
 @media (max-width: 380px) {
   .collapse-wrapper .collapse-btn {
     padding-left: 4.5rem;
-    padding-right: 4.5rem
+    padding-right: 4.5rem;
   }
 }
-
-
 
 .custom-switch {
   height: 30px;

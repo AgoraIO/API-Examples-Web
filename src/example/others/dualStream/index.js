@@ -1,16 +1,16 @@
 // create Agora client
 var client = AgoraRTC.createClient({
   mode: "rtc",
-  codec: "vp8"
+  codec: "vp8",
 });
 AgoraRTC.enableLogUpload();
 var localTracks = {
   videoTrack: null,
-  audioTrack: null
+  audioTrack: null,
 };
 var remoteUsers = {};
 // Agora client options
-var options = getOptionsFromLocal()
+var options = getOptionsFromLocal();
 
 $("body").on("click", ".player", async function (e) {
   e.preventDefault();
@@ -22,11 +22,9 @@ $("body").on("click", ".player", async function (e) {
     await changeSomeUserStream(uid);
   } catch (error) {
     console.error(error);
-    message.error(error.message)
+    message.error(error.message);
   }
-
 });
-
 
 $("#join-form").submit(async function (e) {
   e.preventDefault();
@@ -36,11 +34,11 @@ $("#join-form").submit(async function (e) {
     options.uid = Number($("#uid").val());
     options.token = await agoraGetAppData(options);
     await join();
-    setOptionsToLocal(options)
+    setOptionsToLocal(options);
     message.success("join channel success!");
   } catch (error) {
     console.error(error);
-    message.error(error.message)
+    message.error(error.message);
   } finally {
     $("#leave").attr("disabled", false);
   }
@@ -56,7 +54,7 @@ async function join() {
   client.on("user-unpublished", handleUserUnpublished);
 
   // start Proxy if needed
-  const mode = Number(options.proxyMode)
+  const mode = Number(options.proxyMode);
   if (mode != 0 && !isNaN(mode)) {
     client.startProxyServer(mode);
   }
@@ -66,7 +64,7 @@ async function join() {
     width: 160,
     height: 120,
     framerate: 15,
-    bitrate: 120
+    bitrate: 120,
   });
 
   // Enable dual-stream mode.
@@ -78,8 +76,10 @@ async function join() {
     client.join(options.appid, options.channel, options.token || null, options.uid || null),
     // create local tracks, using microphone and camera
     AgoraRTC.createMicrophoneAudioTrack({
-      encoderConfig: "music_standard"
-    }), AgoraRTC.createCameraVideoTrack()]);
+      encoderConfig: "music_standard",
+    }),
+    AgoraRTC.createCameraVideoTrack(),
+  ]);
 
   // play local video track
   localTracks.videoTrack.play("local-player");
@@ -91,7 +91,7 @@ async function join() {
 }
 
 async function changeSomeUserStream(uid) {
-  const streamType = $(`#stream-type-${uid}`).text()
+  const streamType = $(`#stream-type-${uid}`).text();
   if (streamType == "HQ Stream") {
     // Set the remote user to the low-quality video stream.
     await client.setRemoteVideoStreamType(uid, 1);
@@ -133,11 +133,11 @@ async function subscribe(user, mediaType) {
   // subscribe to a remote user
   await client.subscribe(user, mediaType);
   console.log("subscribe success");
-  if (mediaType === 'video') {
+  if (mediaType === "video") {
     const player = $(`
       <div id="player-wrapper-${uid}">
         <div id="player-${uid}" class="player" data-uid="${uid}">
-          <div class="player-name">uid: ${uid} 
+          <div class="remote-player-name">uid: ${uid} 
             <span id="stream-type-${uid}">HQ Stream</span> 
           </div>
         </div>
@@ -146,7 +146,7 @@ async function subscribe(user, mediaType) {
     $("#remote-playerlist").append(player);
     user.videoTrack.play(`player-${uid}`);
   }
-  if (mediaType === 'audio') {
+  if (mediaType === "audio") {
     user.audioTrack.play();
   }
 }
@@ -157,9 +157,8 @@ function handleUserPublished(user, mediaType) {
   subscribe(user, mediaType);
 }
 
-
 function handleUserUnpublished(user, mediaType) {
-  if (mediaType === 'video') {
+  if (mediaType === "video") {
     const id = user.uid;
     delete remoteUsers[id];
     $(`#player-wrapper-${id}`).remove();

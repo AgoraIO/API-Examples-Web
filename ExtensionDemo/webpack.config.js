@@ -9,20 +9,20 @@ module.exports = {
     filename: "index.js",
     library: {
       type: "umd",
-      name: "SimpleExtension"
-    }
+      name: "SimpleExtension",
+    },
   },
   module: {
     rules: [
       {
         test: /.ts$/,
-        include: path.resolve(ROOT, 'src'),
+        include: path.resolve(ROOT, "src"),
         exclude: /node_modules/,
-        loader: 'babel-loader'
-      }
-    ]
+        loader: "babel-loader",
+      },
+    ],
   },
   resolve: {
-    extensions: ['.ts', '.js']
-  }
-}
+    extensions: [".ts", ".js"],
+  },
+};

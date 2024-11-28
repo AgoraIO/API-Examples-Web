@@ -1,10 +1,9 @@
-import { AudioExtension, AudioProcessor, IAudioProcessorContext } from 'agora-rte-extension'
+import { AudioExtension, AudioProcessor, IAudioProcessorContext } from "agora-rte-extension";
 
 class SimpleAudioExtension extends AudioExtension<SimpleAudioProcessor> {
   protected _createProcessor(): SimpleAudioProcessor {
     return new SimpleAudioProcessor();
   }
-
 }
 
 class SimpleAudioProcessor extends AudioProcessor {
@@ -28,7 +27,6 @@ class SimpleAudioProcessor extends AudioProcessor {
     this.gainNode = undefined;
     this.oscillatorNode?.stop();
     this.oscillatorNode = undefined;
-
   }
 
   protected onEnableChange(enabled: boolean): void | Promise<void> {
@@ -50,4 +48,4 @@ class SimpleAudioProcessor extends AudioProcessor {
   }
 }
 
-export { SimpleAudioExtension }
+export { SimpleAudioExtension };

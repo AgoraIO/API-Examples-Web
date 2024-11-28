@@ -4,12 +4,7 @@
     "moduleResolution": "node",
     "target": "es5",
     "module": "umd",
-    "lib": [
-      "es2015",
-      "es2016",
-      "es2017",
-      "dom"
-    ],
+    "lib": ["es2015", "es2016", "es2017", "dom"],
     "strict": true,
     "strictNullChecks": true,
     "strictPropertyInitialization": true,
@@ -25,11 +20,7 @@
     "stripInternal": true,
     "isolatedModules": true,
     "outDir": "./dist",
-    "typeRoots": [
-      "node_modules/@types"
-    ]
+    "typeRoots": ["node_modules/@types"]
   },
-  "include": [
-    "src/**/*"
-  ]
+  "include": ["src/**/*"]
 }

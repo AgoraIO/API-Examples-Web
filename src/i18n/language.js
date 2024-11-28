@@ -1,71 +1,70 @@
-let __cacheData = JSON.parse(sessionStorage.getItem("__cacheData")) || {}
+let LANGUAGE_CACHE_KEY = "__language_data__";
+let LANGUAGE_CACHE_DATA = JSON.parse(sessionStorage.getItem(LANGUAGE_CACHE_KEY)) || {};
 
 function __insertIe8nText(data) {
-    var insertEle = $(".i18n");
-    insertEle.each(function () {
-        let dataName = $(this).attr("name");
-        let i18nTxt = data[dataName];
-        $(this).text(i18nTxt);
-    })
+  var insertEle = $(".i18n");
+  insertEle.each(function () {
+    let dataName = $(this).attr("name");
+    let i18nTxt = data[dataName];
+    $(this).text(i18nTxt);
+  });
 }
 
 function __getLanguageData(language, success, fail) {
-    let url = ""
+  let url = "";
 
-    if (__cacheData[language]) {
-        success(__cacheData[language])
-        return
-    }
+  if (LANGUAGE_CACHE_DATA[language]) {
+    success(LANGUAGE_CACHE_DATA[language]);
+    return;
+  }
 
-    switch (language) {
-        case "zh":
-            url = `${ORIGIN_URL}/i18n/zh-CN/index.json`
-            break
-        case "zh-CN":
-            url = `${ORIGIN_URL}/i18n/zh-CN/index.json`
-            break
-        case "en":
-            url = `${ORIGIN_URL}/i18n/en/index.json`
-            break
-        default:
-            url = `${ORIGIN_URL}/i18n/en/index.json`
-    }
+  switch (language) {
+    case "zh":
+      url = `${ORIGIN_URL}/i18n/zh-CN/index.json`;
+      break;
+    case "zh-CN":
+      url = `${ORIGIN_URL}/i18n/zh-CN/index.json`;
+      break;
+    case "en":
+      url = `${ORIGIN_URL}/i18n/en/index.json`;
+      break;
+    default:
+      url = `${ORIGIN_URL}/i18n/en/index.json`;
+  }
 
-    $.ajax({
-        url: url,
-        async: true,
-        cache: false,
-        dataType: 'json',
-        success: success,
-        error: fail
-    });
-
+  $.ajax({
+    url: url,
+    async: true,
+    cache: false,
+    dataType: "json",
+    success: success,
+    error: fail,
+  });
 }
 
 function __execI18n() {
-    const language = getLanguage()
+  const language = getLanguage();
 
-    const success = function (data, status) {
-        __cacheData[language] = data
-        sessionStorage.setItem("__cacheData", JSON.stringify(__cacheData))
-        __insertIe8nText(data)
+  const success = function (data, status) {
+    LANGUAGE_CACHE_DATA[language] = data;
+    sessionStorage.setItem(LANGUAGE_CACHE_KEY, JSON.stringify(LANGUAGE_CACHE_DATA));
+    __insertIe8nText(data);
+  };
+
+  const fail = function (jqXHR, textStatus, errorThrown) {
+    let msg = "get language data failed!";
+    let href = window.location.href;
+    if (/^file/.test(href)) {
+      msg += "can not get language data from local file, please use http server!";
     }
+    console.error(msg, jqXHR, textStatus);
+  };
 
-    const fail = function (jqXHR, textStatus, errorThrown) {
-        let msg = "get language data failed!"
-        let href = window.location.href
-        if (/^file/.test(href)) {
-            msg += "can not get language data from local file, please use http server!"
-        }
-        console.error(msg, jqXHR, textStatus);
-    }
-
-    __getLanguageData(language, success, fail)
+  __getLanguageData(language, success, fail);
 }
 
 function __insertLanguageSwitch() {
-    const languageSwitchHtml =
-        `<div class="btn-group language-list">
+  const languageSwitchHtml = `<div class="btn-group language-list">
             <div class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                <span id="language-text"></span> 
             </div>
@@ -73,55 +72,51 @@ function __insertLanguageSwitch() {
                 <li class="dropdown-item rounded-2" id="language-english">English</li>
                 <li class="dropdown-item rounded-2" id="language-zh">简体中文</li>
             </ul>
-        </div>`
+        </div>`;
 
-    $("#language-switch-wrapper").html(languageSwitchHtml)
+  $("#language-switch-wrapper").html(languageSwitchHtml);
 
-    const language = getLanguage()
+  const language = getLanguage();
 
-    if (language == "en") {
-        $("#language-english").addClass("active")
-        $("#language-text").text("English")
+  if (language == "en") {
+    $("#language-english").addClass("active");
+    $("#language-text").text("English");
+  } else {
+    $("#language-zh").addClass("active");
+    $("#language-text").text("简体中文");
+  }
+
+  function switchLanguage(v) {
+    if (language == v) {
+      return;
+    }
+    let options = getOptionsFromLocal();
+    if (v == "zh-CN" || v == "zh") {
+      $("#language-zh").addClass("active");
+      $("#language-english").removeClass("active");
+      $("#language-text").text("简体中文");
+      options.language = "zh-CN";
+      setOptionsToLocal(options);
     } else {
-        $("#language-zh").addClass("active")
-        $("#language-text").text("简体中文")
+      $("#language-english").addClass("active");
+      $("#language-zh").removeClass("active");
+      $("#language-text").text("English");
+      options.language = "en";
+      setOptionsToLocal(options);
     }
+    window.location.reload();
+  }
 
-    function switchLanguage(v) {
-        if (language == v) {
-            return
-        }
-        let options = getOptionsFromLocal()
-        if (v == "zh-CN" || v == "zh") {
-            $("#language-zh").addClass("active")
-            $("#language-english").removeClass("active")
-            $("#language-text").text("简体中文")
-            options.language = "zh-CN"
-            setOptionsToLocal(options)
-        } else {
-            $("#language-english").addClass("active")
-            $("#language-zh").removeClass("active")
-            $("#language-text").text("English")
-            options.language = "en"
-            setOptionsToLocal(options)
-        }
-        window.location.reload()
-    }
+  $("#language-english").click(function (e) {
+    switchLanguage("en");
+  });
 
-    $("#language-english").click(function (e) {
-        switchLanguage("en")
-
-    })
-
-    $("#language-zh").click(function (e) {
-        switchLanguage("zh-CN")
-    })
-
-
+  $("#language-zh").click(function (e) {
+    switchLanguage("zh-CN");
+  });
 }
 
-
 window.addEventListener("pageshow", function (e) {
-    __insertLanguageSwitch()
-    __execI18n()
-})
+  __insertLanguageSwitch();
+  __execI18n();
+});

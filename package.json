@@ -5,11 +5,14 @@
   "main": "index.js",
   "scripts": {
     "dev": "node ./scripts/server.js",
-    "pure": "node ./scripts/pure.js"
+    "pure": "node ./scripts/pure.js",
+    "lint": "prettier . --write --ignore-unknown"
   },
   "devDependencies": {
-    "express":"^4.18.2"
+    "express": "^4.18.2",
+    "prettier": "^3.3.3"
   },
   "author": "qz",
-  "license": "ISC"
+  "license": "ISC",
+  "packageManager": "yarn@1.22.22"
 }
