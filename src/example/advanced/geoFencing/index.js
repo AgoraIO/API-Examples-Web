@@ -1,6 +1,6 @@
 var client = AgoraRTC.createClient({
   mode: "rtc",
-  codec: "vp8"
+  codec: "vp8",
 });
 AgoraRTC.enableLogUpload();
 
@@ -9,7 +9,7 @@ AgoraRTC.enableLogUpload();
  */
 var localTracks = {
   videoTrack: null,
-  audioTrack: null
+  audioTrack: null,
 };
 
 /*
@@ -22,35 +22,43 @@ var remoteUsers = {};
  */
 var options = getOptionsFromLocal();
 
-var areas = [{
-  label: "GLOBAL",
-  detail: "Global",
-  value: "GLOBAL"
-}, {
-  label: "ASIA",
-  detail: "Asia, excluding Mainland China",
-  value: "ASIA"
-}, {
-  label: "CHINA",
-  detail: "China",
-  value: "CHINA"
-}, {
-  label: "EUROPE",
-  detail: "Europe",
-  value: "EUROPE"
-}, {
-  label: "INDIA",
-  detail: "India",
-  value: "INDIA"
-}, {
-  label: "JAPAN",
-  detail: "Japan",
-  value: "JAPAN"
-}, {
-  label: "NORTH_AMERICA",
-  detail: "North America",
-  value: "NORTH_AMERICA"
-}];
+var areas = [
+  {
+    label: "GLOBAL",
+    detail: "Global",
+    value: "GLOBAL",
+  },
+  {
+    label: "ASIA",
+    detail: "Asia, excluding Mainland China",
+    value: "ASIA",
+  },
+  {
+    label: "CHINA",
+    detail: "China",
+    value: "CHINA",
+  },
+  {
+    label: "EUROPE",
+    detail: "Europe",
+    value: "EUROPE",
+  },
+  {
+    label: "INDIA",
+    detail: "India",
+    value: "INDIA",
+  },
+  {
+    label: "JAPAN",
+    detail: "Japan",
+    value: "JAPAN",
+  },
+  {
+    label: "NORTH_AMERICA",
+    detail: "North America",
+    value: "NORTH_AMERICA",
+  },
+];
 
 var area;
 
@@ -63,7 +71,7 @@ $(() => {
 
   $(".areas-list").change(function (e) {
     changeArea(this.value);
-  })
+  });
 });
 
 /*
@@ -79,11 +87,11 @@ $("#join-form").submit(async function (e) {
     options.uid = Number($("#uid").val());
     options.token = await agoraGetAppData(options);
     await join();
-    setOptionsToLocal(options)
+    setOptionsToLocal(options);
     message.success("join channel success!");
   } catch (error) {
     console.error(error);
-    message.error(error.message)
+    message.error(error.message);
   } finally {
     $("#leave").attr("disabled", false);
   }
@@ -105,7 +113,7 @@ async function join() {
   client.on("user-unpublished", handleUserUnpublished);
 
   // start Proxy if needed
-  const mode = Number(options.proxyMode)
+  const mode = Number(options.proxyMode);
   if (mode != 0 && !isNaN(mode)) {
     client.startProxyServer(mode);
   }
@@ -116,8 +124,10 @@ async function join() {
     client.join(options.appid, options.channel, options.token || null, options.uid || null),
     // Create tracks to the local microphone and camera.
     AgoraRTC.createMicrophoneAudioTrack({
-      encoderConfig: "music_standard"
-    }), AgoraRTC.createCameraVideoTrack()]);
+      encoderConfig: "music_standard",
+    }),
+    AgoraRTC.createCameraVideoTrack(),
+  ]);
 
   // Play the local video track to the local browser and update the UI with the user ID.
   localTracks.videoTrack.play("local-player");
@@ -164,18 +174,18 @@ async function subscribe(user, mediaType) {
   // subscribe to a remote user
   await client.subscribe(user, mediaType);
   console.log("subscribe success");
-  if (mediaType === 'video') {
+  if (mediaType === "video") {
     const player = $(`
      <div id="player-wrapper-${uid}">
             <div id="player-${uid}" class="player">
-                 <div class="player-name">uid: ${uid}</div>
+                 <div class="remote-player-name">uid: ${uid}</div>
             </div>
      </div>
     `);
     $("#remote-playerlist").append(player);
     user.videoTrack.play(`player-${uid}`);
   }
-  if (mediaType === 'audio') {
+  if (mediaType === "audio") {
     user.audioTrack.play();
   }
 }
@@ -198,7 +208,7 @@ function handleUserPublished(user, mediaType) {
  * @param  {string} user - The {@link  https://docs.agora.io/en/Voice/API%20Reference/web_ng/interfaces/iagorartcremoteuser.html| remote user} to remove.
  */
 function handleUserUnpublished(user, mediaType) {
-  if (mediaType === 'video') {
+  if (mediaType === "video") {
     const id = user.uid;
     delete remoteUsers[id];
     $(`#player-wrapper-${id}`).remove();
@@ -206,17 +216,19 @@ function handleUserUnpublished(user, mediaType) {
 }
 
 async function changeArea(label) {
-  area = areas.find(profile => profile.label === label);
+  area = areas.find((profile) => profile.label === label);
   $(".areas-list").val(area.label);
   // Specify the region for connection as North America
   AgoraRTC.setArea({
-    areaCode: area.value
+    areaCode: area.value,
   });
 }
 
 function initAreas() {
-  areas.forEach(profile => {
-    $(".areas-list").append(`<option value=${profile.label}>${profile.label}: ${profile.detail}</option>`);
+  areas.forEach((profile) => {
+    $(".areas-list").append(
+      `<option value=${profile.label}>${profile.label}: ${profile.detail}</option>`,
+    );
   });
   area = areas[0];
   $(".areas-list").val(area.label);

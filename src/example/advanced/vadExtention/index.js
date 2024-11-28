@@ -9,7 +9,7 @@ var client = AgoraRTC.createClient({ mode: "rtc", codec: "vp8" });
 
 var localTracks = {
   videoTrack: null,
-  audioTrack: null
+  audioTrack: null,
 };
 
 var remoteUsers = {};
@@ -18,34 +18,29 @@ var options = {
   appid: null,
   channel: null,
   uid: null,
-  token: null
+  token: null,
 };
 
-let processor = null
-let processorEnable = false
-const ctx = document.getElementById('chart');
+let processor = null;
+let processorEnable = false;
+const ctx = document.getElementById("chart");
 
-
-let vadChart = null
+let vadChart = null;
 let vadChartData = [];
 const MAX_NUM = 1000;
 const labels = Array.from(Array(MAX_NUM).keys());
 
-
 if (extension.checkCompatibility()) {
   processor = extension.createProcessor();
 } else {
-  message.error("VAD extension is not supported on current browser!")
+  message.error("VAD extension is not supported on current browser!");
 }
-
-
 
 /*
  * When this page is called with parameters in the URL, this procedure
  * attempts to join a Video Call channel using those parameters.
  */
 $(() => {
-
   var urlParams = new URL(location.href).searchParams;
   options.appid = urlParams.get("appid");
   options.channel = urlParams.get("channel");
@@ -58,9 +53,7 @@ $(() => {
     $("#channel").val(options.channel);
     $("#join-form").submit();
   }
-})
-
-
+});
 
 /*
  * When a user clicks Join or Leave in the HTML form, this procedure gathers the information
@@ -78,8 +71,8 @@ $("#join-form").submit(async function (e) {
       options.appid = appId;
       options.token = token;
       await join();
-      agoraReportData(options)
-      agoraContentInspect(client, options)
+      agoraReportData(options);
+      agoraContentInspect(client, options);
     } else {
       options.appid = $("#appid").val();
       options.token = $("#token").val();
@@ -88,53 +81,53 @@ $("#join-form").submit(async function (e) {
     if (options.token) {
       $("#success-alert-with-token").css("display", "block");
     } else {
-      $("#success-alert a").attr("href", `index.html?appid=${options.appid}&channel=${options.channel}&token=${options.token}`);
+      $("#success-alert a").attr(
+        "href",
+        `index.html?appid=${options.appid}&channel=${options.channel}&token=${options.token}`,
+      );
       $("#success-alert").css("display", "block");
     }
-    $('#vad').attr("disabled", false);
+    $("#vad").attr("disabled", false);
   } catch (error) {
     console.error(error);
   } finally {
     $("#leave").attr("disabled", false);
   }
-})
+});
 
 $("#leave").click(function (e) {
   leave();
-  $('#vad').attr("disabled", true);
-})
-
+  $("#vad").attr("disabled", true);
+});
 
 $("#vad").click(async function (e) {
   if (!processorEnable) {
-    enable()
-    pipe()
-    createVadChart()
+    enable();
+    pipe();
+    createVadChart();
   } else {
-    unPipe()
-    disable()
+    unPipe();
+    disable();
   }
-})
-
-
+});
 
 function enable() {
   processor && processor.enable();
 
-  processorEnable = true
-  $("#vad").text("Disable VAD")
+  processorEnable = true;
+  $("#vad").text("Disable VAD");
 }
 
 function disable() {
   processor && processor.disable();
 
-  processorEnable = false
-  $("#vad").text("Enable VAD")
+  processorEnable = false;
+  $("#vad").text("Enable VAD");
   $("#isSpeaking").text("false");
   $("#speakingProb").text("0%");
-  vadChartData = []
-  vadChart && vadChart.destroy()
-  vadChart = null
+  vadChartData = [];
+  vadChart && vadChart.destroy();
+  vadChart = null;
 }
 
 function dump() {
@@ -157,13 +150,13 @@ function handleResult(result) {
     let speakingProb = (result.voiceProb || 0) * 100;
     $("#speakingProb").text(`${speakingProb.toFixed(4)}%`);
     $("#isSpeaking").text(speakingProb > 99 ? "true" : "false");
-    updateVadChart(speakingProb)
+    updateVadChart(speakingProb);
   }
 }
 
 function createVadChart() {
   if (vadChart) {
-    return
+    return;
   }
   vadChart = new Chart(ctx, {
     type: "line",
@@ -195,11 +188,10 @@ function updateVadChart(value) {
     if (vadChartData.length >= MAX_NUM) {
       vadChartData.shift();
     }
-    vadChartData.push(value)
+    vadChartData.push(value);
     vadChart.update();
   }
 }
-
 
 function pipe() {
   try {
@@ -214,7 +206,7 @@ function pipe() {
     }
   } catch (error) {
     console.error(error);
-    message.error(error.message)
+    message.error(error.message);
   }
 }
 
@@ -238,29 +230,33 @@ async function unPipe() {
       processor.unpipe();
 
       localTracks.audioTrack && localTracks.audioTrack.unpipe();
-      localTracks.audioTrack && localTracks.audioTrack.pipe(localTracks.audioTrack.processorDestination);
+      localTracks.audioTrack &&
+        localTracks.audioTrack.pipe(localTracks.audioTrack.processorDestination);
     }
   } catch (error) {
     console.error(error);
   }
 }
 
-
 /*
  * Join a channel, then create local video and audio tracks and publish them to the channel.
  */
 async function join() {
-
   // Add an event listener to play remote tracks when remote user publishes.
   client.on("user-published", handleUserPublished);
   client.on("user-unpublished", handleUserUnpublished);
 
-  options.uid = await client.join(options.appid, options.channel, options.token || null, options.uid || null)
+  options.uid = await client.join(
+    options.appid,
+    options.channel,
+    options.token || null,
+    options.uid || null,
+  );
 
   if (!localTracks.audioTrack) {
     localTracks.audioTrack = await AgoraRTC.createMicrophoneAudioTrack({
-      encoderConfig: "music_standard"
-    })
+      encoderConfig: "music_standard",
+    });
   }
   if (!localTracks.videoTrack) {
     localTracks.videoTrack = await AgoraRTC.createCameraVideoTrack();
@@ -272,7 +268,6 @@ async function join() {
 
   await client.publish(Object.values(localTracks));
   console.log("publish success");
-
 }
 
 async function leave() {
@@ -289,9 +284,8 @@ async function leave() {
   remoteUsers = {};
   $("#remote-playerlist").html("");
 
-
   // stop VAD
-  disable()
+  disable();
 
   // leave the channel
   await client.leave();
@@ -302,7 +296,6 @@ async function leave() {
   $("#joined-setup").css("display", "none");
   console.log("client leaves channel success");
 }
-
 
 /*
  * Add the local use to a remote channel.
@@ -315,18 +308,18 @@ async function subscribe(user, mediaType) {
   // subscribe to a remote user
   await client.subscribe(user, mediaType);
   console.log("subscribe success");
-  if (mediaType === 'video') {
+  if (mediaType === "video") {
     const player = $(`
       <div id="player-wrapper-${uid}">
-        <p class="player-name">remoteUser(${uid})</p>
+        <p class="remote-player-name">remoteUser(${uid})</p>
         <div id="player-${uid}" class="player"></div>
       </div>
     `);
     $("#remote-playerlist").append(player);
     user.videoTrack.play(`player-${uid}`);
-    toggleSuperClarifyOne(uid)
+    toggleSuperClarifyOne(uid);
   }
-  if (mediaType === 'audio') {
+  if (mediaType === "audio") {
     user.audioTrack.play();
   }
 }
@@ -338,13 +331,9 @@ function handleUserPublished(user, mediaType) {
 }
 
 function handleUserUnpublished(user, mediaType) {
-  if (mediaType === 'video') {
+  if (mediaType === "video") {
     const id = user.uid;
     delete remoteUsers[id];
     $(`#player-wrapper-${id}`).remove();
-
   }
 }
-
-
-

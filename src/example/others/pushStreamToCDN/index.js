@@ -1,18 +1,17 @@
 // create Agora client
 var client = AgoraRTC.createClient({
   mode: "live",
-  codec: "vp8"
+  codec: "vp8",
 });
 AgoraRTC.enableLogUpload();
 var localTracks = {
   videoTrack: null,
-  audioTrack: null
+  audioTrack: null,
 };
 var remoteUsers = {};
 // Agora client options
 // liveStreamingUrl
-var options = getOptionsFromLocal()
-
+var options = getOptionsFromLocal();
 
 $("#live-streaming-stop").click(function (event) {
   event.preventDefault();
@@ -34,11 +33,9 @@ $("#live-streaming-start").click(async function (event) {
     options.liveStreamingUrl && (await liveTranscoding());
   } catch (error) {
     console.error(error);
-    message.error(error.message)
+    message.error(error.message);
   }
 });
-
-
 
 $("#join-form").submit(async function (e) {
   e.preventDefault();
@@ -50,11 +47,11 @@ $("#join-form").submit(async function (e) {
     options.token = await agoraGetAppData(options);
     options.role = "host";
     await join();
-    setOptionsToLocal(options)
+    setOptionsToLocal(options);
     message.success("join channel success!");
   } catch (error) {
     console.error(error);
-    message.error(error.message)
+    message.error(error.message);
   } finally {
     $("#leave").attr("disabled", false);
   }
@@ -73,17 +70,22 @@ async function join() {
   client.on("user-unpublished", handleUserUnpublished);
 
   // start Proxy if needed
-  const mode = Number(options.proxyMode)
+  const mode = Number(options.proxyMode);
   if (mode != 0 && !isNaN(mode)) {
     client.startProxyServer(mode);
   }
 
   // join the channel
-  options.uid = await client.join(options.appid, options.channel, options.token || null, options.uid || null);
+  options.uid = await client.join(
+    options.appid,
+    options.channel,
+    options.token || null,
+    options.uid || null,
+  );
   if (options.role === "host") {
     // create local audio and video tracks
     localTracks.audioTrack = await AgoraRTC.createMicrophoneAudioTrack({
-      encoderConfig: "music_standard"
+      encoderConfig: "music_standard",
     });
     localTracks.videoTrack = await AgoraRTC.createCameraVideoTrack();
     // play local video track
@@ -98,7 +100,7 @@ async function join() {
 
 async function liveTranscoding() {
   if (!options.liveStreamingUrl) {
-    console.error('you should input liveStreaming URL');
+    console.error("you should input liveStreaming URL");
     return;
   }
   // Set the order of local and remote hosts according to your preferences
@@ -116,7 +118,7 @@ async function liveTranscoding() {
       alpha: 1.0,
       // The uid below should be consistent with the uid entered in AgoraRTCClient.join
       // uid must be an integer number
-      uid: Number(uid)
+      uid: Number(uid),
     };
   });
 
@@ -133,22 +135,22 @@ async function liveTranscoding() {
     videoCodecProfile: 100,
     userCount: 2,
     // userConfigExtraInfo: {},
-    backgroundColor: 0x0000EE,
+    backgroundColor: 0x0000ee,
     watermark: {
       url: "https://agoraio-community.github.io/AgoraWebSDK-NG/img/logo.png",
       x: 20,
       y: 20,
       width: 200,
-      height: 200
+      height: 200,
     },
     backgroundImage: {
       url: "https://agoraio-community.github.io/AgoraWebSDK-NG/img/sd_rtn.jpg",
       x: 100,
       y: 100,
       width: 1080,
-      height: 520
+      height: 520,
     },
-    transcodingUsers
+    transcodingUsers,
   };
   try {
     // To monitor errors in the middle of the push, please refer to the API documentation for the list of error codes
@@ -162,7 +164,7 @@ async function liveTranscoding() {
     $("#live-streaming-stop").attr("disabled", false);
     $("#live-streaming-start").attr("disabled", true);
   } catch (error) {
-    console.error('live streaming error:', error.message);
+    console.error("live streaming error:", error.message);
   }
 }
 async function leave() {
@@ -193,18 +195,18 @@ async function subscribe(user, mediaType) {
   // subscribe to a remote user
   await client.subscribe(user, mediaType);
   console.log("subscribe success");
-  if (mediaType === 'video') {
+  if (mediaType === "video") {
     const player = $(`
      <div id="player-wrapper-${uid}">
             <div id="player-${uid}" class="player">
-                 <div class="player-name">uid: ${uid}</div>
+                 <div class="remote-player-name">uid: ${uid}</div>
             </div>
      </div>
     `);
     $("#remote-playerlist").append(player);
     user.videoTrack.play(`player-${uid}`);
   }
-  if (mediaType === 'audio') {
+  if (mediaType === "audio") {
     user.audioTrack.play();
   }
 }
@@ -214,7 +216,7 @@ function handleUserPublished(user, mediaType) {
   subscribe(user, mediaType);
 }
 function handleUserUnpublished(user, mediaType) {
-  if (mediaType === 'video') {
+  if (mediaType === "video") {
     const id = user.uid;
     delete remoteUsers[id];
     $(`#player-wrapper-${id}`).remove();

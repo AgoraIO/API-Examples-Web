@@ -1,10 +1,9 @@
-import { Extension, VideoProcessor, Ticker, IProcessorContext } from 'agora-rte-extension'
+import { Extension, VideoProcessor, Ticker, IProcessorContext } from "agora-rte-extension";
 
 class SimpleVideoExtension extends Extension<SimpleVideoProcessor> {
   protected _createProcessor(): SimpleVideoProcessor {
     return new SimpleVideoProcessor();
   }
-
 }
 
 class SimpleVideoProcessor extends VideoProcessor {
@@ -18,11 +17,11 @@ class SimpleVideoProcessor extends VideoProcessor {
   public constructor() {
     super();
 
-    this.canvas = document.createElement('canvas');
+    this.canvas = document.createElement("canvas");
     this.canvas.width = 640;
     this.canvas.height = 480;
-    this.ctx = this.canvas.getContext('2d')!;
-    this.videoElement = document.createElement('video');
+    this.ctx = this.canvas.getContext("2d")!;
+    this.videoElement = document.createElement("video");
     this.videoElement.muted = true;
     const outputStream = this.canvas.captureStream(30);
     this.canvasTrack = outputStream.getVideoTracks()[0];
@@ -37,7 +36,7 @@ class SimpleVideoProcessor extends VideoProcessor {
       this.ctx.fillStyle = "red";
       this.ctx.fillRect(0, 0, 100, 100);
     }
-  }
+  };
 
   protected onEnableChange(enabled: boolean): void | Promise<void> {
     if (!this.context) {
@@ -61,7 +60,7 @@ class SimpleVideoProcessor extends VideoProcessor {
     this.videoElement.onplaying = () => {
       this.canvas.width = this.videoElement.videoWidth;
       this.canvas.height = this.videoElement.videoHeight;
-    }
+    };
 
     if (this.enabled) {
       this.ticker.start();
@@ -77,4 +76,4 @@ class SimpleVideoProcessor extends VideoProcessor {
   }
 }
 
-export { SimpleVideoExtension }
+export { SimpleVideoExtension };

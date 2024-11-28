@@ -42,22 +42,22 @@
         </section>
       </div>
       <!-- form -->
-      <div class="form-wrapper col-lg-6">
+      <div  class="col-lg-6">
         <form id="join-form" name="join-form">
-          <div class="join-info-group">
-            <div class="form-item">
+          <div  >
+            <div class="mt-2">
               <label class="form-label">Channel</label>
               <input class="form-control" id="channel" type="text" placeholder="enter channel name" required>
               <div class="tips">If you don`t know what is your channel, checkout <a
                   href="https://docs.agora.io/en/Agora%20Platform/terms?platform=All%20Platforms#channel">this</a></div>
             </div>
-            <div class="form-item">
+            <div class="mt-2">
               <label class="form-label">User ID(optional)
             </div>
             <input class="form-control" id="uid" type="text" onkeyup="this.value=this.value.replace(/[^0-9]/g,'')"
               onafterpaste="this.value=this.value.replace(/[^0-9]/g,'')" placeholder="Enter the user ID">
           </div>
-          <div class="button-group">
+          <div class="mt-2">
             <label class="form-label">Video Profiles</label>
             <select class="form-select profile-list" id="">
             </select>
@@ -65,7 +65,7 @@
             <select class="form-select codec-list" id="">
             </select>
           </div>
-          <div class="button-group">
+          <div class="mt-2">
             <button id="join" type="submit" class="btn btn-primary btn-sm">Join</button>
             <button id="leave" type="button" class="btn btn-primary btn-sm" disabled>Leave</button>
           </div>

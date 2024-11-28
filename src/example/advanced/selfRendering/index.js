@@ -1,16 +1,16 @@
 // create Agora client
 var client = AgoraRTC.createClient({
   mode: "rtc",
-  codec: "vp8"
+  codec: "vp8",
 });
 AgoraRTC.enableLogUpload();
 var localTracks = {
   videoTrack: null,
-  audioTrack: null
+  audioTrack: null,
 };
 var remoteUsers = {};
 // Agora client options
-var options = getOptionsFromLocal()
+var options = getOptionsFromLocal();
 
 $("#join-form").submit(async function (e) {
   e.preventDefault();
@@ -20,17 +20,15 @@ $("#join-form").submit(async function (e) {
     options.uid = Number($("#uid").val());
     options.token = await agoraGetAppData(options);
     await join();
-    setOptionsToLocal(options)
+    setOptionsToLocal(options);
     message.success("join channel success!");
   } catch (error) {
     console.error(error);
-    message.error(error.message)
+    message.error(error.message);
   } finally {
     $("#leave").attr("disabled", false);
   }
 });
-
-
 
 $("#leave").click(function (e) {
   leave();
@@ -41,17 +39,22 @@ async function join() {
   client.on("user-unpublished", handleUserUnpublished);
 
   // start Proxy if needed
-  const mode = Number(options.proxyMode)
+  const mode = Number(options.proxyMode);
   if (mode != 0 && !isNaN(mode)) {
     client.startProxyServer(mode);
   }
 
   // join the channel
-  options.uid = await client.join(options.appid, options.channel, options.token || null, options.uid || null);
+  options.uid = await client.join(
+    options.appid,
+    options.channel,
+    options.token || null,
+    options.uid || null,
+  );
   // create local audio and video tracks
   if (!localTracks.audioTrack) {
     localTracks.audioTrack = await AgoraRTC.createMicrophoneAudioTrack({
-      encoderConfig: "music_standard"
+      encoderConfig: "music_standard",
     });
   }
   if (!localTracks.videoTrack) {
@@ -61,12 +64,11 @@ async function join() {
   localTracks.videoTrack.play("local-player");
   $("#local-player-name").text(`uid: ${options.uid}`);
 
-  mirrorPlayerShow()
+  mirrorPlayerShow();
   // publish local tracks to channel
   await client.publish(Object.values(localTracks));
   console.log("publish success");
 }
-
 
 function mirrorPlayerShow() {
   //create the mirror of local player
@@ -108,18 +110,18 @@ async function subscribe(user, mediaType) {
   // subscribe to a remote user
   await client.subscribe(user, mediaType);
   console.log("subscribe success");
-  if (mediaType === 'video') {
+  if (mediaType === "video") {
     const player = $(`
       <div id="player-wrapper-${uid}">
         <div id="player-${uid}" class="player">
-          <div class="player-name">uid: ${uid}</div>
+          <div class="remote-player-name">uid: ${uid}</div>
         </div>
         <div class="mt-2 mb-2 mx-2">Video Mirror</div>
         <div id="player-${uid}-mirror-area" class="player" style="border: 2px dashed red ;">
             <div style="width: 100%; height: 100%; position: relative; overflow: hidden; background-color: black;">
                 <video id="video_track-video-${uid}-mirror" 
                     class="agora_video_player" playsinline="" muted="" 
-                    style="width: 100%; height: 100%; position: absolute; left: 0px; top: 0px; object-fit: cover;">
+                    style="width: 100%; height: 100%; position: absolute; left: 0px; top: 0px; object-fit: cover;  transform: rotateY(180deg);">
                 </video>
             </div>
         </div>
@@ -137,8 +139,16 @@ async function subscribe(user, mediaType) {
     const ms = new MediaStream([msTrack]);
     mirrorRemotePlayer.srcObject = ms;
     mirrorRemotePlayer.play();
+    // disconnected trigger track-ended event
+    user.videoTrack.on("track-updated", (track) => {
+      console.warn("Track Updated: ", track);
+      const ms = new MediaStream([track]);
+      // update the mirror video track
+      mirrorRemotePlayer.srcObject = ms;
+      mirrorRemotePlayer.play();
+    });
   }
-  if (mediaType === 'audio') {
+  if (mediaType === "audio") {
     user.audioTrack.play();
   }
 }
@@ -148,7 +158,7 @@ function handleUserPublished(user, mediaType) {
   subscribe(user, mediaType);
 }
 function handleUserUnpublished(user, mediaType) {
-  if (mediaType === 'video') {
+  if (mediaType === "video") {
     const id = user.uid;
     delete remoteUsers[id];
     $(`#player-wrapper-${id}`).remove();

@@ -11,22 +11,20 @@
  */
 var client = AgoraRTC.createClient({
   mode: "rtc",
-  codec: "vp8"
+  codec: "vp8",
 });
-
-
 
 /*
  * On initiation no users are connected.
  */
 var remoteUsers = {};
 
-var canvasVideoTrack = null
+var canvasVideoTrack = null;
 
 /*
  * On initiation. `client` is not attached to any project or channel for any specific user.
  */
-var options = getOptionsFromLocal()
+var options = getOptionsFromLocal();
 /*
  * When this page is called with parameters in the URL, this procedure
  * attempts to join a Video Call channel using those parameters.
@@ -55,11 +53,11 @@ $("#join-form").submit(async function (e) {
     options.uid = Number($("#uid").val());
     options.token = await agoraGetAppData(options);
     await join();
-    setOptionsToLocal(options)
+    setOptionsToLocal(options);
     message.success("join channel success!");
   } catch (error) {
     console.error(error);
-    message.error(error.message)
+    message.error(error.message);
   } finally {
     $("#leave").attr("disabled", false);
   }
@@ -80,12 +78,17 @@ async function join() {
   client.on("user-published", handleUserPublished);
   client.on("user-unpublished", handleUserUnpublished);
   // start Proxy if needed
-  const mode = Number(options.proxyMode)
+  const mode = Number(options.proxyMode);
   if (mode != 0 && !isNaN(mode)) {
     client.startProxyServer(mode);
   }
   // Join the channel.
-  options.uid = await client.join(options.appid, options.channel, options.token || null, options.uid || null);
+  options.uid = await client.join(
+    options.appid,
+    options.channel,
+    options.token || null,
+    options.uid || null,
+  );
 
   // Create video track to custom canvas element.
   canvasVideoTrack = getCanvasCustomVideoTrack();
@@ -101,13 +104,13 @@ async function join() {
 //initialize canvas elements
 function initializeCanvasCustomVideoTrack() {
   const canvasElement = document.querySelector("#customCanvasElement");
-  const ctx = canvasElement.getContext('2d');
-  const localPlayer = document.querySelector("#local-player")
+  const ctx = canvasElement.getContext("2d");
+  const localPlayer = document.querySelector("#local-player");
   canvasElement.height = localPlayer.clientHeight;
   canvasElement.width = localPlayer.clientWidth;
   setInterval(() => {
     ctx.clearRect(0, 0, canvasElement.clientWidth, canvasElement.clientHeight);
-    ctx.fillStyle = '#dddddd';
+    ctx.fillStyle = "#dddddd";
     ctx.fillRect(10, 10, 130, 130);
     var path = new Path2D();
     path.arc(75, 75, 50, 0, Math.PI * 2, true);
@@ -128,7 +131,7 @@ function getCanvasCustomVideoTrack() {
   const stream = canvasElement.captureStream(30);
   const [videoTrack] = stream.getVideoTracks();
   return AgoraRTC.createCustomVideoTrack({
-    mediaStreamTrack: videoTrack
+    mediaStreamTrack: videoTrack,
   });
 }
 
@@ -166,18 +169,18 @@ async function subscribe(user, mediaType) {
   // subscribe to a remote user
   await client.subscribe(user, mediaType);
   console.log("subscribe success");
-  if (mediaType === 'video') {
+  if (mediaType === "video") {
     const player = $(`
      <div id="player-wrapper-${uid}">
             <div id="player-${uid}" class="player">
-                 <div class="player-name">uid: ${uid}</div>
+                 <div class="remote-player-name">uid: ${uid}</div>
             </div>
      </div>
     `);
     $("#remote-playerlist").append(player);
     user.videoTrack.play(`player-${uid}`);
   }
-  if (mediaType === 'audio') {
+  if (mediaType === "audio") {
     user.audioTrack.play();
   }
 }
@@ -200,7 +203,7 @@ function handleUserPublished(user, mediaType) {
  * @param  {string} user - The {@link  https://docs.agora.io/en/Voice/API%20Reference/web_ng/interfaces/iagorartcremoteuser.html| remote user} to remove.
  */
 function handleUserUnpublished(user, mediaType) {
-  if (mediaType === 'video') {
+  if (mediaType === "video") {
     const id = user.uid;
     delete remoteUsers[id];
     $(`#player-wrapper-${id}`).remove();
