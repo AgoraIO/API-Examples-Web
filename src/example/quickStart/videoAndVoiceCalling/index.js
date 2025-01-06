@@ -38,34 +38,37 @@ $("#video-set-muted").click(function (e) {
 });
 
 $("#video-set-enabled").click(function (e) {
+  setEnabled("video", true);
+  $("#video-set-enabled").attr("disabled", true);
+  $("#video-set-disable").attr("disabled", false);
+});
+
+$("#video-set-disable").click(function (e) {
   if (localTrackState.videoTrackEnabled) {
     setEnabled("video", false);
-    $(this).text("SetEnabled false");
-  } else {
-    setEnabled("video", true);
-    $(this).text("SetEnabled true");
-  }
+    $("#video-set-enabled").attr("disabled", false);
+    $("#video-set-disable").attr("disabled", true);
+    $("#local-player").html("");
+  } 
 });
 
-$("#audio-set-muted").click(function (e) {
-  if (localTrackState.audioTrackMuted) {
-    setMute("audio", false);
-    $(this).text("SetMuted false");
-  } else {
-    setMute("audio", true);
-    $(this).text("SetMuted true");
-  }
-});
 
 $("#audio-set-enabled").click(function (e) {
+    setEnabled("audio", true);
+    $("#audio-set-enabled").attr("disabled", true);
+    $("#audio-set-disable").attr("disabled", false);
+});
+
+
+$("#audio-set-disable").click(function (e) {
   if (localTrackState.audioTrackEnabled) {
     setEnabled("audio", false);
-    $(this).text("SetEnabled false");
-  } else {
-    setEnabled("audio", true);
-    $(this).text("SetEnabled true");
+    $("#audio-set-enabled").attr("disabled", false);
+    $("#audio-set-disable").attr("disabled", true);
   }
 });
+
+
 
 $("#host-join").click(function (e) {
   options.role = "host";
@@ -94,17 +97,11 @@ $("#join-form").submit(async function (e) {
     } else {
       options.token = await agoraGetAppData(options);
     }
+    console.log("options", options);
     await join();
     setOptionsToLocal(options);
     message.success("join channel success!");
     $("#host-join").attr("disabled", true);
-    $("#audience-join").attr("disabled", true);
-    if (options.role == "host") {
-      $("#video-set-muted").attr("disabled", false);
-      $("#video-set-enabled").attr("disabled", false);
-      $("#audio-set-muted").attr("disabled", false);
-      $("#audio-set-enabled").attr("disabled", false);
-    }
   } catch (error) {
     if (error.code === 'CAN_NOT_GET_GATEWAY_SERVER') {
       return message.error("Token parameter error,please check your token.");
@@ -112,28 +109,20 @@ $("#join-form").submit(async function (e) {
     console.error(error);
     message.error(error.message);
   } finally {
+    $("#video-set-enabled").attr("disabled", true);
+    $("#video-set-disable").attr("disabled", false);
+    $("#audio-set-enabled").attr("disabled", true);
+    $("#audio-set-disable").attr("disabled", false);
     $("#leave").attr("disabled", false);
   }
 });
 
 $("#leave").click(function (e) {
   leave();
-  $("#video-set-muted").attr("disabled", true);
+  $("#video-set-disable").attr("disabled", true);
   $("#video-set-enabled").attr("disabled", true);
-  $("#audio-set-muted").attr("disabled", true);
+  $("#audio-set-disable").attr("disabled", true);
   $("#audio-set-enabled").attr("disabled", true);
-});
-
-$("#doubt").click(function (e) {
-  let language = getLanguage();
-  let url = "";
-  if (language == "zh" || language == "zh-CN") {
-    url = "https://doc.shengwang.cn/faq/integration-issues/diff-setenabled-setmuted";
-  } else {
-    url =
-      "https://docs.agora.io/en/help/integration-issues/set_enabled_set_muted";
-  }
-  window.open(url, "_blank");
 });
 
 async function join() {
@@ -173,6 +162,8 @@ async function join() {
     localTracks.videoTrack.play("local-player");
     $("#local-player-name").text(`uid: ${options.uid}`);
 
+    setEnabled("audio", true);
+    setEnabled("video", true);
     // publish local tracks to channel
     await client.publish(Object.values(localTracks));
   }

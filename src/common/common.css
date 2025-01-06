@@ -470,3 +470,7 @@ button#join, button#leave {
     margin-top: 0.5rem !important;
   }
 }
+
+.overflow-hidden {
+  overflow: hidden;
+}

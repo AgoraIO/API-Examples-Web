@@ -22,39 +22,98 @@ let projectList = [];
 $(() => {
   initVersion();
   initModes();
-  let appCertificateLink = "https://docs.agora.io/en/voice-calling/reference/glossary?platform=android#app-certificate";
-  let appIdLink = "https://docs.agora.io/en/Agora%20Platform/terms?platform=All%20Platforms#a-nameappidaapp-id";
-  if (AREA == "internal") {
-    appCertificateLink = "https://docportal.shengwang.cn/cn/Agora%20Platform/get_appid_token?platform=All%20Platforms#%E8%8E%B7%E5%8F%96-app-%E8%AF%81%E4%B9%A6";
-    appIdLink = "https://docportal.shengwang.cn/cn/Agora%20Platform/get_appid_token?platform=Android#%E8%8E%B7%E5%8F%96-app-id";
-    $(".hidden").removeClass("hidden");
-    initProjects();
-  }
-
-  $("#certificate-link").attr("href", appCertificateLink);
-  $("#appid-link").attr("href", appIdLink);
-  
+  initProjects();
+  initDocUrl();
 });
+
+
+
+const saveConfig = () => {
+  options.appid = escapeHTML($("#appid").val().trim());
+  options.certificate = escapeHTML($("#certificate").val().trim());
+  options.proxyMode = proxyModeItem.value;
+  setOptionsToLocal(options);
+}
+
+
+
+const checkAppId = () => {
+  const projectAppIdType = $("#project-id-select").val();
+  if(projectAppIdType !== 'custom_settings'){
+    return  true
+  }
+  // check appid
+  const appId = $("#appid").val().trim();
+  if (!appId) {
+    alert("Need to set up appID and appCertificate!");
+    return;
+  }
+  const isValidate = /^[A-Za-z0-9]{32}$/.test(appId);
+  if (!isValidate) {
+    alert("AppID verification failed, please enter correct information and try again!");
+  }
+  return isValidate;
+
+}
+$(document).ready(function () {
+  $(document).off('click', '.sidebar-bottom').on('click', '.sidebar-bottom', function (e) {
+    if ($(e.target).closest('.sidebar-bottom').length) {
+      saveConfig();
+    }
+
+    const target = $(e.target).attr('data-href');
+    if (!target) {
+      return;
+    }
+    const isValidate = checkAppId();
+    if (!isValidate) {
+      return;
+    }
+    window.location.href = $(e.target).attr('data-href');
+  });
+});
+
 
 $(".proxy-list").change(function (e) {
   changeModes(this.value);
+  saveConfig();
 });
 
 $("#setup-btn").click(function (e) {
-  options.appid = escapeHTML($("#appid").val());
-  options.certificate = escapeHTML($("#certificate").val());
-  options.proxyMode = proxyModeItem.value;
-  setOptionsToLocal(options);
+  saveConfig();
+  const isValidate = checkAppId();
+  if (!isValidate) {
+    return;
+  }  
   message.success("Set successfully! Link to function page!");
   const href = getJumpBackUrl();
   window.location.href = href;
 });
 
+$("#appid").change(function (e) {
+  saveConfig();
+})
+
+$("#certificate").change(function (e) {
+  saveConfig();
+});
+
 $("#project-id-select").change(function (e) {
   const appId = this.value;
+  if (appId === "custom_settings") {
+    $("#appid").val("");
+    $("#certificate").val("");
+    $("#appid").prop("disabled", false);
+    $("#certificate").prop("disabled", false);
+    return;
+  } else {
+    $("#appid").prop("disabled", true);
+    $("#certificate").prop("disabled", true);
+  }
   const project = projectList.find((project) => project.appId === appId);
   $("#appid").val(project.appId);
   $("#certificate").val(project.appSecret);
+
 });
 
 async function changeModes(label) {
@@ -76,8 +135,65 @@ function initVersion() {
   $("#version-text").text(`v${version}`);
 }
 
+function appendCustomOption() {
+  $("#project-id-select").append(
+    `<option value="custom_settings" id="project-custom-settings">Custom</option>`,
+  )
+}
+function initDocUrl() {
+  $("#certificate-link").attr("href", appCertificateLink);
+  $("#appid-link").attr("href", appIdLink);
+  $("#proxy-link").attr("href", proxyLink);
+
+  $('.sidebar-bottom a').each(function () {
+    const href = $(this).attr('href');
+    $(this).attr('data-href', href);
+    $(this).removeAttr('href');
+  });
+  const observer = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+      $('.sidebar-bottom a').each(function () {
+        const href = $(this).attr('href');
+        $(this).attr('data-href', href);
+        $(this).removeAttr('href');
+      });
+      if (mutation.type === 'childList') {
+        const certificateLinkNode = document.getElementById('certificate-link');
+        const appidLinkNode = document.getElementById('appid-link');
+        const proxyLinkNode = document.getElementById('proxy-link');
+        if (certificateLinkNode) {
+          certificateLinkNode.setAttribute('href', appCertificateLink);
+        }
+        if (appidLinkNode) {
+          appidLinkNode.setAttribute('href', appIdLink);
+        }
+        if (proxyLinkNode) {
+          proxyLinkNode.setAttribute('href', proxyLink);
+        }
+        if (certificateLinkNode && appidLinkNode && proxyLinkNode) {
+          observer.disconnect();
+        }
+      }
+    });
+  });
+  observer.observe(document.body, { childList: true, subtree: true });
+}
+
+let reGetProjects = false;
 async function initProjects() {
-  const data = await agoraGetProjects();
+  let data = [];
+  try {
+    data = await agoraGetProjects();
+  } catch (error) {
+    if (error.message == "access_token is invalid, please login again" && !reGetProjects) {
+      reGetProjects = true;
+      await _refreshTokenAndStorage();
+
+      initProjects();
+    }
+    return;
+  }
+
   if (data.length) {
     projectList = data;
     projectList.forEach((project) => {
@@ -85,18 +201,34 @@ async function initProjects() {
         `<option value="${project.appId}" id="project-${project.appId}">${project.name}</option>`,
       );
     });
+
+    appendCustomOption();
     $("#project-id-select").prop("selectedIndex", -1);
     if (!options.appid) {
       // default select the first project
       const firstProject = projectList[0];
       $("#project-id-select").val(firstProject.appId);
+      $("#appid").attr('disabled', true);
+      $("#certificate").attr('disabled', true);
       $("#appid").val(firstProject.appId);
       $("#certificate").val(firstProject.appSecret);
     } else {
       const target = projectList.find((project) => project.appId === options.appid);
       if (target) {
         $("#project-id-select").val(options.appid);
+        $("#appid").attr('disabled', true);
+        $("#certificate").attr('disabled', true);
+      } else {
+        $("#project-id-select").val("custom_settings");
+        $("#appid").val("");
+        $("#certificate").val("");
       }
     }
+  } else {
+    appendCustomOption();
+    $("#appid").val("");
+    $("#certificate").val("");
   }
+
+
 }

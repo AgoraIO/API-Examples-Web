@@ -7,6 +7,10 @@ const ORIGIN_URL = __calcOriginUrl();
 const SETUP_PAGE_URL = `${ORIGIN_URL}/index.html`; // setup page url
 let REDIRECT_URI = ""; // sso redirect uri
 let BASE_URL = ""; // request base url
+let channel_link = "https://doc.shengwang.cn/doc/rtc/javascript/basic-features/join-leave-channel#%E5%8A%A0%E5%85%A5%E9%A2%91%E9%81%93";
+let appCertificateLink = "https://doc.shengwang.cn/doc/rtc/javascript/get-started/enable-service#%E8%8E%B7%E5%8F%96-app-%E8%AF%81%E4%B9%A6";
+let appIdLink = "https://doc.shengwang.cn/doc/rtc/javascript/get-started/enable-service#%E8%8E%B7%E5%8F%96-app-id";
+let proxyLink = "https://doc.shengwang.cn/doc/rtc/javascript/basic-features/firewall#%E4%BA%91%E4%BB%A3%E7%90%86%E6%96%B9%E6%A1%88";
 
 switch (ENV) {
   case "dev":
@@ -20,7 +24,7 @@ switch (ENV) {
     break;
   case "prod":
     BASE_URL = "https://service.agora.io/toolbox";
-    REDIRECT_URI = "https://webdemo.agora.io/sso/index.html";
+    REDIRECT_URI = `${origin}/sso/index.html`;
     break;
 }
 
@@ -39,6 +43,17 @@ let MENU_LIST = [
   },
   {
     name: "quickMenu",
+    data: [{
+      name: "videoAndVoiceCalling",
+      url: `${ORIGIN_URL}/example/quickStart/videoAndVoiceCalling/index.html`,
+      zhDocUrl: "https://doc.shengwang.cn/doc/rtc/javascript/get-started/quick-start",
+      enDocUrl: "https://docs.agora.io/en/video-calling/get-started/get-started-sdk?platform=web",
+      githubUrl:
+        "https://github.com/AgoraIO/API-Examples-Web/tree/main/src/example/quickStart/videoAndVoiceCalling",
+    }]
+  },
+  {
+    name: "basicMenu",
     data: [
       {
         name: "basicVoiceCall",
@@ -279,19 +294,22 @@ let MENU_LIST = [
 ];
 
 if (AREA == "external") {
+  channel_link = "https://docs.agora.io/en/voice-calling/reference/glossary?platform=android#channel";
+  appCertificateLink = "https://docs.agora.io/en/voice-calling/reference/glossary?platform=android#app-certificate";
+  appIdLink = "https://docs.agora.io/en/voice-calling/reference/glossary?platform=android#app-id";
+  proxyLink = "https://docs.agora.io/en/voice-calling/reference/glossary?platform=android#-2";
+
   // hide pushStreamToCDN item in othersMenu
-  const othersMenu = MENU_LIST[4];
-  if (othersMenu.name == "othersMenu") {
-    othersMenu.data = MENU_LIST[4].data.filter((item) => item.name !== "pushStreamToCDN");
-    // add stt case
-    othersMenu.data.push({
-      name: "stt",
-      url: `https://stt-demo.agora.io/`,
-      zhDocUrl: "",
-      enDocUrl: "",
-      githubUrl: "",
-    });
-  }
+  const othersMenuIndex = MENU_LIST.findIndex((item) => item.name == "othersMenu");
+  MENU_LIST[othersMenuIndex].data = MENU_LIST[othersMenuIndex].data.filter((item) => item.name !== "pushStreamToCDN");
+  // add stt case
+  MENU_LIST[othersMenuIndex].data.push({
+    name: "stt",
+    url: `https://stt-demo.agora.io/`,
+    zhDocUrl: "",
+    enDocUrl: "",
+    githubUrl: "",
+  });
 }
 
 function __calcOriginUrl() {

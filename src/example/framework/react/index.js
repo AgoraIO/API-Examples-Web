@@ -491,7 +491,7 @@ $(function () {
                     id="mirror-check"
                     checked={mirrorChecked}
                     disabled={mirrorCheckDisabled}
-                    onChange={(e) => setMirrorChecked(e.target.value)}
+                    onChange={(e) => setMirrorChecked(!mirrorChecked)}
                   ></input>
                 </div>
                 <button

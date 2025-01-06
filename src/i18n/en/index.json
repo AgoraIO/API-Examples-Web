@@ -1,6 +1,10 @@
 {
   "settingMenu": "Setting",
   "quickMenu": "Quick Start",
+  "basicMenu": "Basic Examples",
+  "videoAndVoiceCalling": "Video and Voice Calling",
+  "interactiveLiveStreamingStandard":"Interactive Live Streaming Standard",
+  "interactiveLiveStreamingPremium":"Interactive Live Streaming Premium",
   "advancedMenu": "Advanced Examples",
   "othersMenu": "Other Examples",
   "extensionMenu": "Plugin Examples",
@@ -39,5 +43,10 @@
   "clickChange": "Click to change",
   "needHelp": "If you need help, please visit the official website",
   "agoraDocs": "Agora Docs",
-  "stt": "Speech To Text"
+  "stt": "Speech To Text",
+  "autoPlayFailed": " The autoplay has failed; please click  to initiate playback.",
+  "appIdTips": "If you don`t know what is your appid, checkout <a id='appid-link' >this</a>",
+  "appCertificateTips": " If you don`t know what is your app certificate, checkout <a id='certificate-link' >this</a>",
+  "cloudProxyTips": "If you don`t know what is Cloud Proxy, checkout <a id='proxy-link' >this</a>",
+  "chooseCustom": "Choose Custom Option to manually enter the project's App ID and App Certificate (optional)."
 }

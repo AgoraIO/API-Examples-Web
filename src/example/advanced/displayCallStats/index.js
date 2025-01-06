@@ -70,6 +70,7 @@ async function join() {
   console.log("publish success");
   initStats();
 }
+
 async function leave() {
   for (trackName in localTracks) {
     var track = localTracks[trackName];
