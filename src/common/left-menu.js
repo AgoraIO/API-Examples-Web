@@ -18,14 +18,14 @@ function __transListToMenuDom(list) {
  </div>
  <div class="sidebar-list">
    ${item.data
-     .map((item, index) => {
-       return `
+          .map((item, index) => {
+            return `
      <div class="sidebar-item" data-index="${index}">
        <a href="${item.url}" class="i18n" name="${item.name}"> </a>
      </div>
      `;
-     })
-     .join("")}
+          })
+          .join("")}
  </div>
 </div>`;
     })
@@ -55,7 +55,9 @@ function __initMenu() {
       </span>
     </div>
   </div> 
-  ${__transListToMenuDom(MENU_LIST)}
+  <div class="sidebar-bottom">
+    ${__transListToMenuDom(MENU_LIST)}
+    </div
   </div >
     `;
 
@@ -94,6 +96,12 @@ function __hightlightMenu() {
   let targetNode = $(`.sidebar-item:has(a[href = "${href}"])`);
   if (!targetNode.length) {
     targetNode = $(`.sidebar-item:has(a[href = "${href}index.html"])`);
+  }
+  if (!targetNode.length) {
+    targetNode = $(`.sidebar-item:has(a[data-href = "${href}index.html#"])`);
+  }
+  if (!targetNode.length) {
+    targetNode = $(`.sidebar-item:has(a[data-href = "${href}"])`);
   }
   targetNode.addClass("active");
   const sidebarMenu = targetNode.closest(".sidebar-menu");
@@ -144,12 +152,11 @@ function __initListener() {
 
   $(".sidebar-item").click(function (e) {
     const href = $(this).find("a")[0].href;
-    if (href == SETUP_LIST[0].url) {
-      localStorage.removeItem("__setupJumpHref");
-    }
+    // if (href == SETUP_LIST[0].url) {
+    //   localStorage.removeItem("__setupJumpHref");
+    // }
   });
 }
-
 // ----------------- init -----------------
 window.addEventListener("load", function (e) {
   __initMenu();

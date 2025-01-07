@@ -76,55 +76,39 @@
             </div>
             <div class="mt-2">
               <button id="host-join" type="submit" class="btn btn-primary btn-sm">
-                Join as host
+                Join 
               </button>
-              <div class="dropdown" style="display: inline-block">
-                <button
-                  class="btn btn-primary btn-sm dropdown-toggle"
-                  id="audience-join"
-                  type="button"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
-                >
-                  Join as audience
-                </button>
-                <ul class="dropdown-menu" id="audience-menu">
-                  <li id="lowLatency" class="dropdown-item" >
-                    <label class="i18n" name="interactiveLiveStreamingStandard"></label>
-                  </li>
-                  <li id="ultraLowLatency" class="dropdown-item i18n" name="interactiveLiveStreamingPremium">
-                  </li>
-                </ul>
-              </div>
               <button id="leave" type="button" class="btn btn-primary btn-sm" disabled>
                 Leave
               </button>
             </div>
             <!-- set enabled/muted -->
             <div class="mt-2 d-flex align-items-center">
-              Video
-              <img id="doubt" class="mx-2" width="24" height="24" src="./assets/doubt.png" alt="" />
+             <div class="mt-2 me-2">  Video</div>
+              <div class="mt-2">
+                <button type="button" id="video-set-enabled" class="btn btn-primary btn-sm" disabled>
+                  Enable
+                </button>
+                <button type="button" id="video-set-disable" class="btn btn-primary btn-sm" disabled>
+                  Disable
+                </button>
+              </div>
             </div>
-            <div class="mt-2">
-              <button type="button" id="video-set-enabled" class="btn btn-primary btn-sm" disabled>
-                SetEnabled true
-              </button>
-              <button type="button" id="video-set-muted" class="btn btn-primary btn-sm" disabled>
-                SetMuted false
-              </button>
+            
+            <div class="mt-2 d-flex align-items-center">
+              <div class="mt-2 me-2"> Audio</div>
+              <div class="mt-2">
+                <button type="button" id="audio-set-enabled" class="btn btn-primary btn-sm" disabled>
+                  Enable
+                </button>
+                <button type="button" id="audio-set-disable" class="btn btn-primary btn-sm" disabled>
+                  Disable
+                </button>
+              </div>
             </div>
-            <div class="mt-2 d-flex align-items-center">Audio</div>
-            <div class="mt-2">
-              <button type="button" id="audio-set-enabled" class="btn btn-primary btn-sm" disabled>
-                SetEnabled true
-              </button>
-              <button type="button" id="audio-set-muted" class="btn btn-primary btn-sm" disabled>
-                SetMuted false
-              </button>
+            </form>
             </div>
-          </form>
-        </div>
-        <!-- app info -->
+            <!-- app info -->
         <div id="app-info"></div>
       </section>
     </div>

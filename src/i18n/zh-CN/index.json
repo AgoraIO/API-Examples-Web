@@ -1,6 +1,10 @@
 {
   "settingMenu": "设置",
   "quickMenu": "快速开始",
+  "basicMenu": "基础示例",
+  "videoAndVoiceCalling": "音视频通话",
+  "interactiveLiveStreamingStandard":"极速直播",
+  "interactiveLiveStreamingPremium":"互动直播",
   "advancedMenu": "进阶示例",
   "othersMenu": "其他示例",
   "extensionMenu": "插件示例",
@@ -39,5 +43,11 @@
   "clickChange": "点击修改",
   "needHelp": "需要帮助请跳转至",
   "agoraDocs": "声网文档",
-  "stt": "语音转文字"
+  "stt": "语音转文字",
+  "autoPlayFailed": "自动播放失败,点击即可播放。",
+  "appIdTips": "点击<a id='appid-link' >这里</a>了解App ID",
+  "appCertificateTips": "点击<a id='certificate-link' >这里</a>了解App 证书",
+  "cloudProxyTips": "点击<a id='proxy-link' >这里</a>了解云代理",
+  "chooseCustom": "选择自定义，可手动填写项目的 App ID 和 App 证书（如有）。"
+
 }

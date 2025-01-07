@@ -294,7 +294,7 @@ function getJumpBackUrl() {
   if (href) {
     sessionStorage.removeItem(JUMP_BACK_URL_KEY);
   } else {
-    href = `${ORIGIN_URL}/example/basic/basicVoiceCall/index.html`;
+    href = `${ORIGIN_URL}/example/quickStart/videoAndVoiceCalling/index.html`;
   }
 
   return href;
@@ -344,6 +344,9 @@ async function agoraContentInspect(localVideoTrack) {
     }
   }, 1000 * 10);
 }
+
+// The token used in the demo is solely for testing purposes; 
+// users are required to deploy their own token server to obtain the service.
 
 async function agoraGetAppData(config) {
   const { uid, channel } = config;
@@ -413,12 +416,37 @@ async function agoraGetProjects() {
     }),
   });
   resp = (await resp.json()) || {};
+  if (resp.code == 138) {
+    throw new Error("access_token is invalid, please login again");
+  }
+
   if (resp.code != 0) {
-    message.error("Generate token error, please check your appid and appcertificate parameters");
+    message.error(resp.msg);
     throw Error(resp.msg);
   }
   return resp.data;
 }
+
+function generateRandomString(length) {
+
+  const options = getOptionsFromLocal();
+  if (options.channel && options.channel.length === length) {
+    return options.channel;
+  }
+  
+  // const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  const characters = '0123456789';
+  let result = '';
+  const charactersLength = characters.length;
+  for (let i = 0; i < length; i++) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+  }
+  setOptionsToLocal({channel: result});
+  
+}
+
+
+
 
 // ---------------------- agora ----------------------------
 
@@ -427,3 +455,12 @@ __queryUrlParams();
 __checkLocalOptions();
 __addAppInfoUI();
 __checkExperienceTime();
+generateRandomString(6);
+
+
+$(() => {
+  const options = getOptionsFromLocal();
+  $('#channel').val(options.channel);
+  $('#channel-2').val(`${options.channel}2`);
+  $('#channel-link').attr("href",channel_link);
+})

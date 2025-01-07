@@ -46,8 +46,13 @@ function isMobileSafari() {
   return /iP(ad|hone|od).+Version\/[\d.]+.*Safari/i.test(ua);
 }
 
+window.addEventListener("error", function (event) {
+  console.error("Error occurred: ", event.message);
+  message.error(`Error occurred: ${event.message}`);
+});
+
+
 $(() => {
-  console.log('update video attr 12343');
   if (isMobileSafari()) {
     $('#sample-video').attr('playsinline', 'true');
     $('#sample-video').attr('webkit-playsinline', 'true');
@@ -60,6 +65,7 @@ $(() => {
  */
 $("#join").click(async function (e) {
   e.preventDefault();
+  $('#retry-play-alert').modal('show');
   $("#join").attr("disabled", true);
   try {
     currentStream = $("#stream-source").val();
@@ -69,7 +75,11 @@ $("#join").click(async function (e) {
     // 移动端的safari浏览器需要用户的click事件手动触发视频播放
     if (currentStream !== "camera" && isMobileSafari()) {
       try {
-        videoFromDiv.play();
+        videoFromDiv.play().catch(error => {
+          console.error(error);
+          $('#retry-play-alert').removeClass("hidden");
+          $('#retry-play-alert').modal('show');
+        });
       } catch (error) {
         console.error(error);
         message.error(error.message);
@@ -137,7 +147,6 @@ const getCaptureStream = () => {
   let stream;
   const isFirefox = navigator.userAgent.indexOf("Firefox") > -1;
   const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
-  debugger;
   console.log('isFirefox', isFirefox);
   if (isFirefox) {
       stream = videoFromDiv.mozCaptureStream();
@@ -163,6 +172,20 @@ const getCaptureStream = () => {
   return null;
 }
 
+
+$('#retry-play').click(()=>{
+  videoFromDiv.play().catch(error => {
+    if (error.name === 'NotAllowedError') {
+      console.error('NotAllowedError: ', error);
+      message.error(error.message);
+    } else {
+      console.error(error);
+      message.error(error.message);
+    }
+  });
+})
+
+
 async function createAndPublishVideoTrack(){
 
   if (currentStream == "camera") {
@@ -172,7 +195,11 @@ async function createAndPublishVideoTrack(){
     // https://developers.google.com/web/updates/2016/10/capture-stream - captureStream()
     // can only be called after the video element is able to play video;
     try {
-      videoFromDiv.play();
+      videoFromDiv.play().catch(error => {
+        console.error(error);
+        $('#retry-play-alert').removeClass("hidden");
+        $('#retry-play-alert').modal('show');
+      });
     } catch (error) {
       console.error(error);
       message.error(error.message);

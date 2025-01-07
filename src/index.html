@@ -1,86 +1,69 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="./assets/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Agora WebSDK Demos</title>
-    <link rel="stylesheet" href="./assets/bootstrap.min.css" />
-    <link rel="stylesheet" href="./common/common.css" />
-  </head>
 
-  <body>
-    <div class="container">
-      <!-- left -->
-      <section class="left"></section>
-      <!-- right -->
-      <section class="right row">
-        <!-- form -->
-        <div class="col-12">
-          <div id="version-text" class="text-end"></div>
-          <form class="mt-4 mw-700px m-auto" name="form">
-            <label class="form-label hidden">Project</label>
-            <select class="form-select hidden" id="project-id-select"></select>
-            <section class="mt-2">
-              <label class="form-label">App ID</label>
-              <input
-                class="form-control"
-                id="appid"
-                class="form-control"
-                type="text"
-                placeholder="enter appid"
-              />
-              <div class="tips">
-                If you don`t know what is your appid, checkout
-                <a id="appid-link">this</a>
-                </div>
-            </section>
-            <section class="mt-2">
-              <!-- optional -->
-              <label class="form-label i18n" name="certificate">App 证书 (可选)</label>
-              <input
-                class="form-control"
-                id="certificate"
-                class="form-control"
-                type="text"
-                placeholder="enter app certificate"
-              />
-              <div class="tips">
-                If you don`t know what is your app certificate, checkout
-                <a
-                  id="certificate-link"
-                  >this</a
-                >
-              </div>
-            </section>
-            <!-- Cloud Proxy -->
-            <section class="mt-2">
-              <label class="form-label i18n" name="cloudProxy">Cloud Proxy</label>
-              <select class="form-select proxy-list"></select>
-            </section>
-            <section class="mt-2 pt-5">
-              <button
-                id="setup-btn"
-                type="button"
-                class="btn btn-primary w-100 i18n"
-                name="setting"
-              >
-                SetUp
-              </button>
-            </section>
-          </form>
-        </div>
-      </section>
-    </div>
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="./assets/favicon.ico" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Agora WebSDK Demos</title>
+  <link rel="stylesheet" href="./assets/bootstrap.min.css" />
+  <link rel="stylesheet" href="./common/common.css" />
+</head>
 
-    <script src="./common/constant.js"></script>
-    <script src="./assets/jquery-3.4.1.min.js"></script>
-    <script src="./assets/bootstrap.bundle.min.js"></script>
-    <script src="./common/utils.js"></script>
-    <script src="./common/left-menu.js"></script>
-    <script src="./i18n/language.js"></script>
-    <script src="https://download.agora.io/sdk/release/AgoraRTC_N.js"></script>
-    <script src="./index.js"></script>
-  </body>
+<body>
+  <div class="container">
+    <!-- left -->
+    <section class="left"></section>
+    <!-- right -->
+    <section class="right row">
+      <!-- form -->
+      <div class="col-12">
+        <div id="version-text" class="text-end"></div>
+        <form class="mt-4 mw-700px m-auto" name="form">
+          <label class="form-label ">Project </label>
+          <select class="form-select " id="project-id-select"></select>
+          <div class="tips i18n" name="chooseCustom">
+          </div>
+          <section class="mt-2">
+            <label class="form-label">App ID</label>
+            <input class="form-control" id="appid" class="form-control" type="text" placeholder="enter appid" />
+            <div class="tips i18n" name="appIdTips">
+            </div>
+          </section>
+          <section class="mt-2">
+            <!-- optional -->
+            <label class="form-label i18n" name="certificate">App 证书 (可选)</label>
+            <input class="form-control" id="certificate" class="form-control" type="text"
+              placeholder="enter app certificate" />
+            <div class="tips i18n" name="appCertificateTips">
+            </div>
+          </section>
+          <!-- Cloud Proxy -->
+          <section class="mt-2">
+            <label class="form-label i18n" name="cloudProxy">Cloud Proxy</label>
+            <select class="form-select proxy-list"></select>
+            <div class="tips i18n" name="cloudProxyTips">
+            </div>
+          </section>
+          <section class="mt-2 pt-5">
+            <button id="setup-btn" type="button" class="btn btn-primary w-100 i18n" name="setting">
+              SetUp
+            </button>
+          </section>
+        </form>
+      </div>
+    </section>
+  </div>
+
+  <script src="./common/constant.js"></script>
+  <script src="./assets/jquery-3.4.1.min.js"></script>
+  <script src="./assets/bootstrap.bundle.min.js"></script>
+  <script src="./common/utils.js"></script>
+  <script src="./common/left-menu.js"></script>
+  <script src="./i18n/language.js"></script>
+  <script src="https://download.agora.io/sdk/release/AgoraRTC_N.js"></script>
+  <script src="./index.js"></script>
+</body>
+
 </html>

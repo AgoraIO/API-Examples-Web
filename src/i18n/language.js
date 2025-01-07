@@ -6,14 +6,13 @@ function __insertIe8nText(data) {
   insertEle.each(function () {
     let dataName = $(this).attr("name");
     let i18nTxt = data[dataName];
-    $(this).text(i18nTxt);
+    $(this).html(i18nTxt);
   });
 }
 
 function __getLanguageData(language, success, fail) {
   let url = "";
-
-  if (LANGUAGE_CACHE_DATA[language]) {
+  if (LANGUAGE_CACHE_DATA[language] && LANGUAGE_CACHE_DATA[language].interactiveLiveStreamingPremium) {
     success(LANGUAGE_CACHE_DATA[language]);
     return;
   }

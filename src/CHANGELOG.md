@@ -11,6 +11,10 @@
 7. Introduce a dropdown menu for selecting to subscribe to remote users.  
 8. Add a direct link to GitHub for convenient access.
 9. Support the addition of dynamic tokens for channel entry.
-10. Introduce error messages for invalid token/app ID inputs.  
-11. Extend the display duration of messages.  
-12. Provide distinct documentation links for app ID/token configuration based on domestic and overseas contexts.  
+
+## [2.1.0] - 2024-12-30
+
+1. Add translate
+2. Add rule verification for appid
+3. Enter appid to save automatically
+4. Corrected some boot links
