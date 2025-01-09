@@ -12,7 +12,7 @@ function __insertIe8nText(data) {
 
 function __getLanguageData(language, success, fail) {
   let url = "";
-  if (LANGUAGE_CACHE_DATA[language].superClarity) {
+  if (LANGUAGE_CACHE_DATA[language] && LANGUAGE_CACHE_DATA[language].superClarity) {
     success(LANGUAGE_CACHE_DATA[language]);
     return;
   }
