@@ -71,7 +71,7 @@ let AGORA_VIDEO_PROFILES = [
 ];
 const DEFAULT_VIDEO_PROFILE = "480p_1";
 
-$("#switch-super-clarify").attr("disabled", true);
+$("#switch-super-clarity").attr("disabled", true);
 $("#switch-pvc").attr("disabled", true);
 
 $(() => {
@@ -81,11 +81,11 @@ $(() => {
   });
 });
 
-$("#switch-super-clarify").on("change", function (e) {
+$("#switch-super-clarity").on("change", function (e) {
   if ($(this).is(":checked")) {
-    toggleSuperClarify(true);
+    toggleSuperClarity(true);
   } else {
-    toggleSuperClarify(false);
+    toggleSuperClarity(false);
   }
 });
 
@@ -116,7 +116,7 @@ $("#join-form").submit(async function (e) {
     await join();
     setOptionsToLocal(options);
     message.success("join channel success!");
-    $("#switch-super-clarify").attr("disabled", false);
+    $("#switch-super-clarity").attr("disabled", false);
     $("#switch-pvc").attr("disabled", false);
   } catch (error) {
     console.error(error);
@@ -154,8 +154,8 @@ async function initPvcProcessor() {
   }
 }
 
-// Super Clarify only work on remote users
-async function toggleSuperClarify(open) {
+// Super Clarity only work on remote users
+async function toggleSuperClarity(open) {
   const uids = Object.keys(remoteUsers);
   for (let uid of uids) {
     uid = String(uid);
@@ -184,7 +184,7 @@ async function closeProcessor(uid) {
   }
 }
 
-async function toggleSuperClarifyOne(uid) {
+async function toggleSuperClarityOne(uid) {
   uid = String(uid);
   const user = remoteUsers[uid];
   let processor = superClarityProcessorMap.get(uid);
@@ -193,7 +193,7 @@ async function toggleSuperClarifyOne(uid) {
     superClarityProcessorMap.set(uid, processor);
     user.videoTrack.pipe(processor).pipe(user.videoTrack.processorDestination);
   }
-  if ($("#switch-super-clarify").is(":checked")) {
+  if ($("#switch-super-clarity").is(":checked")) {
     await processor.enable();
   } else {
     await processor.disable();
@@ -306,7 +306,7 @@ async function leave() {
   $("#leave").attr("disabled", true);
   $("#switch-pvc").prop("checked", false);
   $("#switch-pvc").attr("disabled", true);
-  $("#switch-super-clarify").prop("checked", false);
+  $("#switch-super-clarity").prop("checked", false);
   console.log("client leaves channel success");
 }
 
@@ -331,7 +331,7 @@ async function subscribe(user, mediaType) {
     `);
     $("#remote-playerlist").append(player);
     user.videoTrack.play(`player-${uid}`);
-    toggleSuperClarifyOne(uid);
+    toggleSuperClarityOne(uid);
   }
   if (mediaType === "audio") {
     user.audioTrack.play();
