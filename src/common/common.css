@@ -27,22 +27,17 @@ input[type="range"]::-webkit-slider-runnable-track {
 
 .left {
   position: relative;
-  flex: 0 0 240px;
-  max-width: 240px;
-  min-width: 240px;
   height: 100vh;
   box-shadow: 1px 0px 20px rgba(0, 0, 0, 0.08);
   overflow-y: auto;
-  overflow-x: hidden;
+  overflow-x: scroll;
 }
 
 .right {
-  position: relative;
   flex: 1 1 880px;
-  max-width: 880px;
+  /* max-width: 880px; */
   background-color: #f2f7f8;
-  padding-top: 1rem;
-  padding-bottom: 1rem;
+  padding: 1rem;
   height: 100vh;
   overflow-y: auto;
 }
@@ -118,7 +113,7 @@ input[type="range"]::-webkit-slider-runnable-track {
   margin-bottom: 0.25rem !important;
   padding: 0.25rem 0.5rem;
   font-weight: 600;
-  color: rgba(0, 0, 0, 0.85);
+  /* color: rgba(0, 0, 0, 0.85); */
 }
 
 .triangle {
@@ -160,7 +155,7 @@ input[type="range"]::-webkit-slider-runnable-track {
 }
 
 .sidebar-top a {
-  display: inline-block;
+  /* display: inline-block; */
 }
 
 .sidebar-item {
@@ -469,4 +464,9 @@ button#join, button#leave {
   form {
     margin-top: 0.5rem !important;
   }
+}
+
+
+.finder {
+  border: 5px solid red;
 }

@@ -121,7 +121,7 @@ async function subscribe(user, mediaType) {
             <div style="width: 100%; height: 100%; position: relative; overflow: hidden; background-color: black;">
                 <video id="video_track-video-${uid}-mirror" 
                     class="agora_video_player" playsinline="" muted="" 
-                    style="width: 100%; height: 100%; position: absolute; left: 0px; top: 0px; object-fit: cover;  transform: rotateY(180deg);">
+                    style="width: 100%; height: 100%; position: absolute; left: 0px; top: 0px;  transform: rotateY(180deg);">
                 </video>
             </div>
         </div>
