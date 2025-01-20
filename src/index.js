@@ -22,7 +22,6 @@ let projectList = [];
 $(() => {
   initVersion();
   initModes();
-  initProjects();
   initDocUrl();
 });
 
@@ -180,55 +179,3 @@ function initDocUrl() {
 }
 
 let reGetProjects = false;
-async function initProjects() {
-  let data = [];
-  try {
-    data = await agoraGetProjects();
-  } catch (error) {
-    if (error.message == "access_token is invalid, please login again" && !reGetProjects) {
-      reGetProjects = true;
-      await _refreshTokenAndStorage();
-
-      initProjects();
-    }
-    return;
-  }
-
-  if (data.length) {
-    projectList = data;
-    projectList.forEach((project) => {
-      $("#project-id-select").append(
-        `<option value="${project.appId}" id="project-${project.appId}">${project.name}</option>`,
-      );
-    });
-
-    appendCustomOption();
-    $("#project-id-select").prop("selectedIndex", -1);
-    if (!options.appid) {
-      // default select the first project
-      const firstProject = projectList[0];
-      $("#project-id-select").val(firstProject.appId);
-      $("#appid").attr('disabled', true);
-      $("#certificate").attr('disabled', true);
-      $("#appid").val(firstProject.appId);
-      $("#certificate").val(firstProject.appSecret);
-    } else {
-      const target = projectList.find((project) => project.appId === options.appid);
-      if (target) {
-        $("#project-id-select").val(options.appid);
-        $("#appid").attr('disabled', true);
-        $("#certificate").attr('disabled', true);
-      } else {
-        $("#project-id-select").val("custom_settings");
-        $("#appid").val("");
-        $("#certificate").val("");
-      }
-    }
-  } else {
-    appendCustomOption();
-    $("#appid").val("");
-    $("#certificate").val("");
-  }
-
-
-}

@@ -317,7 +317,7 @@ async function subscribe(user, mediaType) {
     `);
     $("#remote-playerlist").append(player);
     user.videoTrack.play(`player-${uid}`);
-    toggleSuperClarifyOne(uid);
+    toggleSuperClarityOne(uid);
   }
   if (mediaType === "audio") {
     user.audioTrack.play();

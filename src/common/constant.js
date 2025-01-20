@@ -1,5 +1,5 @@
 const ENV = "dev"; // dev, test, prod
-const AREA = "external"; // internal, external
+const AREA = "internal"; // internal, external
 const EXTERNAL_DEMO_PATH = "api-examples-external"; // external demo path
 const INTERNAL_DEMO_PATH = "api-examples-internal"; // internal demo path
 const SSO_DATA_KEY = "agora_sso_data";
@@ -218,13 +218,13 @@ let MENU_LIST = [
           "https://github.com/AgoraIO/API-Examples-Web/tree/main/src/example/extension/aiDenoiser",
       },
       {
-        name: "superClarify",
-        url: `${ORIGIN_URL}/example/extension/superClarify/index.html`,
+        name: "superClarity",
+        url: `${ORIGIN_URL}/example/extension/superClarity/index.html`,
         zhDocUrl: "https://doc.shengwang.cn/doc/rtc/javascript/advanced-features/super-clarity",
         enDocUrl:
           "https://docs-beta.agora.io/en/extensions-marketplace/develop/integrate/superclarity?platform=web",
         githubUrl:
-          "https://github.com/AgoraIO/API-Examples-Web/tree/main/src/example/extension/superClarify",
+          "https://github.com/AgoraIO/API-Examples-Web/tree/main/src/example/extension/superClarity",
       },
       {
         name: "spatialAudio",
