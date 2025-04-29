@@ -23,6 +23,10 @@ const AGORA_CODEC_LIST = [
     label: "h264",
     value: "h264",
   },
+  {
+    label: "av1 (beta)",
+    value: "av1",
+  },
 ];
 
 const AGORA_VIDEO_PROFILES = [
@@ -70,25 +74,39 @@ const AGORA_VIDEO_PROFILES = [
 
 const DEFAULT_VIDEO_PROFILE = "480p_1";
 const AGORA_CODEC = "vp8";
+let supportedCodec= []
 
 // the demo can auto join channel with params in url
-$(() => {
+$(async () => {
+
+
   initVideoProfiles();
   initCodecList();
-
   $(".profile-list").change(function (e) {
     changeVideoProfile(this.value);
   });
 
-  $(".codec-list").change(function (e) {
+  $(".codec-list").change(async function (e) {
+    console.log("change codec", this.value);
+  if (!checkVideoCodecSupport(this.value)) {
+    changeCodec("vp8");
+    return;
+  }
+  console.log("change codec", this.value);
     changeCodec(this.value);
+    
   });
+  supportedCodec = await AgoraRTC.getSupportedCodec();
 });
 
 $("#join-form").submit(async function (e) {
   e.preventDefault();
   $("#join").attr("disabled", true);
   try {
+    if (!checkVideoCodecSupport(curCodec)) {
+    changeCodec("vp8");
+    return;
+  }
     client = AgoraRTC.createClient({
       mode: "rtc",
       codec: curCodec,
@@ -209,7 +227,7 @@ function initVideoProfiles() {
 
 function initCodecList() {
   AGORA_CODEC_LIST.forEach((item) => {
-    $(".codec-list").append(`<option value=${item.label}>${item.label}</option>`);
+    $(".codec-list").append(`<option value=${item.value}>${item.label}</option>`);
   });
   curCodec = AGORA_CODEC;
   $(".codec-list").val(curCodec);
@@ -225,6 +243,7 @@ async function changeVideoProfile(label) {
 
 function changeCodec(label) {
   curCodec = label;
+  console.log("change codec 1", curCodec);
   $(".codec-list").val(curCodec);
 }
 
@@ -240,4 +259,14 @@ function handleUserUnpublished(user, mediaType) {
     delete remoteUsers[id];
     $(`#player-wrapper-${id}`).remove();
   }
+}
+
+
+function checkVideoCodecSupport(codec) {
+  const videoCodec = (supportedCodec.video || []).map(codec => codec.toUpperCase());
+  if (!videoCodec.includes(codec.toUpperCase())) {
+    message.error(`${codec.toUpperCase()} is not supported by your browser, switched to default codec.`);
+    return false;
+  }
+  return true;
 }
