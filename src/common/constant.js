@@ -58,8 +58,8 @@ let MENU_LIST = [
       {
         name: "basicVoiceCall",
         url: `${ORIGIN_URL}/example/basic/basicVoiceCall/index.html`,
-        zhDocUrl: "https://doc.shengwang.cn/doc/rtc/javascript/get-started/quick-start",
-        enDocUrl: "https://docs.agora.io/en/video-calling/get-started/get-started-sdk?platform=web",
+        zhDocUrl: "https://doc.shengwang.cn/doc/rtc/javascript/basic-features/audio-quick-start",
+        enDocUrl: "https://docs.agora.io/en/voice-calling/overview/product-overview?platform=android",
         githubUrl:
           "https://github.com/AgoraIO/API-Examples-Web/tree/main/src/example/basic/basicVoiceCall",
       },
@@ -67,15 +67,15 @@ let MENU_LIST = [
         name: "basicVideoCall",
         url: `${ORIGIN_URL}/example/basic/basicVideoCall/index.html`,
         zhDocUrl: "https://doc.shengwang.cn/doc/rtc/javascript/get-started/quick-start",
-        enDocUrl: "https://docs.agora.io/en/video-calling/get-started/get-started-sdk?platform=web",
+        enDocUrl: "https://docs.agora.io/en/video-calling/overview/product-overview?platform=android",
         githubUrl:
           "https://github.com/AgoraIO/API-Examples-Web/tree/main/src/example/basic/basicVideoCall",
       },
       {
         name: "basicLive",
         url: `${ORIGIN_URL}/example/basic/basicLive/index.html`,
-        zhDocUrl: "https://doc.shengwang.cn/doc/rtc/javascript/get-started/quick-start",
-        enDocUrl: "https://docs.agora.io/en/video-calling/get-started/get-started-sdk?platform=web",
+        zhDocUrl: "https://doc.shengwang.cn/doc/rtc/javascript/basic-features/ls-quick-start",
+        enDocUrl: "https://docs.agora.io/en/interactive-live-streaming/overview/product-overview?platform=android",
         githubUrl:
           "https://github.com/AgoraIO/API-Examples-Web/tree/main/src/example/basic/basicLive",
       },
@@ -284,7 +284,7 @@ let MENU_LIST = [
       {
         name: "react",
         url: `${ORIGIN_URL}/example/framework/react/index.html`,
-        zhDocUrl: "https://doc.shengwang.cn/api-ref/rtc/react/react-sdk/components",
+        zhDocUrl: "",
         enDocUrl: "",
         githubUrl:
           "https://github.com/AgoraIO/API-Examples-Web/tree/main/src/example/framework/react",

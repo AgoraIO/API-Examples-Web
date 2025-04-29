@@ -116,8 +116,9 @@ function __addAppInfoUI() {
     <div class="d-md-flex align-items-center gap-1">
       <span class="i18n" name="needHelp">If you need help, please visit the official website</span>
       <a class="text-decoration-none i18n" href=${documentUrl} name="agoraDocs" target="__blank">Agora Docs</a> 
-      <a target="__blank" href=${target.githubUrl}>
-         <img src="${ORIGIN_URL}/assets/github.png" width="24" height="24"></img>
+      <span class="i18n" name="and">and</span>
+      <a target="__blank" href=${target.githubUrl} class="text-decoration-none i18n"  name="sampleCode">
+           sample code
       </a>
     </div> 
   </div>`);

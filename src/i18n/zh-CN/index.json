@@ -48,6 +48,8 @@
   "appIdTips": "点击<a id='appid-link' >这里</a>了解App ID",
   "appCertificateTips": "点击<a id='certificate-link' >这里</a>了解App 证书",
   "cloudProxyTips": "点击<a id='proxy-link' >这里</a>了解云代理",
-  "chooseCustom": "选择自定义，可手动填写项目的 App ID 和 App 证书（如有）。"
+  "chooseCustom": "选择自定义，可手动填写项目的 App ID 和 App 证书（如有）。",
+  "sampleCode": "示例代码",
+  "and": "和"
 
 }
