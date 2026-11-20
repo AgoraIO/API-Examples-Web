@@ -51,13 +51,19 @@ async function join() {
   // Add an event listener to play remote tracks when remote user publishes.
   client.on("user-published", handleUserPublished);
   client.on("user-unpublished", handleUserUnpublished);
-  [options.uid, localTracks.audioTrack, localTracks.videoTrack] = await Promise.all([
-    client.join(options.appid, options.channel, options.token || null, options.uid || null),
-    AgoraRTC.createMicrophoneAudioTrack({
-      encoderConfig: "music_standard",
-    }),
-    AgoraRTC.createCameraVideoTrack(),
-  ]);
+  [options.uid, localTracks.audioTrack, localTracks.videoTrack] =
+    await Promise.all([
+      client.join(
+        options.appid,
+        options.channel,
+        options.token || null,
+        options.uid || null,
+      ),
+      AgoraRTC.createMicrophoneAudioTrack({
+        encoderConfig: "music_standard",
+      }),
+      AgoraRTC.createCameraVideoTrack(),
+    ]);
   localTracks.videoTrack.play("local-player");
   $("#local-player-name").text(`uid: ${options.uid}`);
 
@@ -67,6 +73,28 @@ async function join() {
 }
 
 async function leave() {
+  if (processor) {
+    try {
+      if (processor.enabled) {
+        await processor.disable();
+      }
+      processor.unpipe();
+      if (localTracks.audioTrack) {
+        localTracks.audioTrack.unpipe();
+      }
+      await processor.destroy();
+    } catch (e) {
+      console.error("destroy AIDenoiser processor failure", e);
+    }
+    processor = null;
+  }
+  processorEnable = true;
+  $("#openAiDenosier").attr("disabled", true);
+  $("#enableAiDenosier").attr("disabled", true);
+  $("#enableAiDenosier").text("Enable AIDenoiser");
+  $("#dump").attr("disabled", true);
+  $("#ai-status-tip").text("");
+
   for (trackName in localTracks) {
     var track = localTracks[trackName];
     if (track) {
@@ -130,30 +158,89 @@ function handleUserUnpublished(user, mediaType) {
 }
 
 $("#openAiDenosier").click(async (e) => {
-  let extension = new AIDenoiser.AIDenoiserExtension({
-    assetsPath: "./agora-extension-ai-denoiser/external",
-  });
-  AgoraRTC.registerExtensions([extension]);
-  extension.onloaderror = (e) => {
-    console.error(e);
-    processor = null;
-  };
-
-  processor = extension.createProcessor();
-
-  processor.onoverload = async () => {
-    await processor.disable();
-    $("#enableAiDenosier").val("Enable AIDenoiser");
-    $("#ai-status-tip").text("AIDenoiser is disabled");
-    processorEnable = true;
-  };
-
-  localTracks.audioTrack.pipe(processor).pipe(localTracks.audioTrack.processorDestination);
-
-  message.success("open AIDenoiser success!");
   $("#openAiDenosier").attr("disabled", true);
-  $("#enableAiDenosier").attr("disabled", false);
-  $("#dump").attr("disabled", false);
+  try {
+    if (!extension) {
+      extension = new AIDenoiser.AIDenoiserExtension({
+        assetsPath: "./agora-extension-ai-denoiser/external",
+      });
+      AgoraRTC.registerExtensions([extension]);
+    }
+
+    if (!extension.checkCompatibility()) {
+      message.error("Your browser does not support AI Denoiser.");
+      $("#enableAiDenosier").attr("disabled", true);
+      $("#dump").attr("disabled", true);
+      $("#openAiDenosier").attr("disabled", false);
+      return;
+    }
+
+    processor = extension.createProcessor();
+    const currentProcessor = processor;
+
+    currentProcessor.on("pipeerror", (error) => {
+      console.error("AIDenoiser pipe failure", error);
+      message.error("AI Denoiser failed to load.");
+      try {
+        currentProcessor.unpipe();
+        localTracks.audioTrack.unpipe();
+        localTracks.audioTrack.pipe(
+          localTracks.audioTrack.processorDestination,
+        );
+      } catch (restoreError) {
+        console.error("restore audio pipeline failure", restoreError);
+      }
+      if (processor === currentProcessor) {
+        processor = null;
+      }
+      processorEnable = true;
+      $("#enableAiDenosier").attr("disabled", true);
+      $("#enableAiDenosier").text("Enable AIDenoiser");
+      $("#dump").attr("disabled", true);
+      $("#ai-status-tip").text("AIDenoiser is disabled");
+      $("#openAiDenosier").attr("disabled", false);
+    });
+
+    currentProcessor.on("overload", async () => {
+      await currentProcessor.disable();
+      $("#enableAiDenosier").text("Enable AIDenoiser");
+      $("#ai-status-tip").text("AIDenoiser is disabled");
+      processorEnable = true;
+    });
+
+    currentProcessor.on("dump", (blob, name) => {
+      const objectURL = URL.createObjectURL(blob);
+      const tag = document.createElement("a");
+      tag.download = name;
+      tag.href = objectURL;
+      tag.click();
+      setTimeout(() => {
+        URL.revokeObjectURL(objectURL);
+      }, 0);
+    });
+
+    currentProcessor.on("dumpend", () => {
+      console.log("dump ended!!");
+    });
+
+    localTracks.audioTrack
+      .pipe(currentProcessor)
+      .pipe(localTracks.audioTrack.processorDestination);
+
+    message.success("open AIDenoiser success!");
+    $("#enableAiDenosier").attr("disabled", false);
+    $("#dump").attr("disabled", false);
+  } catch (error) {
+    console.error("open AIDenoiser failure", error);
+    processor = null;
+    processorEnable = true;
+    $("#enableAiDenosier").attr("disabled", true);
+    $("#enableAiDenosier").text("Enable AIDenoiser");
+    $("#dump").attr("disabled", true);
+    $("#ai-status-tip").text("AIDenoiser is disabled");
+    $("#openAiDenosier").attr("disabled", false);
+    message.error(error.message);
+  }
 });
 
 $("#enableAiDenosier").click(async (e) => {
@@ -181,15 +268,10 @@ $("#dump").click(async (e) => {
   if (!processor) {
     return;
   }
-  processor.ondump = (blob, name) => {
-    const objectURL = URL.createObjectURL(blob);
-    const tag = document.createElement("a");
-    tag.download = name + ".wav";
-    tag.href = objectURL;
-    tag.click();
-  };
-  processor.ondumpend = () => {
-    console.log("dump ended!!");
-  };
-  processor.dump();
+  try {
+    await processor.dump();
+  } catch (error) {
+    console.error("dump audio failure", error);
+    message.error("Failed to dump audio.");
+  }
 });
